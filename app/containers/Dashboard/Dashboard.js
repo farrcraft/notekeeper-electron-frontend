@@ -7,7 +7,7 @@ export default class Dashboard extends Component {
     return (
       <h1>Hello QuantumNote!</h1>
     );
-  	/*
+    /*
     return (
       <Home />
     );

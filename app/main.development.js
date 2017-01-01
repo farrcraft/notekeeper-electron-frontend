@@ -76,7 +76,7 @@ app.on('ready', async () => {
     template = [{
       label: 'Electron',
       submenu: [{
-        label: 'About ElectronReact',
+        label: 'About NoteKeeper.io',
         selector: 'orderFrontStandardAboutPanel:'
       }, {
         type: 'separator'
@@ -86,7 +86,7 @@ app.on('ready', async () => {
       }, {
         type: 'separator'
       }, {
-        label: 'Hide ElectronReact',
+        label: 'Hide NoteKeeper.io',
         accelerator: 'Command+H',
         selector: 'hide:'
       }, {
@@ -184,21 +184,6 @@ app.on('ready', async () => {
         click() {
           shell.openExternal('http://electron.atom.io');
         }
-      }, {
-        label: 'Documentation',
-        click() {
-          shell.openExternal('https://github.com/atom/electron/tree/master/docs#readme');
-        }
-      }, {
-        label: 'Community Discussions',
-        click() {
-          shell.openExternal('https://discuss.atom.io/c/electron');
-        }
-      }, {
-        label: 'Search Issues',
-        click() {
-          shell.openExternal('https://github.com/atom/electron/issues');
-        }
       }]
     }];
 
@@ -250,21 +235,6 @@ app.on('ready', async () => {
         label: 'Learn More',
         click() {
           shell.openExternal('http://electron.atom.io');
-        }
-      }, {
-        label: 'Documentation',
-        click() {
-          shell.openExternal('https://github.com/atom/electron/tree/master/docs#readme');
-        }
-      }, {
-        label: 'Community Discussions',
-        click() {
-          shell.openExternal('https://discuss.atom.io/c/electron');
-        }
-      }, {
-        label: 'Search Issues',
-        click() {
-          shell.openExternal('https://github.com/atom/electron/issues');
         }
       }]
     }];
