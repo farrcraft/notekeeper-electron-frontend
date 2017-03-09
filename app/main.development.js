@@ -41,6 +41,9 @@ const installExtensions = async () => {
 app.on('ready', async () => {
   await installExtensions();
 
+  // Start the backend process:
+  // var backend = require('child_process').spawn('python', ['./hello.py']);
+
   mainWindow = new BrowserWindow({
     show: false,
     width: 1024,
@@ -55,6 +58,8 @@ app.on('ready', async () => {
   });
 
   mainWindow.on('closed', () => {
+    // Terminate backend process
+    // backend.kill('SIGINT');
     mainWindow = null;
   });
 

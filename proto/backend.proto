@@ -1,0 +1,81 @@
+syntax = "proto3";
+
+package notekeeper;
+
+service Backend {
+	rpc OpenMasterDb(OpenMasterDbRequest) returns (OpenMasterDbResponse) {}
+
+	rpc CreateAccount(CreateAccountRequest) returns (CreateAccountResponse) {}
+	rpc UnlockAccount(UnlockAccountRequest) returns (UnlockAccountResponse) {}
+	rpc SigninAccount(SigninAccountRequest) returns (SigninAccountResponse) {}
+	rpc SignoutAccount(SignoutAccountRequest) returns(SignoutAccountResponse) {}
+	rpc LockAccount(LockAccountRequest) returns (LockAccountResponse) {}
+
+	rpc CreateNotebook(CreateNotebookRequest) returns (CreateNotebookResponse) {}
+}
+
+message OpenMasterDbRequest {
+	string path = 1; // user data directory path
+}
+
+message OpenMasterDbResponse {
+	string status = 1;
+}
+
+message CreateAccountRequest {
+	string name = 1; // account name
+	string email = 2; // user email
+	string passphrase = 3; // user password
+}
+
+message CreateAccountResponse {
+	string status = 1;
+	string id = 2;
+}
+
+message UnlockAccountRequest {
+	string id = 1;
+	string passphrase = 2;
+}
+
+message UnlockAccountResponse {
+	string status = 1;
+}
+
+message SigninAccountRequest {
+	string name = 1;
+	string email = 2;
+	string passphrase = 3;
+}
+
+message SigninAccountResponse {
+	string status = 1;
+	string id = 2;
+}
+
+message SignoutAccountRequest {
+	string id = 1;
+}
+
+message SignoutAccountResponse {
+	string status = 1;
+}
+
+message LockAccountRequest {
+	string id = 1;
+}
+
+message LockAccountResponse {
+	string status = 1;
+}
+
+message CreateNotebookRequest {
+	string name = 1;
+	string user_id = 2;
+	string shelf_id = 3;
+}
+
+message CreateNotebookResponse {
+	string status = 1;
+	string id = 2;
+}
