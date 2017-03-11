@@ -5,6 +5,7 @@ class Account extends singleton {
   transportLayer;
 
   constructor(transportLayer) {
+    super();
     this.transportLayer = transportLayer;
   }
 
@@ -33,7 +34,7 @@ class Account extends singleton {
   }
 
   exists() {
-    
+
   }
 }
 

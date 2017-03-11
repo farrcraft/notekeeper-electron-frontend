@@ -4,6 +4,28 @@
 var grpc = require('grpc');
 var proto_backend_pb = require('../proto/backend_pb.js');
 
+function serialize_notekeeper_AccountStateRequest(arg) {
+  if (!(arg instanceof proto_backend_pb.AccountStateRequest)) {
+    throw new Error('Expected argument of type notekeeper.AccountStateRequest');
+  }
+  return new Buffer(arg.serializeBinary());
+}
+
+function deserialize_notekeeper_AccountStateRequest(buffer_arg) {
+  return proto_backend_pb.AccountStateRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_notekeeper_AccountStateResponse(arg) {
+  if (!(arg instanceof proto_backend_pb.AccountStateResponse)) {
+    throw new Error('Expected argument of type notekeeper.AccountStateResponse');
+  }
+  return new Buffer(arg.serializeBinary());
+}
+
+function deserialize_notekeeper_AccountStateResponse(buffer_arg) {
+  return proto_backend_pb.AccountStateResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_notekeeper_CreateAccountRequest(arg) {
   if (!(arg instanceof proto_backend_pb.CreateAccountRequest)) {
     throw new Error('Expected argument of type notekeeper.CreateAccountRequest');
@@ -136,6 +158,28 @@ function deserialize_notekeeper_SignoutAccountResponse(buffer_arg) {
   return proto_backend_pb.SignoutAccountResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_notekeeper_UIStateRequest(arg) {
+  if (!(arg instanceof proto_backend_pb.UIStateRequest)) {
+    throw new Error('Expected argument of type notekeeper.UIStateRequest');
+  }
+  return new Buffer(arg.serializeBinary());
+}
+
+function deserialize_notekeeper_UIStateRequest(buffer_arg) {
+  return proto_backend_pb.UIStateRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_notekeeper_UIStateResponse(arg) {
+  if (!(arg instanceof proto_backend_pb.UIStateResponse)) {
+    throw new Error('Expected argument of type notekeeper.UIStateResponse');
+  }
+  return new Buffer(arg.serializeBinary());
+}
+
+function deserialize_notekeeper_UIStateResponse(buffer_arg) {
+  return proto_backend_pb.UIStateResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_notekeeper_UnlockAccountRequest(arg) {
   if (!(arg instanceof proto_backend_pb.UnlockAccountRequest)) {
     throw new Error('Expected argument of type notekeeper.UnlockAccountRequest');
@@ -225,6 +269,28 @@ var BackendService = exports.BackendService = {
     requestDeserialize: deserialize_notekeeper_LockAccountRequest,
     responseSerialize: serialize_notekeeper_LockAccountResponse,
     responseDeserialize: deserialize_notekeeper_LockAccountResponse,
+  },
+  uIState: {
+    path: '/notekeeper.Backend/UIState',
+    requestStream: false,
+    responseStream: false,
+    requestType: proto_backend_pb.UIStateRequest,
+    responseType: proto_backend_pb.UIStateResponse,
+    requestSerialize: serialize_notekeeper_UIStateRequest,
+    requestDeserialize: deserialize_notekeeper_UIStateRequest,
+    responseSerialize: serialize_notekeeper_UIStateResponse,
+    responseDeserialize: deserialize_notekeeper_UIStateResponse,
+  },
+  accountState: {
+    path: '/notekeeper.Backend/AccountState',
+    requestStream: false,
+    responseStream: false,
+    requestType: proto_backend_pb.AccountStateRequest,
+    responseType: proto_backend_pb.AccountStateResponse,
+    requestSerialize: serialize_notekeeper_AccountStateRequest,
+    requestDeserialize: deserialize_notekeeper_AccountStateRequest,
+    responseSerialize: serialize_notekeeper_AccountStateResponse,
+    responseDeserialize: deserialize_notekeeper_AccountStateResponse,
   },
   createNotebook: {
     path: '/notekeeper.Backend/CreateNotebook',

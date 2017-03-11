@@ -4,6 +4,7 @@ class Notebook extends singleton {
   transportLayer;
 
   constructor(transportLayer) {
+    super();
     this.transportLayer = transportLayer;
   }
 

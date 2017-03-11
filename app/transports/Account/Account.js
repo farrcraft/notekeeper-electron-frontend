@@ -1,38 +1,38 @@
-import grpc from 'grpc';
+import rpc from '../Rpc';
 import messages from '../../proto/backend_pb';
 
 /*
-	rpc CreateAccount(CreateAccountRequest) returns (CreateAccountResponse) {}
-	rpc UnlockAccount(UnlockAccountRequest) returns (UnlockAccountResponse) {}
-	rpc SigninAccount(SigninAccountRequest) returns (SigninAccountResponse) {}
-	rpc SignoutAccount(SignoutAccountRequest) returns(SignoutAccountResponse) {}
-	rpc LockAccount(LockAccountRequest) returns (LockAccountResponse) {}
+rpc CreateAccount(CreateAccountRequest) returns (CreateAccountResponse) {}
+rpc UnlockAccount(UnlockAccountRequest) returns (UnlockAccountResponse) {}
+rpc SigninAccount(SigninAccountRequest) returns (SigninAccountResponse) {}
+rpc SignoutAccount(SignoutAccountRequest) returns(SignoutAccountResponse) {}
+rpc LockAccount(LockAccountRequest) returns (LockAccountResponse) {}
 */
 export default class Account {
-  create() {
-    var request = new messages.CreateAccountRequest();
-    //request.setPath(userDataPath);
-    var client = rpc.getClient();
-    client.CreateAccount(request, function(err, response) {
+  static create() {
+    const request = new messages.CreateAccountRequest();
+    // request.setPath(userDataPath);
+    const client = rpc.getClient();
+    client.CreateAccount(request, (err, response) => {
       const status = response.getStatus();
-      if (status != 'OK') {
+      if (status !== 'OK') {
       }
     });
   }
 
-  signin() {
-      
-  }
-
-  signout() {
+  static signin() {
 
   }
 
-  unlock() {
+  static signout() {
 
   }
 
-  lock() {
+  static unlock() {
+
+  }
+
+  static lock() {
 
   }
 }
