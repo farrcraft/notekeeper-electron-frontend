@@ -1,3 +1,10 @@
+# Default action
+build:
+	npm run build
+
+lint:
+	npm run lint
+
 # Backend repo is source of truth for proto definitions
 proto-copy:
 	cp ../notekeeper-electron-backend/src/proto/*.proto app/proto/
