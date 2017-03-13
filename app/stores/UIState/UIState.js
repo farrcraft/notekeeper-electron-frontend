@@ -1,10 +1,24 @@
 import { observable, computed, asStructure } from 'mobx';
-import singleton from 'singleton';
 
-class UIState extends singleton {
-  constructor() {
-    super();
+class UIState {
+  @observable windowHeight = -1;
+  @observable windowWidth = -1;
+
+  transportLayer;
+
+  setTransport(transportLayer) {
+    this.transportLayer = transportLayer;
+  }
+
+  load() {
+    this.transportLayer.load();
+  }
+
+  save() {
+    this.transportLayer.save();
   }
 }
 
-export default UIState.get();
+const uiStore = new UIState();
+
+export default uiStore;

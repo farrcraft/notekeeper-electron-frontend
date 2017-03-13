@@ -1,6 +1,6 @@
-import singleton from 'singleton';
-
-class Auth extends singleton {
+class Auth {
 }
 
-export default Auth.get();
+const authStore = new Auth();
+
+export default authStore;

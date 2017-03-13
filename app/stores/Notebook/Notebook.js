@@ -1,13 +1,12 @@
-import singleton from 'singleton';
-
-class Notebook extends singleton {
+class Notebook {
   transportLayer;
 
-  constructor(transportLayer) {
-    super();
+  setTransport(transportLayer) {
     this.transportLayer = transportLayer;
   }
 
 }
 
-export default Notebook.get();
+const notebookStore = new Notebook();
+
+export default notebookStore;

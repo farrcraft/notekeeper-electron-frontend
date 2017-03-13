@@ -1,10 +1,9 @@
-import singleton from 'singleton';
 import grpc from 'grpc';
 import services from '../../proto/backend_grpc_pb';
 
 const RPC_PORT = 'localhost:53017';
 
-class Rpc extends singleton {
+class Rpc {
   client
 
   getClient() {
@@ -16,4 +15,6 @@ class Rpc extends singleton {
   }
 }
 
-export default Rpc.get();
+const rpcTransport = new Rpc();
+
+export default rpcTransport;

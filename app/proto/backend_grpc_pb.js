@@ -4,17 +4,6 @@
 var grpc = require('grpc');
 var app_proto_backend_pb = require('../../app/proto/backend_pb.js');
 
-function serialize_notekeeper_AccountStateRequest(arg) {
-  if (!(arg instanceof app_proto_backend_pb.AccountStateRequest)) {
-    throw new Error('Expected argument of type notekeeper.AccountStateRequest');
-  }
-  return new Buffer(arg.serializeBinary());
-}
-
-function deserialize_notekeeper_AccountStateRequest(buffer_arg) {
-  return app_proto_backend_pb.AccountStateRequest.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
 function serialize_notekeeper_AccountStateResponse(arg) {
   if (!(arg instanceof app_proto_backend_pb.AccountStateResponse)) {
     throw new Error('Expected argument of type notekeeper.AccountStateResponse');
@@ -37,17 +26,6 @@ function deserialize_notekeeper_CreateAccountRequest(buffer_arg) {
   return app_proto_backend_pb.CreateAccountRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
-function serialize_notekeeper_CreateAccountResponse(arg) {
-  if (!(arg instanceof app_proto_backend_pb.CreateAccountResponse)) {
-    throw new Error('Expected argument of type notekeeper.CreateAccountResponse');
-  }
-  return new Buffer(arg.serializeBinary());
-}
-
-function deserialize_notekeeper_CreateAccountResponse(buffer_arg) {
-  return app_proto_backend_pb.CreateAccountResponse.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
 function serialize_notekeeper_CreateNotebookRequest(arg) {
   if (!(arg instanceof app_proto_backend_pb.CreateNotebookRequest)) {
     throw new Error('Expected argument of type notekeeper.CreateNotebookRequest');
@@ -59,37 +37,26 @@ function deserialize_notekeeper_CreateNotebookRequest(buffer_arg) {
   return app_proto_backend_pb.CreateNotebookRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
-function serialize_notekeeper_CreateNotebookResponse(arg) {
-  if (!(arg instanceof app_proto_backend_pb.CreateNotebookResponse)) {
-    throw new Error('Expected argument of type notekeeper.CreateNotebookResponse');
+function serialize_notekeeper_IdRequest(arg) {
+  if (!(arg instanceof app_proto_backend_pb.IdRequest)) {
+    throw new Error('Expected argument of type notekeeper.IdRequest');
   }
   return new Buffer(arg.serializeBinary());
 }
 
-function deserialize_notekeeper_CreateNotebookResponse(buffer_arg) {
-  return app_proto_backend_pb.CreateNotebookResponse.deserializeBinary(new Uint8Array(buffer_arg));
+function deserialize_notekeeper_IdRequest(buffer_arg) {
+  return app_proto_backend_pb.IdRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
-function serialize_notekeeper_LockAccountRequest(arg) {
-  if (!(arg instanceof app_proto_backend_pb.LockAccountRequest)) {
-    throw new Error('Expected argument of type notekeeper.LockAccountRequest');
+function serialize_notekeeper_IdResponse(arg) {
+  if (!(arg instanceof app_proto_backend_pb.IdResponse)) {
+    throw new Error('Expected argument of type notekeeper.IdResponse');
   }
   return new Buffer(arg.serializeBinary());
 }
 
-function deserialize_notekeeper_LockAccountRequest(buffer_arg) {
-  return app_proto_backend_pb.LockAccountRequest.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
-function serialize_notekeeper_LockAccountResponse(arg) {
-  if (!(arg instanceof app_proto_backend_pb.LockAccountResponse)) {
-    throw new Error('Expected argument of type notekeeper.LockAccountResponse');
-  }
-  return new Buffer(arg.serializeBinary());
-}
-
-function deserialize_notekeeper_LockAccountResponse(buffer_arg) {
-  return app_proto_backend_pb.LockAccountResponse.deserializeBinary(new Uint8Array(buffer_arg));
+function deserialize_notekeeper_IdResponse(buffer_arg) {
+  return app_proto_backend_pb.IdResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_notekeeper_OpenMasterDbRequest(arg) {
@@ -103,17 +70,6 @@ function deserialize_notekeeper_OpenMasterDbRequest(buffer_arg) {
   return app_proto_backend_pb.OpenMasterDbRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
-function serialize_notekeeper_OpenMasterDbResponse(arg) {
-  if (!(arg instanceof app_proto_backend_pb.OpenMasterDbResponse)) {
-    throw new Error('Expected argument of type notekeeper.OpenMasterDbResponse');
-  }
-  return new Buffer(arg.serializeBinary());
-}
-
-function deserialize_notekeeper_OpenMasterDbResponse(buffer_arg) {
-  return app_proto_backend_pb.OpenMasterDbResponse.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
 function serialize_notekeeper_SaveUIStateRequest(arg) {
   if (!(arg instanceof app_proto_backend_pb.SaveUIStateRequest)) {
     throw new Error('Expected argument of type notekeeper.SaveUIStateRequest');
@@ -123,17 +79,6 @@ function serialize_notekeeper_SaveUIStateRequest(arg) {
 
 function deserialize_notekeeper_SaveUIStateRequest(buffer_arg) {
   return app_proto_backend_pb.SaveUIStateRequest.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
-function serialize_notekeeper_SaveUIStateResponse(arg) {
-  if (!(arg instanceof app_proto_backend_pb.SaveUIStateResponse)) {
-    throw new Error('Expected argument of type notekeeper.SaveUIStateResponse');
-  }
-  return new Buffer(arg.serializeBinary());
-}
-
-function deserialize_notekeeper_SaveUIStateResponse(buffer_arg) {
-  return app_proto_backend_pb.SaveUIStateResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_notekeeper_SigninAccountRequest(arg) {
@@ -147,48 +92,26 @@ function deserialize_notekeeper_SigninAccountRequest(buffer_arg) {
   return app_proto_backend_pb.SigninAccountRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
-function serialize_notekeeper_SigninAccountResponse(arg) {
-  if (!(arg instanceof app_proto_backend_pb.SigninAccountResponse)) {
-    throw new Error('Expected argument of type notekeeper.SigninAccountResponse');
+function serialize_notekeeper_StatusResponse(arg) {
+  if (!(arg instanceof app_proto_backend_pb.StatusResponse)) {
+    throw new Error('Expected argument of type notekeeper.StatusResponse');
   }
   return new Buffer(arg.serializeBinary());
 }
 
-function deserialize_notekeeper_SigninAccountResponse(buffer_arg) {
-  return app_proto_backend_pb.SigninAccountResponse.deserializeBinary(new Uint8Array(buffer_arg));
+function deserialize_notekeeper_StatusResponse(buffer_arg) {
+  return app_proto_backend_pb.StatusResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
-function serialize_notekeeper_SignoutAccountRequest(arg) {
-  if (!(arg instanceof app_proto_backend_pb.SignoutAccountRequest)) {
-    throw new Error('Expected argument of type notekeeper.SignoutAccountRequest');
+function serialize_notekeeper_TokenRequest(arg) {
+  if (!(arg instanceof app_proto_backend_pb.TokenRequest)) {
+    throw new Error('Expected argument of type notekeeper.TokenRequest');
   }
   return new Buffer(arg.serializeBinary());
 }
 
-function deserialize_notekeeper_SignoutAccountRequest(buffer_arg) {
-  return app_proto_backend_pb.SignoutAccountRequest.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
-function serialize_notekeeper_SignoutAccountResponse(arg) {
-  if (!(arg instanceof app_proto_backend_pb.SignoutAccountResponse)) {
-    throw new Error('Expected argument of type notekeeper.SignoutAccountResponse');
-  }
-  return new Buffer(arg.serializeBinary());
-}
-
-function deserialize_notekeeper_SignoutAccountResponse(buffer_arg) {
-  return app_proto_backend_pb.SignoutAccountResponse.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
-function serialize_notekeeper_UIStateRequest(arg) {
-  if (!(arg instanceof app_proto_backend_pb.UIStateRequest)) {
-    throw new Error('Expected argument of type notekeeper.UIStateRequest');
-  }
-  return new Buffer(arg.serializeBinary());
-}
-
-function deserialize_notekeeper_UIStateRequest(buffer_arg) {
-  return app_proto_backend_pb.UIStateRequest.deserializeBinary(new Uint8Array(buffer_arg));
+function deserialize_notekeeper_TokenRequest(buffer_arg) {
+  return app_proto_backend_pb.TokenRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_notekeeper_UIStateResponse(arg) {
@@ -213,17 +136,6 @@ function deserialize_notekeeper_UnlockAccountRequest(buffer_arg) {
   return app_proto_backend_pb.UnlockAccountRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
-function serialize_notekeeper_UnlockAccountResponse(arg) {
-  if (!(arg instanceof app_proto_backend_pb.UnlockAccountResponse)) {
-    throw new Error('Expected argument of type notekeeper.UnlockAccountResponse');
-  }
-  return new Buffer(arg.serializeBinary());
-}
-
-function deserialize_notekeeper_UnlockAccountResponse(buffer_arg) {
-  return app_proto_backend_pb.UnlockAccountResponse.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
 
 var BackendService = exports.BackendService = {
   openMasterDb: {
@@ -231,75 +143,75 @@ var BackendService = exports.BackendService = {
     requestStream: false,
     responseStream: false,
     requestType: app_proto_backend_pb.OpenMasterDbRequest,
-    responseType: app_proto_backend_pb.OpenMasterDbResponse,
+    responseType: app_proto_backend_pb.StatusResponse,
     requestSerialize: serialize_notekeeper_OpenMasterDbRequest,
     requestDeserialize: deserialize_notekeeper_OpenMasterDbRequest,
-    responseSerialize: serialize_notekeeper_OpenMasterDbResponse,
-    responseDeserialize: deserialize_notekeeper_OpenMasterDbResponse,
+    responseSerialize: serialize_notekeeper_StatusResponse,
+    responseDeserialize: deserialize_notekeeper_StatusResponse,
   },
   createAccount: {
     path: '/notekeeper.Backend/CreateAccount',
     requestStream: false,
     responseStream: false,
     requestType: app_proto_backend_pb.CreateAccountRequest,
-    responseType: app_proto_backend_pb.CreateAccountResponse,
+    responseType: app_proto_backend_pb.IdResponse,
     requestSerialize: serialize_notekeeper_CreateAccountRequest,
     requestDeserialize: deserialize_notekeeper_CreateAccountRequest,
-    responseSerialize: serialize_notekeeper_CreateAccountResponse,
-    responseDeserialize: deserialize_notekeeper_CreateAccountResponse,
+    responseSerialize: serialize_notekeeper_IdResponse,
+    responseDeserialize: deserialize_notekeeper_IdResponse,
   },
   unlockAccount: {
     path: '/notekeeper.Backend/UnlockAccount',
     requestStream: false,
     responseStream: false,
     requestType: app_proto_backend_pb.UnlockAccountRequest,
-    responseType: app_proto_backend_pb.UnlockAccountResponse,
+    responseType: app_proto_backend_pb.StatusResponse,
     requestSerialize: serialize_notekeeper_UnlockAccountRequest,
     requestDeserialize: deserialize_notekeeper_UnlockAccountRequest,
-    responseSerialize: serialize_notekeeper_UnlockAccountResponse,
-    responseDeserialize: deserialize_notekeeper_UnlockAccountResponse,
+    responseSerialize: serialize_notekeeper_StatusResponse,
+    responseDeserialize: deserialize_notekeeper_StatusResponse,
   },
   signinAccount: {
     path: '/notekeeper.Backend/SigninAccount',
     requestStream: false,
     responseStream: false,
     requestType: app_proto_backend_pb.SigninAccountRequest,
-    responseType: app_proto_backend_pb.SigninAccountResponse,
+    responseType: app_proto_backend_pb.IdResponse,
     requestSerialize: serialize_notekeeper_SigninAccountRequest,
     requestDeserialize: deserialize_notekeeper_SigninAccountRequest,
-    responseSerialize: serialize_notekeeper_SigninAccountResponse,
-    responseDeserialize: deserialize_notekeeper_SigninAccountResponse,
+    responseSerialize: serialize_notekeeper_IdResponse,
+    responseDeserialize: deserialize_notekeeper_IdResponse,
   },
   signoutAccount: {
     path: '/notekeeper.Backend/SignoutAccount',
     requestStream: false,
     responseStream: false,
-    requestType: app_proto_backend_pb.SignoutAccountRequest,
-    responseType: app_proto_backend_pb.SignoutAccountResponse,
-    requestSerialize: serialize_notekeeper_SignoutAccountRequest,
-    requestDeserialize: deserialize_notekeeper_SignoutAccountRequest,
-    responseSerialize: serialize_notekeeper_SignoutAccountResponse,
-    responseDeserialize: deserialize_notekeeper_SignoutAccountResponse,
+    requestType: app_proto_backend_pb.IdRequest,
+    responseType: app_proto_backend_pb.StatusResponse,
+    requestSerialize: serialize_notekeeper_IdRequest,
+    requestDeserialize: deserialize_notekeeper_IdRequest,
+    responseSerialize: serialize_notekeeper_StatusResponse,
+    responseDeserialize: deserialize_notekeeper_StatusResponse,
   },
   lockAccount: {
     path: '/notekeeper.Backend/LockAccount',
     requestStream: false,
     responseStream: false,
-    requestType: app_proto_backend_pb.LockAccountRequest,
-    responseType: app_proto_backend_pb.LockAccountResponse,
-    requestSerialize: serialize_notekeeper_LockAccountRequest,
-    requestDeserialize: deserialize_notekeeper_LockAccountRequest,
-    responseSerialize: serialize_notekeeper_LockAccountResponse,
-    responseDeserialize: deserialize_notekeeper_LockAccountResponse,
+    requestType: app_proto_backend_pb.IdRequest,
+    responseType: app_proto_backend_pb.StatusResponse,
+    requestSerialize: serialize_notekeeper_IdRequest,
+    requestDeserialize: deserialize_notekeeper_IdRequest,
+    responseSerialize: serialize_notekeeper_StatusResponse,
+    responseDeserialize: deserialize_notekeeper_StatusResponse,
   },
   uIState: {
     path: '/notekeeper.Backend/UIState',
     requestStream: false,
     responseStream: false,
-    requestType: app_proto_backend_pb.UIStateRequest,
+    requestType: app_proto_backend_pb.TokenRequest,
     responseType: app_proto_backend_pb.UIStateResponse,
-    requestSerialize: serialize_notekeeper_UIStateRequest,
-    requestDeserialize: deserialize_notekeeper_UIStateRequest,
+    requestSerialize: serialize_notekeeper_TokenRequest,
+    requestDeserialize: deserialize_notekeeper_TokenRequest,
     responseSerialize: serialize_notekeeper_UIStateResponse,
     responseDeserialize: deserialize_notekeeper_UIStateResponse,
   },
@@ -308,20 +220,20 @@ var BackendService = exports.BackendService = {
     requestStream: false,
     responseStream: false,
     requestType: app_proto_backend_pb.SaveUIStateRequest,
-    responseType: app_proto_backend_pb.SaveUIStateResponse,
+    responseType: app_proto_backend_pb.StatusResponse,
     requestSerialize: serialize_notekeeper_SaveUIStateRequest,
     requestDeserialize: deserialize_notekeeper_SaveUIStateRequest,
-    responseSerialize: serialize_notekeeper_SaveUIStateResponse,
-    responseDeserialize: deserialize_notekeeper_SaveUIStateResponse,
+    responseSerialize: serialize_notekeeper_StatusResponse,
+    responseDeserialize: deserialize_notekeeper_StatusResponse,
   },
   accountState: {
     path: '/notekeeper.Backend/AccountState',
     requestStream: false,
     responseStream: false,
-    requestType: app_proto_backend_pb.AccountStateRequest,
+    requestType: app_proto_backend_pb.TokenRequest,
     responseType: app_proto_backend_pb.AccountStateResponse,
-    requestSerialize: serialize_notekeeper_AccountStateRequest,
-    requestDeserialize: deserialize_notekeeper_AccountStateRequest,
+    requestSerialize: serialize_notekeeper_TokenRequest,
+    requestDeserialize: deserialize_notekeeper_TokenRequest,
     responseSerialize: serialize_notekeeper_AccountStateResponse,
     responseDeserialize: deserialize_notekeeper_AccountStateResponse,
   },
@@ -330,11 +242,11 @@ var BackendService = exports.BackendService = {
     requestStream: false,
     responseStream: false,
     requestType: app_proto_backend_pb.CreateNotebookRequest,
-    responseType: app_proto_backend_pb.CreateNotebookResponse,
+    responseType: app_proto_backend_pb.IdResponse,
     requestSerialize: serialize_notekeeper_CreateNotebookRequest,
     requestDeserialize: deserialize_notekeeper_CreateNotebookRequest,
-    responseSerialize: serialize_notekeeper_CreateNotebookResponse,
-    responseDeserialize: deserialize_notekeeper_CreateNotebookResponse,
+    responseSerialize: serialize_notekeeper_IdResponse,
+    responseDeserialize: deserialize_notekeeper_IdResponse,
   },
 };
 

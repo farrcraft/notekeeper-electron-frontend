@@ -1,11 +1,12 @@
-import singleton from 'singleton';
 import { observable } from 'mobx';
 
-class Account extends singleton {
+class Account {
   transportLayer;
 
-  constructor(transportLayer) {
-    super();
+  constructor() {
+  }
+
+  setTransport(transportLayer) {
     this.transportLayer = transportLayer;
   }
 
@@ -38,4 +39,7 @@ class Account extends singleton {
   }
 }
 
-export default Account.get();
+const accountStore = new Account();
+
+export default accountStore;
+// export { Account };
