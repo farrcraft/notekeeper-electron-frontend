@@ -137,6 +137,9 @@ function deserialize_notekeeper_UnlockAccountRequest(buffer_arg) {
 }
 
 
+// N.B. - In the go bindings, case of the generated methods matches these proto definitions
+// However, in the JS bindings, method names start lowercase (so it's, e.g. "openMasterDb" instead of "OpenMasterDb")
+// If you try to invoke the latter, the client will just hang indefinitely.
 var BackendService = exports.BackendService = {
   openMasterDb: {
     path: '/notekeeper.Backend/OpenMasterDb',

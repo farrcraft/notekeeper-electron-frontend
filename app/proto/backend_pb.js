@@ -748,8 +748,9 @@ proto.notekeeper.UIStateResponse.prototype.toObject = function(opt_includeInstan
  */
 proto.notekeeper.UIStateResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
-    windowwidth: jspb.Message.getFieldWithDefault(msg, 1, 0),
-    windowheight: jspb.Message.getFieldWithDefault(msg, 2, 0)
+    status: (f = msg.getStatus()) && proto.notekeeper.StatusResponse.toObject(includeInstance, f),
+    windowwidth: jspb.Message.getFieldWithDefault(msg, 2, 0),
+    windowheight: jspb.Message.getFieldWithDefault(msg, 3, 0)
   };
 
   if (includeInstance) {
@@ -787,10 +788,15 @@ proto.notekeeper.UIStateResponse.deserializeBinaryFromReader = function(msg, rea
     var field = reader.getFieldNumber();
     switch (field) {
     case 1:
+      var value = new proto.notekeeper.StatusResponse;
+      reader.readMessage(value,proto.notekeeper.StatusResponse.deserializeBinaryFromReader);
+      msg.setStatus(value);
+      break;
+    case 2:
       var value = /** @type {number} */ (reader.readInt32());
       msg.setWindowwidth(value);
       break;
-    case 2:
+    case 3:
       var value = /** @type {number} */ (reader.readInt32());
       msg.setWindowheight(value);
       break;
@@ -832,50 +838,88 @@ proto.notekeeper.UIStateResponse.prototype.serializeBinary = function() {
  */
 proto.notekeeper.UIStateResponse.prototype.serializeBinaryToWriter = function (writer) {
   var f = undefined;
-  f = this.getWindowwidth();
-  if (f !== 0) {
-    writer.writeInt32(
+  f = this.getStatus();
+  if (f != null) {
+    writer.writeMessage(
       1,
-      f
+      f,
+      proto.notekeeper.StatusResponse.serializeBinaryToWriter
     );
   }
-  f = this.getWindowheight();
+  f = this.getWindowwidth();
   if (f !== 0) {
     writer.writeInt32(
       2,
       f
     );
   }
+  f = this.getWindowheight();
+  if (f !== 0) {
+    writer.writeInt32(
+      3,
+      f
+    );
+  }
 };
 
 
 /**
- * optional int32 windowWidth = 1;
+ * optional StatusResponse status = 1;
+ * @return {?proto.notekeeper.StatusResponse}
+ */
+proto.notekeeper.UIStateResponse.prototype.getStatus = function() {
+  return /** @type{?proto.notekeeper.StatusResponse} */ (
+    jspb.Message.getWrapperField(this, proto.notekeeper.StatusResponse, 1));
+};
+
+
+/** @param {?proto.notekeeper.StatusResponse|undefined} value */
+proto.notekeeper.UIStateResponse.prototype.setStatus = function(value) {
+  jspb.Message.setWrapperField(this, 1, value);
+};
+
+
+proto.notekeeper.UIStateResponse.prototype.clearStatus = function() {
+  this.setStatus(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {!boolean}
+ */
+proto.notekeeper.UIStateResponse.prototype.hasStatus = function() {
+  return jspb.Message.getField(this, 1) != null;
+};
+
+
+/**
+ * optional int32 windowWidth = 2;
  * @return {number}
  */
 proto.notekeeper.UIStateResponse.prototype.getWindowwidth = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 1, 0));
-};
-
-
-/** @param {number} value */
-proto.notekeeper.UIStateResponse.prototype.setWindowwidth = function(value) {
-  jspb.Message.setField(this, 1, value);
-};
-
-
-/**
- * optional int32 windowHeight = 2;
- * @return {number}
- */
-proto.notekeeper.UIStateResponse.prototype.getWindowheight = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 2, 0));
 };
 
 
 /** @param {number} value */
-proto.notekeeper.UIStateResponse.prototype.setWindowheight = function(value) {
+proto.notekeeper.UIStateResponse.prototype.setWindowwidth = function(value) {
   jspb.Message.setField(this, 2, value);
+};
+
+
+/**
+ * optional int32 windowHeight = 3;
+ * @return {number}
+ */
+proto.notekeeper.UIStateResponse.prototype.getWindowheight = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 3, 0));
+};
+
+
+/** @param {number} value */
+proto.notekeeper.UIStateResponse.prototype.setWindowheight = function(value) {
+  jspb.Message.setField(this, 3, value);
 };
 
 
@@ -925,8 +969,9 @@ proto.notekeeper.SaveUIStateRequest.prototype.toObject = function(opt_includeIns
  */
 proto.notekeeper.SaveUIStateRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
-    windowwidth: jspb.Message.getFieldWithDefault(msg, 1, 0),
-    windowheight: jspb.Message.getFieldWithDefault(msg, 2, 0)
+    status: (f = msg.getStatus()) && proto.notekeeper.StatusResponse.toObject(includeInstance, f),
+    windowwidth: jspb.Message.getFieldWithDefault(msg, 2, 0),
+    windowheight: jspb.Message.getFieldWithDefault(msg, 3, 0)
   };
 
   if (includeInstance) {
@@ -964,10 +1009,15 @@ proto.notekeeper.SaveUIStateRequest.deserializeBinaryFromReader = function(msg, 
     var field = reader.getFieldNumber();
     switch (field) {
     case 1:
+      var value = new proto.notekeeper.StatusResponse;
+      reader.readMessage(value,proto.notekeeper.StatusResponse.deserializeBinaryFromReader);
+      msg.setStatus(value);
+      break;
+    case 2:
       var value = /** @type {number} */ (reader.readInt32());
       msg.setWindowwidth(value);
       break;
-    case 2:
+    case 3:
       var value = /** @type {number} */ (reader.readInt32());
       msg.setWindowheight(value);
       break;
@@ -1009,50 +1059,88 @@ proto.notekeeper.SaveUIStateRequest.prototype.serializeBinary = function() {
  */
 proto.notekeeper.SaveUIStateRequest.prototype.serializeBinaryToWriter = function (writer) {
   var f = undefined;
-  f = this.getWindowwidth();
-  if (f !== 0) {
-    writer.writeInt32(
+  f = this.getStatus();
+  if (f != null) {
+    writer.writeMessage(
       1,
-      f
+      f,
+      proto.notekeeper.StatusResponse.serializeBinaryToWriter
     );
   }
-  f = this.getWindowheight();
+  f = this.getWindowwidth();
   if (f !== 0) {
     writer.writeInt32(
       2,
       f
     );
   }
+  f = this.getWindowheight();
+  if (f !== 0) {
+    writer.writeInt32(
+      3,
+      f
+    );
+  }
 };
 
 
 /**
- * optional int32 windowWidth = 1;
+ * optional StatusResponse status = 1;
+ * @return {?proto.notekeeper.StatusResponse}
+ */
+proto.notekeeper.SaveUIStateRequest.prototype.getStatus = function() {
+  return /** @type{?proto.notekeeper.StatusResponse} */ (
+    jspb.Message.getWrapperField(this, proto.notekeeper.StatusResponse, 1));
+};
+
+
+/** @param {?proto.notekeeper.StatusResponse|undefined} value */
+proto.notekeeper.SaveUIStateRequest.prototype.setStatus = function(value) {
+  jspb.Message.setWrapperField(this, 1, value);
+};
+
+
+proto.notekeeper.SaveUIStateRequest.prototype.clearStatus = function() {
+  this.setStatus(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {!boolean}
+ */
+proto.notekeeper.SaveUIStateRequest.prototype.hasStatus = function() {
+  return jspb.Message.getField(this, 1) != null;
+};
+
+
+/**
+ * optional int32 windowWidth = 2;
  * @return {number}
  */
 proto.notekeeper.SaveUIStateRequest.prototype.getWindowwidth = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 1, 0));
-};
-
-
-/** @param {number} value */
-proto.notekeeper.SaveUIStateRequest.prototype.setWindowwidth = function(value) {
-  jspb.Message.setField(this, 1, value);
-};
-
-
-/**
- * optional int32 windowHeight = 2;
- * @return {number}
- */
-proto.notekeeper.SaveUIStateRequest.prototype.getWindowheight = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 2, 0));
 };
 
 
 /** @param {number} value */
-proto.notekeeper.SaveUIStateRequest.prototype.setWindowheight = function(value) {
+proto.notekeeper.SaveUIStateRequest.prototype.setWindowwidth = function(value) {
   jspb.Message.setField(this, 2, value);
+};
+
+
+/**
+ * optional int32 windowHeight = 3;
+ * @return {number}
+ */
+proto.notekeeper.SaveUIStateRequest.prototype.getWindowheight = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 3, 0));
+};
+
+
+/** @param {number} value */
+proto.notekeeper.SaveUIStateRequest.prototype.setWindowheight = function(value) {
+  jspb.Message.setField(this, 3, value);
 };
 
 

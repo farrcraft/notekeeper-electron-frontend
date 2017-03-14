@@ -6,16 +6,24 @@ class UIState {
 
   transportLayer;
 
-  setTransport(transportLayer) {
-    this.transportLayer = transportLayer;
+  setTransport(transport) {
+    console.log('setting transport');
+    console.log(transport);
+    this.transportLayer = transport;
   }
 
   load() {
+    console.log('loading from transport');
+    const transport = this.transportLayer;
     const promise = new Promise((resolve, reject) => {
-      this.transportLayer.load().then((val) => {
+      console.log('calling transport layer');
+      console.log(transport);
+      console.log(transport.load);
+      transport.load().then((val) => {
+        console.log('and then transport loaded val ', val);
         this.windowWidth = val.getWindowWidth();
         this.windowHeight = val.getWindowHeight();
-        resolve(this);
+        resolve();
       });
     });
     return promise;
@@ -23,7 +31,7 @@ class UIState {
 
   save() {
     const promise = new Promise((resolve, reject) => {
-      this.transportLayer.save().then(val) => {
+      this.transportLayer.save().then((val) => {
         // [FIXME]
         resolve(this);
       });

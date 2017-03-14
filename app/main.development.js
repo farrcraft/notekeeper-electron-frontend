@@ -1,9 +1,11 @@
-import { electron, app, BrowserWindow, Menu, shell, dialog } from 'electron';
-import messages from './proto/backend_pb';
-import rpc from './transports/Rpc';
+import { electron, app, BrowserWindow, Menu, shell } from 'electron';
+import Core from './shared';
+import uiStateStore from './stores/UIState';
+import { default as UIStateTransport } from './transports/UIState';
 
 let menu;
 let template;
+// Declared here so our main window doesn't get GC'd
 let mainWindow = null;
 
 if (process.env.NODE_ENV === 'production') {
@@ -18,14 +20,43 @@ if (process.env.NODE_ENV === 'development') {
   require('module').globalPaths.push(p); // eslint-disable-line
 }
 
-process.on('error', function(err) {
+process.on('error', (err) => {
   console.log(err);
 });
 
-app.on('window-all-closed', () => {
-  if (process.platform !== 'darwin') app.quit();
+// We only want a single instance to be able to run at once
+const shouldQuit = app.makeSingleInstance((argv, workingDirectory) => {
+  if (mainWindow) {
+    if (mainWindow.isMinimized()) {
+      mainWindow.restore();
+    }
+    mainWindow.focus();
+  }
 });
 
+if (shouldQuit) {
+  app.quit();
+}
+
+app.on('activate', () => {
+  if (mainWindow === null) {
+    createWindow();
+  }
+});
+
+app.on('will-quit', () => {
+  // all windows have been closed & app is about to quit
+  // [FIXME] - do we need to wait for save to complete?
+  uiStateStore.save();
+  // [FIXME] - should lock account in backend process here?
+  // [FIXME] - gracefully close the rpc client connection
+});
+
+app.on('window-all-closed', () => {
+  if (process.platform !== 'darwin') {
+    app.quit();
+  }
+});
 
 const installExtensions = async () => {
   if (process.env.NODE_ENV === 'development') {
@@ -44,33 +75,11 @@ const installExtensions = async () => {
   }
 };
 
-// openMasterDb makes an RPC call to the backend, instructing it to open the master DB
-function openMasterDb() {
-  // Renderer process has to get `app` module via `remote`, whereas the main process can get it directly
-  // app.getPath('userData') will return a string of the user's app data directory path.
-  const userDataPath = app.getPath('userData');
-  const request = new messages.OpenMasterDbRequest();
-  request.setPath(userDataPath);
-  const client = rpc.getClient();
-  client.openMasterDb(request, function(err, response) {
-    console.log(response);
-    const status = response.getStatus();
-    if (status != 'OK') {
-      dialog.showErrorBox("Fatal Error", "Could not open database.")
-      app.quit();
-    }
-  });
-}
-
-app.on('ready', async () => {
-  await installExtensions();
-
-  openMasterDb();
-
+function createWindow(width, height) {
   mainWindow = new BrowserWindow({
     show: false,
-    width: 1024,
-    height: 728
+    width: width,
+    height: height
   });
 
   mainWindow.loadURL(`file://${__dirname}/app.html`);
@@ -78,6 +87,14 @@ app.on('ready', async () => {
   mainWindow.webContents.on('did-finish-load', () => {
     mainWindow.show();
     mainWindow.focus();
+  });
+
+  mainWindow.on('resize', () => {
+    // The event doesn't pass us the window size, so we call the `getBounds` method
+    // which returns an object with the height, width, and x and y coordinates.
+    const { newWidth, newHeight } = mainWindow.getBounds();
+    uiStateStore.windowWidth = newWidth;
+    uiStateStore.windowHeight = newHeight;
   });
 
   mainWindow.on('closed', () => {
@@ -269,4 +286,26 @@ app.on('ready', async () => {
     menu = Menu.buildFromTemplate(template);
     mainWindow.setMenu(menu);
   }
+}
+
+app.on('ready', async () => {
+  await installExtensions();
+  Core.openMasterDb().then((val) => {
+    const uiTransport = new UIStateTransport();
+    console.log(uiTransport);
+    uiStateStore.setTransport(uiTransport);
+    console.log('transported');
+    uiStateStore.load().then(() => {
+      console.log('ui loaded');
+      let width = uiStateStore.windowWidth;
+      let height = uiStateStore.windowHeight;
+      if (width <= 0) {
+        width = 800;
+      }
+      if (height <= 0) {
+        height = 600;
+      }
+      createWindow(width, height);
+    });
+  });
 });
