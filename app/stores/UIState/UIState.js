@@ -11,11 +11,24 @@ class UIState {
   }
 
   load() {
-    this.transportLayer.load();
+    const promise = new Promise((resolve, reject) => {
+      this.transportLayer.load().then((val) => {
+        this.windowWidth = val.getWindowWidth();
+        this.windowHeight = val.getWindowHeight();
+        resolve(this);
+      });
+    });
+    return promise;
   }
 
   save() {
-    this.transportLayer.save();
+    const promise = new Promise((resolve, reject) => {
+      this.transportLayer.save().then(val) => {
+        // [FIXME]
+        resolve(this);
+      });
+    });
+    return promise;
   }
 }
 

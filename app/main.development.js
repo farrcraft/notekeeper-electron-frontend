@@ -1,4 +1,6 @@
-import { app, BrowserWindow, Menu, shell } from 'electron';
+import { electron, app, BrowserWindow, Menu, shell, dialog } from 'electron';
+import messages from './proto/backend_pb';
+import rpc from './transports/Rpc';
 
 let menu;
 let template;
@@ -15,6 +17,10 @@ if (process.env.NODE_ENV === 'development') {
   const p = path.join(__dirname, '..', 'app', 'node_modules'); // eslint-disable-line
   require('module').globalPaths.push(p); // eslint-disable-line
 }
+
+process.on('error', function(err) {
+  console.log(err);
+});
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') app.quit();
@@ -38,11 +44,28 @@ const installExtensions = async () => {
   }
 };
 
+// openMasterDb makes an RPC call to the backend, instructing it to open the master DB
+function openMasterDb() {
+  // Renderer process has to get `app` module via `remote`, whereas the main process can get it directly
+  // app.getPath('userData') will return a string of the user's app data directory path.
+  const userDataPath = app.getPath('userData');
+  const request = new messages.OpenMasterDbRequest();
+  request.setPath(userDataPath);
+  const client = rpc.getClient();
+  client.openMasterDb(request, function(err, response) {
+    console.log(response);
+    const status = response.getStatus();
+    if (status != 'OK') {
+      dialog.showErrorBox("Fatal Error", "Could not open database.")
+      app.quit();
+    }
+  });
+}
+
 app.on('ready', async () => {
   await installExtensions();
 
-  // Start the backend process:
-  // var backend = require('child_process').spawn('python', ['./hello.py']);
+  openMasterDb();
 
   mainWindow = new BrowserWindow({
     show: false,

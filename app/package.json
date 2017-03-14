@@ -1,8 +1,8 @@
 {
-	"name": "notekeeper",
-	"version": "0.1",
-	"description": "NoteKeeper.io desktop application",
-	"license": "UNLICENSED",
-	"dependencies": {
-	}
+  "name": "notekeeper",
+  "version": "0.1.0",
+  "description": "NoteKeeper.io desktop application",
+  "license": "UNLICENSED",
+  "dependencies": {
+  }
 }
