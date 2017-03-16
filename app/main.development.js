@@ -46,13 +46,19 @@ app.on('activate', () => {
 
 app.on('will-quit', () => {
   // all windows have been closed & app is about to quit
-  // [FIXME] - do we need to wait for save to complete?
-  uiStateStore.save();
-  // [FIXME] - should lock account in backend process here?
-  // [FIXME] - gracefully close the rpc client connection
 });
 
-app.on('window-all-closed', () => {
+app.on('window-all-closed', async () => {
+  // [FIXME] - do we need to wait for save to complete?
+  console.log('saving ui state');
+  try {
+    await uiStateStore.save();
+  } catch (e) {
+    console.log(e);
+  }
+  console.log('saved state?');
+  // [FIXME] - should lock account in backend process here?
+  // [FIXME] - gracefully close the rpc client connection
   if (process.platform !== 'darwin') {
     app.quit();
   }
@@ -92,9 +98,9 @@ function createWindow(width, height) {
   mainWindow.on('resize', () => {
     // The event doesn't pass us the window size, so we call the `getBounds` method
     // which returns an object with the height, width, and x and y coordinates.
-    const { newWidth, newHeight } = mainWindow.getBounds();
-    uiStateStore.windowWidth = newWidth;
-    uiStateStore.windowHeight = newHeight;
+    const bounds = mainWindow.getBounds();
+    uiStateStore.windowWidth = bounds.width;
+    uiStateStore.windowHeight = bounds.height;
   });
 
   mainWindow.on('closed', () => {
@@ -290,22 +296,17 @@ function createWindow(width, height) {
 
 app.on('ready', async () => {
   await installExtensions();
-  Core.openMasterDb().then((val) => {
-    const uiTransport = new UIStateTransport();
-    console.log(uiTransport);
-    uiStateStore.setTransport(uiTransport);
-    console.log('transported');
-    uiStateStore.load().then(() => {
-      console.log('ui loaded');
-      let width = uiStateStore.windowWidth;
-      let height = uiStateStore.windowHeight;
-      if (width <= 0) {
-        width = 800;
-      }
-      if (height <= 0) {
-        height = 600;
-      }
-      createWindow(width, height);
-    });
-  });
+  await Core.openMasterDb();
+  const uiTransport = new UIStateTransport();
+  uiStateStore.setTransport(uiTransport);
+  await uiStateStore.load();
+  let width = uiStateStore.windowWidth;
+  let height = uiStateStore.windowHeight;
+  if (width <= 0) {
+    width = 800;
+  }
+  if (height <= 0) {
+    height = 600;
+  }
+  createWindow(width, height);
 });
