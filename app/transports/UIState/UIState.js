@@ -1,4 +1,4 @@
-import rpc from '../Rpc';
+import { default as rpc } from '../Rpc';
 import messages from '../../proto/backend_pb';
 
 export default class UIState {

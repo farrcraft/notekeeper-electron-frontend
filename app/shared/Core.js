@@ -1,8 +1,6 @@
 import { app, dialog } from 'electron';
 import messages from '../proto/backend_pb';
-import rpc from '../transports/Rpc';
-import uiStateStore from '../stores/UIState';
-import UIStateTransport from '../transports/UIState';
+import { default as rpc } from '../transports/Rpc';
 
 class Core {
   client = null;
@@ -17,20 +15,23 @@ class Core {
     // whereas the main process can get it directly
     // app.getPath('userData') will return a string of the user's app data directory path.
     const userDataPath = app.getPath('userData');
-    console.log('got path ', userDataPath);
     const request = new messages.OpenMasterDbRequest();
     request.setPath(userDataPath);
     const promise = new Promise((resolve, reject) => {
       this.client.openMasterDb(request, (err, response) => {
         const status = response.getStatus();
         if (status !== 'OK') {
-          dialog.showErrorBox("Fatal Error", "Could not open database.");
+          dialog.showErrorBox('Fatal Error', 'Could not open database.');
           app.quit();
         }
         resolve(status);
       });
     });
     return promise;
+  }
+
+  shutdown() {
+    rpc.close();
   }
 }
 

@@ -1,3 +1,3 @@
-import Account from './Account';
+import { default as Account } from './Account';
 
 export default Account;

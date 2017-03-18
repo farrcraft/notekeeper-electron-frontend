@@ -1,38 +1,94 @@
-import rpc from '../Rpc';
-import messages from '../../proto/backend_pb';
+// [FIXME] - this import causes webpack to blow up
+import { default as rpc } from '../Rpc';
+//import messages from '../../proto/backend_pb';
+
+export default class Account {
+  client = null;
 
 /*
-rpc CreateAccount(CreateAccountRequest) returns (CreateAccountResponse) {}
-rpc UnlockAccount(UnlockAccountRequest) returns (UnlockAccountResponse) {}
-rpc SigninAccount(SigninAccountRequest) returns (SigninAccountResponse) {}
-rpc SignoutAccount(SignoutAccountRequest) returns(SignoutAccountResponse) {}
-rpc LockAccount(LockAccountRequest) returns (LockAccountResponse) {}
-*/
-export default class Account {
-  static create() {
+  constructor() {
+    this.client = rpc.getClient();
+  }
+
+  // create makes an RPC request to create a new account
+  create(name, email, passphrase) {
     const request = new messages.CreateAccountRequest();
-    // request.setPath(userDataPath);
-    const client = rpc.getClient();
-    client.CreateAccount(request, (err, response) => {
-      const status = response.getStatus();
-      if (status !== 'OK') {
-      }
+    request.setName(name);
+    request.setEmail(email);
+    request.setPassphrase(passphrase);
+    const promise = new Promise((resolve, reject) => {
+      this.client.CreateAccount(request, (err, response) => {
+        // [FIXME] - error handling
+        const status = response.getStatus();
+        if (status !== 'OK') {
+        }
+        resolve(response);
+      });
     });
+    return promise;
   }
 
-  static signin() {
-
+  // getState makes an RPC request to get the current account state
+  getState(store) {
+    const request = new messages.TokenRequest();
+    const promise = new Promise((resolve, reject) => {
+      this.client.AccountState(request, (err, response) => {
+        // [FIXME] - error handling
+        store.signedIn = response.getSignedin();
+        store.locked = response.getLocked();
+        console.log(response);
+        resolve();
+      });
+    });
+    return promise;
   }
 
-  static signout() {
-
+  // signin makes an RPC request to sign in to an account
+  signin() {
+    const request = new messages.SigninAccountRequest();
+    const promise = new Promise((resolve, reject) => {
+      this.client.SigninAccount(request, (err, response) => {
+        // [FIXME] - error handling
+        resolve(response);
+      });
+    });
+    return promise;
   }
 
-  static unlock() {
-
+  // signout makes an RPC request to sign out from a signed in account
+  signout() {
+    const request = new messages.IdRequest();
+    const promise = new Promise((resolve, reject) => {
+      this.client.SignoutAccount(request, (err, response) => {
+        // [FIXME] - error handling
+        resolve(response);
+      });
+    });
+    return promise;
   }
 
-  static lock() {
-
+  // unlock makes an RPC request to unlock a locked account
+  unlock() {
+    const request = new messages.UnlockAccountRequest();
+    const promise = new Promise((resolve, reject) => {
+      this.client.UnlockAccount(request, (err, response) => {
+        // [FIXME] - error handling
+        resolve(response);
+      });
+    });
+    return promise;
   }
+
+  // lock makes an RPC request to lock an unlocked account
+  lock() {
+    const request = new messages.IdRequest();
+    const promise = new Promise((resolve, reject) => {
+      this.client.LockAccount(request, (err, response) => {
+        // [FIXME] - error handling
+        resolve(response);
+      });
+    });
+    return promise;
+  }
+*/
 }

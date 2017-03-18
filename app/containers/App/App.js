@@ -7,7 +7,7 @@ export default class App extends Component {
   };
 
   componentWillMount() {
-    // [FIXME] - 
+    // [FIXME] -
     // do we set properties here? (need to set this.props.children)
     // need logic to determine whether we're showing the:
     //  account login screen

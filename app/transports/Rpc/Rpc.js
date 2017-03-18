@@ -13,6 +13,13 @@ class Rpc {
     }
     return this.client;
   }
+
+  close() {
+    if (this.client) {
+      grpc.closeClient(this.client);
+      this.client = null;
+    }
+  }
 }
 
 const rpcTransport = new Rpc();

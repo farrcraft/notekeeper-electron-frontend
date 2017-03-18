@@ -49,16 +49,13 @@ app.on('will-quit', () => {
 });
 
 app.on('window-all-closed', async () => {
-  // [FIXME] - do we need to wait for save to complete?
-  console.log('saving ui state');
   try {
     await uiStateStore.save();
   } catch (e) {
     console.log(e);
   }
-  console.log('saved state?');
   // [FIXME] - should lock account in backend process here?
-  // [FIXME] - gracefully close the rpc client connection
+  Core.shutdown();
   if (process.platform !== 'darwin') {
     app.quit();
   }
