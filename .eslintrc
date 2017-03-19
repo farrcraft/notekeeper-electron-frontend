@@ -3,17 +3,19 @@
   "extends": "airbnb",
   "env": {
     "browser": true,
-    "mocha": true,
     "node": true
   },
   "rules": {
     "arrow-parens": ["off"],
+    "compat/compat": 2,
     "consistent-return": "off",
     "comma-dangle": "off",
     "generator-star-spacing": "off",
-    "import/no-unresolved": ["error", { "ignore": ["electron"] }],
+    "import/no-unresolved": 2,
     "import/no-extraneous-dependencies": "off",
+    "no-console": 0,
     "no-use-before-define": "off",
+    "no-multi-assign": 0,
     "promise/param-names": 2,
     "promise/always-return": 2,
     "promise/catch-or-return": 2,
@@ -28,6 +30,7 @@
     "flowtype-errors",
     "import",
     "promise",
+    "compat",
     "react"
   ],
   "settings": {

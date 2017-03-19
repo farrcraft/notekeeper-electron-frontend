@@ -29,8 +29,8 @@ export default merge(baseConfig, {
       {
         test: /\.global\.css$/,
         use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
           use: 'css-loader'
+          fallback: 'style-loader',
         })
       },
 
@@ -38,11 +38,11 @@ export default merge(baseConfig, {
       {
         test: /^((?!\.global).)*\.css$/,
         use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
           use: [
             {
               loader: 'css-loader',
               options: {
+                modules: true,
                 importLoaders: 1,
                 localIdentName: '[name]__[local]___[hash:base64:5]'
               }
@@ -52,34 +52,79 @@ export default merge(baseConfig, {
       },
 
       // Fonts
-      { test: /\.woff(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=10000&mimetype=application/font-woff' },
-      { test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=10000&mimetype=application/font-woff' },
-      { test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=10000&mimetype=application/octet-stream' },
-      { test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, loader: 'file' },
-      { test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=10000&mimetype=image/svg+xml' },
+      {
+        test: /\.woff(\?v=\d+\.\d+\.\d+)?$/, 
+        use: {
+          loader: 'url-loader',
+          options: {
+            limit: 10000,
+            mimetype: 'application/font-woff'
+        }
+      },
+      {
+        test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/, 
+        use: {
+          loader: 'url-loader',
+          options: {
+            limit: 10000,
+            mimetype: 'application/font-woff'
+        }
+      },
+      {
+        test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/, 
+        use: {
+          loader: 'url-loader',
+          options: {
+            limit: 10000,
+            mimetype: 'application/octet-stream'
+        }
+      },
+      {
+        test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, 
+        use: 'file-loader'
+      },
+      {
+        test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, 
+        use: {
+          loader: 'url-loader',
+          options: {
+            limit: 10000,
+            mimetype: 'image/svg+xml'
+        }
+      },
 
       // Images
       {
         test: /\.(?:ico|gif|png|jpg|jpeg|webp)$/,
-        loader: 'url-loader'
+        use: 'url-loader'
       }
     ]
   },
 
   plugins: [
-    // https://webpack.github.io/docs/list-of-plugins.html#occurrenceorderplugin
-    // https://github.com/webpack/webpack/issues/864
-    new webpack.optimize.OccurrenceOrderPlugin(),
-
-    // NODE_ENV should be production so that modules do not perform certain development checks
+    /**
+     * Create global constants which can be configured at compile time.
+     *
+     * Useful for allowing different behaviour between development builds and
+     * release builds
+     *
+     * NODE_ENV should be production so that modules do not perform certain
+     * development checks
+     */
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify('production')
     }),
 
+    /**
+     * Babli is an ES6+ aware minifier based on the Babel toolchain (beta)
+     */
     new BabiliPlugin(),
 
-    new ExtractTextPlugin({ filename: 'style.css', allChunks: true }),
+    new ExtractTextPlugin('style.css'),
 
+    /**
+     * Dynamically generate index.html page
+     */
     new HtmlWebpackPlugin({
       filename: '../app.html',
       template: 'app/app.html',

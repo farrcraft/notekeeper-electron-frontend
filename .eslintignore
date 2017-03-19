@@ -1,5 +1,4 @@
+flow-typed/
+app/dist/
 app/main.js
-app/bundle.js
-dist
-main.js
-app/proto/*
+node_modules

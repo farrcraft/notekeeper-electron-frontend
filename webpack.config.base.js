@@ -28,10 +28,15 @@ export default {
    */
   resolve: {
     extensions: ['.js', '.jsx', '.json'],
-    mainFields: ['webpack', 'browser', 'web', 'browserify', ['jam', 'main'], 'main']
+    modules: [
+      path.join(__dirname, 'app'),
+      'node_modules',
+    ],
   },
 
-  plugins: [],
+  plugins: [
+    new webpack.NamedModulesPlugin(),
+  ],
 
   externals: Object.keys(externals || {})
 };

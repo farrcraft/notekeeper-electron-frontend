@@ -1,11 +1,9 @@
-// [FIXME] - this import causes webpack to blow up
 import { default as rpc } from '../Rpc';
-//import messages from '../../proto/backend_pb';
+import messages from '../../proto/backend_pb';
 
 export default class Account {
   client = null;
 
-/*
   constructor() {
     this.client = rpc.getClient();
   }
@@ -30,8 +28,10 @@ export default class Account {
 
   // getState makes an RPC request to get the current account state
   getState(store) {
+    console.log('transport getting state');
     const request = new messages.TokenRequest();
     const promise = new Promise((resolve, reject) => {
+      console.log('making request');
       this.client.AccountState(request, (err, response) => {
         // [FIXME] - error handling
         store.signedIn = response.getSignedin();
@@ -90,5 +90,4 @@ export default class Account {
     });
     return promise;
   }
-*/
 }

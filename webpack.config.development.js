@@ -1,23 +1,26 @@
 /* eslint-disable max-len */
 /**
  * Build config for development process that uses Hot-Module-Replacement
- * https://webpack.github.io/docs/hot-module-replacement-with-webpack.html
+ * https://webpack.github.io/concepts/hot-module-replacement/
  */
 
+import path from 'path';
 import webpack from 'webpack';
 import merge from 'webpack-merge';
-import formatter from 'eslint-formatter-pretty';
+import { spawn } from 'child_process';
 import baseConfig from './webpack.config.base';
 
 const port = process.env.PORT || 3000;
+const publicPath = `http://localhost:${port}/dist`
 
 export default merge(baseConfig, {
   devtool: 'inline-source-map',
 
   entry: [
-    `webpack-hot-middleware/client?path=http://localhost:${port}/__webpack_hmr`,
-    'babel-polyfill',
-    './app/index'
+    'react-hot-loader/patch',
+    `webpack-dev-server/client?http://localhost:${port}`,
+    'webpack/hot/only-dev-server',
+    path.join(__dirname, './app/index.js'),
   ],
 
   output: {
@@ -27,35 +30,21 @@ export default merge(baseConfig, {
   module: {
     rules: [
       {
-        enforce: 'pre',
-        test: /\.js$/,
-        exclude: /node_modules/,
-        loader: 'eslint-loader',
-        options: {
-          formatter: formatter
-        }
-      },
-      {
         test: /\.global\.css$/,
         use: [
-          {
-            loader: 'style-loader'
-          },
+          { loader: 'style-loader' },
           {
             loader: 'css-loader',
             options: {
               sourceMap: true
-            }
+            },
           }
         ]
       },
-
       {
         test: /^((?!\.global).)*\.css$/,
         use: [
-          {
-            loader: 'style-loader'
-          },
+          { loader: 'style-loader' },
           {
             loader: 'css-loader',
             options: {
@@ -64,15 +53,57 @@ export default merge(baseConfig, {
               importLoaders: 1,
               localIdentName: '[name]__[local]___[hash:base64:5]'
             }
-          }
+          },
         ]
       },
-
-      { test: /\.woff(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=10000&mimetype=application/font-woff' },
-      { test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=10000&mimetype=application/font-woff' },
-      { test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=10000&mimetype=application/octet-stream' },
-      { test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, loader: 'file' },
-      { test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=10000&mimetype=image/svg+xml' },
+      {
+        test: /\.woff(\?v=\d+\.\d+\.\d+)?$/,
+        use: {
+          loader: 'url-loader',
+          options: {
+            limit: 10000,
+            mimetype: 'application/font-woff'
+          }
+        },
+      },
+      {
+        test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/,
+        use: {
+          loader: 'url-loader',
+          options: {
+            limit: 10000,
+            mimetype: 'application/font-woff'
+          }
+        },
+      },
+      {
+        test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
+        use: {
+          loader: 'url-loader',
+          options: {
+            limit: 10000,
+            mimetype: 'application/octet-stream'
+          }
+        },
+      },
+      {
+        test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
+        use: 'file-loader',
+      },
+      {
+        test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
+        use: {
+          loader: 'url-loader',
+          options: {
+            limit: 10000,
+            mimetype: 'image/svg+xml'
+          }
+        },
+      },
+      {
+        test: /\.(?:ico|gif|png|jpg|jpeg|webp)$/,
+        use: 'url-loader',
+      }
     ]
   },
 
@@ -83,20 +114,43 @@ export default merge(baseConfig, {
       }
     }),
 
-    // https://webpack.github.io/docs/hot-module-replacement-with-webpack.html
+    // https://webpack.js.org/concepts/hot-module-replacement
     new webpack.HotModuleReplacementPlugin(),
-
-    // “If you are using the CLI, the webpack process will not exit with an error code by enabling this plugin.”
-    // https://github.com/webpack/docs/wiki/list-of-plugins#noerrorsplugin
-    new webpack.NoErrorsPlugin(),
-
-    // NODE_ENV should be production so that modules do not perform certain development checks
+    new webpack.NoEmitOnErrorsPlugin(),
+    /**
+     * Create global constants which can be configured at compile time.
+     *
+     * Useful for allowing different behaviour between development builds and
+     * release builds
+     *
+     * NODE_ENV should be production so that modules do not perform certain
+     * development checks
+     */
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify('development')
-    })
+    }),
+    // turn debug mode on
+    new webpack.LoaderOptionsPlugin({
+      debug: true
+    }),
   ],
 
   // https://github.com/chentsulin/webpack-target-electron-renderer#how-this-module-works
-  target: 'electron-renderer'
+  target: 'electron-renderer',
+  devServer: {
+    port,
+    hot: true,
+    inline: false,
+    historyApiFallback: true,
+    contentBase: path.join(__dirname, 'dist'),
+    publicPath,
+    setup() {
+      if (process.env.START_HOT) {
+        spawn('npm', ['run', 'start-hot'], { shell: true, env: process.env, stdio: 'inherit' })
+          .on('close', code => process.exit(code))
+          .on('error', spawnError => console.error(spawnError));
+      }
+    }
+  },
 });
 

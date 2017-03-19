@@ -7,9 +7,9 @@ import { default as AccountTransport } from './transports/Account';
 // import './scss/general.scss';
 
 // [FIXME] need to fetch account state from backend
-//const accountTransport = new AccountTransport();
-//accountStore.setTransport(accountTransport);
-//accountStore.getState();
+const accountTransport = new AccountTransport();
+accountStore.setTransport(accountTransport);
+accountStore.getState();
 
 // Get the DOM Element that will host our React application.
 const rootEl = document.getElementById('root');

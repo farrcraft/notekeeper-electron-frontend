@@ -2,12 +2,20 @@
 
 ## Build Dependencies
 
+* Node v6.10.0
+
 The electron-rebuild tool has a dependency on python.  Even though there is a
 python environment in babun, a standard Windows install is still necessary.
 Stick with a 2.7.x version.
 
 * https://www.python.org/downloads/windows/
 
+## Setup
+
+```sh
+npm install
+./install_grpc.sh
+```
 
 ## Building
 
