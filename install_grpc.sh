@@ -4,7 +4,7 @@
 #
 
 # Electron's version.
-export npm_config_target=1.4.13
+export npm_config_target=1.4.15
 # The architecture of Electron, can be ia32 or x64.
 export npm_config_arch=x64
 export npm_config_target_arch=x64

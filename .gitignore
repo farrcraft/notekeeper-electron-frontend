@@ -20,3 +20,5 @@ dist
 main.js
 main.js.map
 .idea
+node_modules.old
+flow-typed
