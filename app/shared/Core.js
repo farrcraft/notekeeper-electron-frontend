@@ -1,6 +1,6 @@
 import { app, dialog } from 'electron';
 import messages from '../proto/backend_pb';
-import { default as rpc } from '../transports/Rpc';
+import { default as rpc } from '../transports/rpc/Rpc';
 
 class Core {
   client = null;

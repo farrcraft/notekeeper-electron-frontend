@@ -1,5 +1,5 @@
 import { default as rpc } from '../Rpc';
-import messages from '../../proto/backend_pb';
+import messages from '../../../proto/backend_pb';
 import { ipcMain } from 'electron';
 
 export default class Account {

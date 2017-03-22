@@ -1,5 +1,5 @@
 import grpc from 'grpc';
-import services from '../../proto/backend_grpc_pb';
+import services from '../../../proto/backend_grpc_pb';
 import { default as AccountTransport } from '../Account';
 
 const RPC_PORT = 'localhost:53017';

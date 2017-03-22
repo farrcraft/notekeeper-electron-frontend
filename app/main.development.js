@@ -1,9 +1,9 @@
 import { electron, app, BrowserWindow, Menu, shell } from 'electron';
 import Core from './shared';
 import MenuBuilder from './menu';
-import { default as rpc } from './transports/Rpc';
+import { default as rpc } from './transports/rpc/Rpc';
 import uiStateStore from './stores/UIState';
-import { default as UIStateTransport } from './transports/UIState';
+import { default as UIStateTransport } from './transports/rpc/UIState';
 
 let menu;
 let template;
