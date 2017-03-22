@@ -14,13 +14,11 @@ class Account {
   }
 
   getState() {
-    console.log('store requesting state from ipc transport');
     const promise = this.transportLayer.getState();
-    console.log('ready for then');
     promise.then((val) => {
-      console.log('client got state - ', val);
+      this.signedIn = val.signedIn;
+      this.locked = val.locked;
     });
-    console.log('did then');
   }
 
   create() {

@@ -6,16 +6,47 @@ export default class Account {
   client = null;
 
   constructor() {
-    console.log('constructing account transport');
     this.client = rpc.getClient();
+    this.registerIpc();
+  }
 
-    console.log('main listening');
+  // registerIpc registers IPC hooks mirroring the RPC calls
+  registerIpc() {
+    ipcMain.on('Account::create', (event, arg) => {
+    });
+
     ipcMain.on('Account::getState', (event, arg) => {
-      console.log('main got message');
       const promise = this.getState();
       promise.then((val) => {
-        console.log('ipc responding to sender with account state');
         event.sender.send('Account::getState', val);
+      });
+    });
+
+    ipcMain.on('Account::signin', (event, arg) => {
+      const promise = this.create(arg.name, arg.email, arg.passphrase);
+      promise.then((val) => {
+        event.sender.send('Account::signin', val);
+      });
+    });
+
+    ipcMain.on('Account::signout', (event, arg) => {
+      const promise = this.signout();
+      promise.then((val) => {
+        event.sender.send('Account::signout', val);
+      });
+    });
+
+    ipcMain.on('Account::unlock', (event, arg) => {
+      const promise = this.unlock();
+      promise.then((val) => {
+        event.sender.send('Account::unlock', val);
+      });
+    });
+
+    ipcMain.on('Account::lock', (event, arg) => {
+      const promise = this.lock();
+      promise.then((val) => {
+        event.sender.send('Account::lock', val);
       });
     });
   }
@@ -40,16 +71,13 @@ export default class Account {
 
   // getState makes an RPC request to get the current account state
   getState() {
-    console.log('transport getting state');
     const request = new messages.TokenRequest();
     const promise = new Promise((resolve, reject) => {
-      console.log('making request');
       this.client.accountState(request, (err, response) => {
         // [FIXME] - error handling
         const state = {};
         state.signedIn = response.getSignedin();
         state.locked = response.getLocked();
-        console.log(response);
         resolve(state);
       });
     });

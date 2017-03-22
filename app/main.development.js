@@ -135,10 +135,7 @@ app.on('ready', async () => {
     height = 600;
   }
 
-  console.log('creating window');
   createWindow(width, height);
 
-  console.log('registering rpc transports');
   rpc.registerTransports();
-  console.log('registered transports');
 });

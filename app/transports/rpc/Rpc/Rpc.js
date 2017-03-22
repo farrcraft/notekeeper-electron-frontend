@@ -9,7 +9,6 @@ class Rpc {
   transports = {};
 
   registerTransports() {
-    console.log('creating account transport');
     account = new AccountTransport();
     transports['account'] = account;
   }
