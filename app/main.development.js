@@ -1,5 +1,7 @@
 import { electron, app, BrowserWindow, Menu, shell } from 'electron';
 import Core from './shared';
+import MenuBuilder from './menu';
+import { default as rpc } from './transports/Rpc';
 import uiStateStore from './stores/UIState';
 import { default as UIStateTransport } from './transports/UIState';
 
@@ -66,20 +68,26 @@ const installExtensions = async () => {
     const installer = require('electron-devtools-installer'); // eslint-disable-line global-require
 
     const extensions = [
-      'REACT_DEVELOPER_TOOLS',
-      'REDUX_DEVTOOLS'
+      'REACT_DEVELOPER_TOOLS'
     ];
     const forceDownload = !!process.env.UPGRADE_EXTENSIONS;
-    for (const name of extensions) { // eslint-disable-line
-      try {
-        await installer.default(installer[name], forceDownload);
-      } catch (e) {} // eslint-disable-line
-    }
+
+    // TODO: Use async interation statement.
+    //       Waiting on https://github.com/tc39/proposal-async-iteration
+    //       Promises will fail silently, which isn't what we want in development
+    return Promise
+      .all(extensions.map(name => installer.default(installer[name], forceDownload)))
+      .catch(console.log);
   }
 };
 
 function createWindow(width, height) {
   mainWindow = new BrowserWindow({
+    /*
+    webPreferences: {
+      nodeIntegration: false
+    },
+    */
     show: false,
     width: width,
     height: height
@@ -106,194 +114,15 @@ function createWindow(width, height) {
     mainWindow = null;
   });
 
-  if (process.env.NODE_ENV === 'development') {
-    mainWindow.openDevTools();
-    mainWindow.webContents.on('context-menu', (e, props) => {
-      const { x, y } = props;
-
-      Menu.buildFromTemplate([{
-        label: 'Inspect element',
-        click() {
-          mainWindow.inspectElement(x, y);
-        }
-      }]).popup(mainWindow);
-    });
-  }
-
-  if (process.platform === 'darwin') {
-    template = [{
-      label: 'Electron',
-      submenu: [{
-        label: 'About NoteKeeper.io',
-        selector: 'orderFrontStandardAboutPanel:'
-      }, {
-        type: 'separator'
-      }, {
-        label: 'Services',
-        submenu: []
-      }, {
-        type: 'separator'
-      }, {
-        label: 'Hide NoteKeeper.io',
-        accelerator: 'Command+H',
-        selector: 'hide:'
-      }, {
-        label: 'Hide Others',
-        accelerator: 'Command+Shift+H',
-        selector: 'hideOtherApplications:'
-      }, {
-        label: 'Show All',
-        selector: 'unhideAllApplications:'
-      }, {
-        type: 'separator'
-      }, {
-        label: 'Quit',
-        accelerator: 'Command+Q',
-        click() {
-          app.quit();
-        }
-      }]
-    }, {
-      label: 'Edit',
-      submenu: [{
-        label: 'Undo',
-        accelerator: 'Command+Z',
-        selector: 'undo:'
-      }, {
-        label: 'Redo',
-        accelerator: 'Shift+Command+Z',
-        selector: 'redo:'
-      }, {
-        type: 'separator'
-      }, {
-        label: 'Cut',
-        accelerator: 'Command+X',
-        selector: 'cut:'
-      }, {
-        label: 'Copy',
-        accelerator: 'Command+C',
-        selector: 'copy:'
-      }, {
-        label: 'Paste',
-        accelerator: 'Command+V',
-        selector: 'paste:'
-      }, {
-        label: 'Select All',
-        accelerator: 'Command+A',
-        selector: 'selectAll:'
-      }]
-    }, {
-      label: 'View',
-      submenu: (process.env.NODE_ENV === 'development') ? [{
-        label: 'Reload',
-        accelerator: 'Command+R',
-        click() {
-          mainWindow.webContents.reload();
-        }
-      }, {
-        label: 'Toggle Full Screen',
-        accelerator: 'Ctrl+Command+F',
-        click() {
-          mainWindow.setFullScreen(!mainWindow.isFullScreen());
-        }
-      }, {
-        label: 'Toggle Developer Tools',
-        accelerator: 'Alt+Command+I',
-        click() {
-          mainWindow.toggleDevTools();
-        }
-      }] : [{
-        label: 'Toggle Full Screen',
-        accelerator: 'Ctrl+Command+F',
-        click() {
-          mainWindow.setFullScreen(!mainWindow.isFullScreen());
-        }
-      }]
-    }, {
-      label: 'Window',
-      submenu: [{
-        label: 'Minimize',
-        accelerator: 'Command+M',
-        selector: 'performMiniaturize:'
-      }, {
-        label: 'Close',
-        accelerator: 'Command+W',
-        selector: 'performClose:'
-      }, {
-        type: 'separator'
-      }, {
-        label: 'Bring All to Front',
-        selector: 'arrangeInFront:'
-      }]
-    }, {
-      label: 'Help',
-      submenu: [{
-        label: 'Learn More',
-        click() {
-          shell.openExternal('http://electron.atom.io');
-        }
-      }]
-    }];
-
-    menu = Menu.buildFromTemplate(template);
-    Menu.setApplicationMenu(menu);
-  } else {
-    template = [{
-      label: '&File',
-      submenu: [{
-        label: '&Open',
-        accelerator: 'Ctrl+O'
-      }, {
-        label: '&Close',
-        accelerator: 'Ctrl+W',
-        click() {
-          mainWindow.close();
-        }
-      }]
-    }, {
-      label: '&View',
-      submenu: (process.env.NODE_ENV === 'development') ? [{
-        label: '&Reload',
-        accelerator: 'Ctrl+R',
-        click() {
-          mainWindow.webContents.reload();
-        }
-      }, {
-        label: 'Toggle &Full Screen',
-        accelerator: 'F11',
-        click() {
-          mainWindow.setFullScreen(!mainWindow.isFullScreen());
-        }
-      }, {
-        label: 'Toggle &Developer Tools',
-        accelerator: 'Alt+Ctrl+I',
-        click() {
-          mainWindow.toggleDevTools();
-        }
-      }] : [{
-        label: 'Toggle &Full Screen',
-        accelerator: 'F11',
-        click() {
-          mainWindow.setFullScreen(!mainWindow.isFullScreen());
-        }
-      }]
-    }, {
-      label: 'Help',
-      submenu: [{
-        label: 'Learn More',
-        click() {
-          shell.openExternal('http://electron.atom.io');
-        }
-      }]
-    }];
-    menu = Menu.buildFromTemplate(template);
-    mainWindow.setMenu(menu);
-  }
+  const menuBuilder = new MenuBuilder(mainWindow);
+  menuBuilder.buildMenu();
 }
 
 app.on('ready', async () => {
   await installExtensions();
+
   await Core.openMasterDb();
+
   const uiTransport = new UIStateTransport();
   uiStateStore.setTransport(uiTransport);
   await uiStateStore.load();
@@ -305,5 +134,11 @@ app.on('ready', async () => {
   if (height <= 0) {
     height = 600;
   }
+
+  console.log('creating window');
   createWindow(width, height);
+
+  console.log('registering rpc transports');
+  rpc.registerTransports();
+  console.log('registered transports');
 });

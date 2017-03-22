@@ -3,6 +3,13 @@
 # Rebuild grpc node module using electron node version.
 #
 
+#if [ ! -d ./deps/grpc ]; then
+#    git clone https://github.com/grpc/grpc.git
+#    cd deps/grpc
+#    git submodule update --init
+#    cd ../../
+#fi
+
 # Electron's version.
 export npm_config_target=1.4.15
 # The architecture of Electron, can be ia32 or x64.
@@ -14,5 +21,7 @@ export npm_config_disturl=https://atom.io/download/electron
 export npm_config_runtime=electron
 # Install all dependencies, and store cache to ~/.electron-gyp.
 HOME=~/.electron-gyp npm install grpc
+#HOME=~/.electron-gyp npm install git+https://github.com/grpc/grpc.git#40a947ef93aeddca3b606613f628d4d09f094e77
+#HOME=~/.electron-gyp npm install ./deps/grpc
 
 exit 0

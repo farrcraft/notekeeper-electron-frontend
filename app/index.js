@@ -3,7 +3,7 @@ import * as React from 'react';
 import { render } from 'react-dom';
 import App from './containers/App';
 import accountStore from './stores/Account';
-import { default as AccountTransport } from './transports/Account';
+import { default as AccountTransport } from './ipc/Account';
 // import './scss/general.scss';
 
 // [FIXME] need to fetch account state from backend

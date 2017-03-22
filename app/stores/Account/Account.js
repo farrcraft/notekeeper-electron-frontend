@@ -13,8 +13,14 @@ class Account {
     this.transportLayer = transportLayer;
   }
 
-  async getState() {
-    await this.transportLayer.getState(this);
+  getState() {
+    console.log('store requesting state from ipc transport');
+    const promise = this.transportLayer.getState();
+    console.log('ready for then');
+    promise.then((val) => {
+      console.log('client got state - ', val);
+    });
+    console.log('did then');
   }
 
   create() {
