@@ -23,6 +23,16 @@ export default class UIState {
     const request = new messages.SaveUIStateRequest();
     request.setWindowwidth(store.windowWidth);
     request.setWindowheight(store.windowHeight);
+    request.setWindowxposition(store.windowXPosition);
+    request.setWindowyposition(store.windowYPosition);
+    request.setWindowmaximized(store.windowMaximized);
+    request.setWindowminimized(store.windowMinimized);
+    request.setWindowfullscreen(store.windowFullscreen);
+    request.setDisplayheight(store.displayHeight);
+    request.setDisplaywidth(store.displayWidth);
+    request.setDisplayxposition(store.displayXPosition);
+    request.setDisplayyposition(store.displayYPosition);
+
     const promise = new Promise((resolve, reject) => {
       this.client.saveUIState(request, (err, response) => {
         const status = response.getStatus();

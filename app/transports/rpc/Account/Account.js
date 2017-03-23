@@ -78,6 +78,7 @@ export default class Account {
         const state = {};
         state.signedIn = response.getSignedin();
         state.locked = response.getLocked();
+        state.exists = response.getExists();
         resolve(state);
       });
     });

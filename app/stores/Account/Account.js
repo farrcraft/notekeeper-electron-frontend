@@ -3,6 +3,7 @@ import { observable } from 'mobx';
 class Account {
   @observable signedIn = false;
   @observable locked = true;
+  @observable exists = false;
 
   transportLayer = null;
 
@@ -18,6 +19,7 @@ class Account {
     promise.then((val) => {
       this.signedIn = val.signedIn;
       this.locked = val.locked;
+      this.exists = val.exists;
     });
   }
 

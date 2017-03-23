@@ -710,7 +710,16 @@ proto.notekeeper.UIStateResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
     status: (f = msg.getStatus()) && proto.notekeeper.StatusResponse.toObject(includeInstance, f),
     windowwidth: jspb.Message.getFieldWithDefault(msg, 2, 0),
-    windowheight: jspb.Message.getFieldWithDefault(msg, 3, 0)
+    windowheight: jspb.Message.getFieldWithDefault(msg, 3, 0),
+    windowxposition: jspb.Message.getFieldWithDefault(msg, 4, 0),
+    windowyposition: jspb.Message.getFieldWithDefault(msg, 5, 0),
+    windowmaximized: jspb.Message.getFieldWithDefault(msg, 6, false),
+    windowminimized: jspb.Message.getFieldWithDefault(msg, 7, false),
+    windowfullscreen: jspb.Message.getFieldWithDefault(msg, 8, false),
+    displaywidth: jspb.Message.getFieldWithDefault(msg, 9, 0),
+    displayheight: jspb.Message.getFieldWithDefault(msg, 10, 0),
+    displayxposition: jspb.Message.getFieldWithDefault(msg, 11, 0),
+    displayyposition: jspb.Message.getFieldWithDefault(msg, 12, 0)
   };
 
   if (includeInstance) {
@@ -760,6 +769,42 @@ proto.notekeeper.UIStateResponse.deserializeBinaryFromReader = function(msg, rea
       var value = /** @type {number} */ (reader.readInt32());
       msg.setWindowheight(value);
       break;
+    case 4:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setWindowxposition(value);
+      break;
+    case 5:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setWindowyposition(value);
+      break;
+    case 6:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setWindowmaximized(value);
+      break;
+    case 7:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setWindowminimized(value);
+      break;
+    case 8:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setWindowfullscreen(value);
+      break;
+    case 9:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setDisplaywidth(value);
+      break;
+    case 10:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setDisplayheight(value);
+      break;
+    case 11:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setDisplayxposition(value);
+      break;
+    case 12:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setDisplayyposition(value);
+      break;
     default:
       reader.skipField();
       break;
@@ -807,6 +852,69 @@ proto.notekeeper.UIStateResponse.serializeBinaryToWriter = function(message, wri
   if (f !== 0) {
     writer.writeInt32(
       3,
+      f
+    );
+  }
+  f = message.getWindowxposition();
+  if (f !== 0) {
+    writer.writeInt32(
+      4,
+      f
+    );
+  }
+  f = message.getWindowyposition();
+  if (f !== 0) {
+    writer.writeInt32(
+      5,
+      f
+    );
+  }
+  f = message.getWindowmaximized();
+  if (f) {
+    writer.writeBool(
+      6,
+      f
+    );
+  }
+  f = message.getWindowminimized();
+  if (f) {
+    writer.writeBool(
+      7,
+      f
+    );
+  }
+  f = message.getWindowfullscreen();
+  if (f) {
+    writer.writeBool(
+      8,
+      f
+    );
+  }
+  f = message.getDisplaywidth();
+  if (f !== 0) {
+    writer.writeInt32(
+      9,
+      f
+    );
+  }
+  f = message.getDisplayheight();
+  if (f !== 0) {
+    writer.writeInt32(
+      10,
+      f
+    );
+  }
+  f = message.getDisplayxposition();
+  if (f !== 0) {
+    writer.writeInt32(
+      11,
+      f
+    );
+  }
+  f = message.getDisplayyposition();
+  if (f !== 0) {
+    writer.writeInt32(
+      12,
       f
     );
   }
@@ -873,6 +981,147 @@ proto.notekeeper.UIStateResponse.prototype.setWindowheight = function(value) {
 };
 
 
+/**
+ * optional int32 windowXPosition = 4;
+ * @return {number}
+ */
+proto.notekeeper.UIStateResponse.prototype.getWindowxposition = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 4, 0));
+};
+
+
+/** @param {number} value */
+proto.notekeeper.UIStateResponse.prototype.setWindowxposition = function(value) {
+  jspb.Message.setField(this, 4, value);
+};
+
+
+/**
+ * optional int32 windowYPosition = 5;
+ * @return {number}
+ */
+proto.notekeeper.UIStateResponse.prototype.getWindowyposition = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 5, 0));
+};
+
+
+/** @param {number} value */
+proto.notekeeper.UIStateResponse.prototype.setWindowyposition = function(value) {
+  jspb.Message.setField(this, 5, value);
+};
+
+
+/**
+ * optional bool windowMaximized = 6;
+ * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
+ * You should avoid comparisons like {@code val === true/false} in those cases.
+ * @return {boolean}
+ */
+proto.notekeeper.UIStateResponse.prototype.getWindowmaximized = function() {
+  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 6, false));
+};
+
+
+/** @param {boolean} value */
+proto.notekeeper.UIStateResponse.prototype.setWindowmaximized = function(value) {
+  jspb.Message.setField(this, 6, value);
+};
+
+
+/**
+ * optional bool windowMinimized = 7;
+ * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
+ * You should avoid comparisons like {@code val === true/false} in those cases.
+ * @return {boolean}
+ */
+proto.notekeeper.UIStateResponse.prototype.getWindowminimized = function() {
+  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 7, false));
+};
+
+
+/** @param {boolean} value */
+proto.notekeeper.UIStateResponse.prototype.setWindowminimized = function(value) {
+  jspb.Message.setField(this, 7, value);
+};
+
+
+/**
+ * optional bool windowFullscreen = 8;
+ * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
+ * You should avoid comparisons like {@code val === true/false} in those cases.
+ * @return {boolean}
+ */
+proto.notekeeper.UIStateResponse.prototype.getWindowfullscreen = function() {
+  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 8, false));
+};
+
+
+/** @param {boolean} value */
+proto.notekeeper.UIStateResponse.prototype.setWindowfullscreen = function(value) {
+  jspb.Message.setField(this, 8, value);
+};
+
+
+/**
+ * optional int32 displayWidth = 9;
+ * @return {number}
+ */
+proto.notekeeper.UIStateResponse.prototype.getDisplaywidth = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 9, 0));
+};
+
+
+/** @param {number} value */
+proto.notekeeper.UIStateResponse.prototype.setDisplaywidth = function(value) {
+  jspb.Message.setField(this, 9, value);
+};
+
+
+/**
+ * optional int32 displayHeight = 10;
+ * @return {number}
+ */
+proto.notekeeper.UIStateResponse.prototype.getDisplayheight = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 10, 0));
+};
+
+
+/** @param {number} value */
+proto.notekeeper.UIStateResponse.prototype.setDisplayheight = function(value) {
+  jspb.Message.setField(this, 10, value);
+};
+
+
+/**
+ * optional int32 displayXPosition = 11;
+ * @return {number}
+ */
+proto.notekeeper.UIStateResponse.prototype.getDisplayxposition = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 11, 0));
+};
+
+
+/** @param {number} value */
+proto.notekeeper.UIStateResponse.prototype.setDisplayxposition = function(value) {
+  jspb.Message.setField(this, 11, value);
+};
+
+
+/**
+ * optional int32 displayYPosition = 12;
+ * @return {number}
+ */
+proto.notekeeper.UIStateResponse.prototype.getDisplayyposition = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 12, 0));
+};
+
+
+/** @param {number} value */
+proto.notekeeper.UIStateResponse.prototype.setDisplayyposition = function(value) {
+  jspb.Message.setField(this, 12, value);
+};
+
+
 
 /**
  * Generated by JsPbCodeGenerator.
@@ -921,7 +1170,16 @@ proto.notekeeper.SaveUIStateRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
     status: (f = msg.getStatus()) && proto.notekeeper.StatusResponse.toObject(includeInstance, f),
     windowwidth: jspb.Message.getFieldWithDefault(msg, 2, 0),
-    windowheight: jspb.Message.getFieldWithDefault(msg, 3, 0)
+    windowheight: jspb.Message.getFieldWithDefault(msg, 3, 0),
+    windowxposition: jspb.Message.getFieldWithDefault(msg, 4, 0),
+    windowyposition: jspb.Message.getFieldWithDefault(msg, 5, 0),
+    windowmaximized: jspb.Message.getFieldWithDefault(msg, 6, false),
+    windowminimized: jspb.Message.getFieldWithDefault(msg, 7, false),
+    windowfullscreen: jspb.Message.getFieldWithDefault(msg, 8, false),
+    displaywidth: jspb.Message.getFieldWithDefault(msg, 9, 0),
+    displayheight: jspb.Message.getFieldWithDefault(msg, 10, 0),
+    displayxposition: jspb.Message.getFieldWithDefault(msg, 11, 0),
+    displayyposition: jspb.Message.getFieldWithDefault(msg, 12, 0)
   };
 
   if (includeInstance) {
@@ -971,6 +1229,42 @@ proto.notekeeper.SaveUIStateRequest.deserializeBinaryFromReader = function(msg, 
       var value = /** @type {number} */ (reader.readInt32());
       msg.setWindowheight(value);
       break;
+    case 4:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setWindowxposition(value);
+      break;
+    case 5:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setWindowyposition(value);
+      break;
+    case 6:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setWindowmaximized(value);
+      break;
+    case 7:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setWindowminimized(value);
+      break;
+    case 8:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setWindowfullscreen(value);
+      break;
+    case 9:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setDisplaywidth(value);
+      break;
+    case 10:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setDisplayheight(value);
+      break;
+    case 11:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setDisplayxposition(value);
+      break;
+    case 12:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setDisplayyposition(value);
+      break;
     default:
       reader.skipField();
       break;
@@ -1018,6 +1312,69 @@ proto.notekeeper.SaveUIStateRequest.serializeBinaryToWriter = function(message, 
   if (f !== 0) {
     writer.writeInt32(
       3,
+      f
+    );
+  }
+  f = message.getWindowxposition();
+  if (f !== 0) {
+    writer.writeInt32(
+      4,
+      f
+    );
+  }
+  f = message.getWindowyposition();
+  if (f !== 0) {
+    writer.writeInt32(
+      5,
+      f
+    );
+  }
+  f = message.getWindowmaximized();
+  if (f) {
+    writer.writeBool(
+      6,
+      f
+    );
+  }
+  f = message.getWindowminimized();
+  if (f) {
+    writer.writeBool(
+      7,
+      f
+    );
+  }
+  f = message.getWindowfullscreen();
+  if (f) {
+    writer.writeBool(
+      8,
+      f
+    );
+  }
+  f = message.getDisplaywidth();
+  if (f !== 0) {
+    writer.writeInt32(
+      9,
+      f
+    );
+  }
+  f = message.getDisplayheight();
+  if (f !== 0) {
+    writer.writeInt32(
+      10,
+      f
+    );
+  }
+  f = message.getDisplayxposition();
+  if (f !== 0) {
+    writer.writeInt32(
+      11,
+      f
+    );
+  }
+  f = message.getDisplayyposition();
+  if (f !== 0) {
+    writer.writeInt32(
+      12,
       f
     );
   }
@@ -1081,6 +1438,147 @@ proto.notekeeper.SaveUIStateRequest.prototype.getWindowheight = function() {
 /** @param {number} value */
 proto.notekeeper.SaveUIStateRequest.prototype.setWindowheight = function(value) {
   jspb.Message.setField(this, 3, value);
+};
+
+
+/**
+ * optional int32 windowXPosition = 4;
+ * @return {number}
+ */
+proto.notekeeper.SaveUIStateRequest.prototype.getWindowxposition = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 4, 0));
+};
+
+
+/** @param {number} value */
+proto.notekeeper.SaveUIStateRequest.prototype.setWindowxposition = function(value) {
+  jspb.Message.setField(this, 4, value);
+};
+
+
+/**
+ * optional int32 windowYPosition = 5;
+ * @return {number}
+ */
+proto.notekeeper.SaveUIStateRequest.prototype.getWindowyposition = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 5, 0));
+};
+
+
+/** @param {number} value */
+proto.notekeeper.SaveUIStateRequest.prototype.setWindowyposition = function(value) {
+  jspb.Message.setField(this, 5, value);
+};
+
+
+/**
+ * optional bool windowMaximized = 6;
+ * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
+ * You should avoid comparisons like {@code val === true/false} in those cases.
+ * @return {boolean}
+ */
+proto.notekeeper.SaveUIStateRequest.prototype.getWindowmaximized = function() {
+  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 6, false));
+};
+
+
+/** @param {boolean} value */
+proto.notekeeper.SaveUIStateRequest.prototype.setWindowmaximized = function(value) {
+  jspb.Message.setField(this, 6, value);
+};
+
+
+/**
+ * optional bool windowMinimized = 7;
+ * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
+ * You should avoid comparisons like {@code val === true/false} in those cases.
+ * @return {boolean}
+ */
+proto.notekeeper.SaveUIStateRequest.prototype.getWindowminimized = function() {
+  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 7, false));
+};
+
+
+/** @param {boolean} value */
+proto.notekeeper.SaveUIStateRequest.prototype.setWindowminimized = function(value) {
+  jspb.Message.setField(this, 7, value);
+};
+
+
+/**
+ * optional bool windowFullscreen = 8;
+ * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
+ * You should avoid comparisons like {@code val === true/false} in those cases.
+ * @return {boolean}
+ */
+proto.notekeeper.SaveUIStateRequest.prototype.getWindowfullscreen = function() {
+  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 8, false));
+};
+
+
+/** @param {boolean} value */
+proto.notekeeper.SaveUIStateRequest.prototype.setWindowfullscreen = function(value) {
+  jspb.Message.setField(this, 8, value);
+};
+
+
+/**
+ * optional int32 displayWidth = 9;
+ * @return {number}
+ */
+proto.notekeeper.SaveUIStateRequest.prototype.getDisplaywidth = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 9, 0));
+};
+
+
+/** @param {number} value */
+proto.notekeeper.SaveUIStateRequest.prototype.setDisplaywidth = function(value) {
+  jspb.Message.setField(this, 9, value);
+};
+
+
+/**
+ * optional int32 displayHeight = 10;
+ * @return {number}
+ */
+proto.notekeeper.SaveUIStateRequest.prototype.getDisplayheight = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 10, 0));
+};
+
+
+/** @param {number} value */
+proto.notekeeper.SaveUIStateRequest.prototype.setDisplayheight = function(value) {
+  jspb.Message.setField(this, 10, value);
+};
+
+
+/**
+ * optional int32 displayXPosition = 11;
+ * @return {number}
+ */
+proto.notekeeper.SaveUIStateRequest.prototype.getDisplayxposition = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 11, 0));
+};
+
+
+/** @param {number} value */
+proto.notekeeper.SaveUIStateRequest.prototype.setDisplayxposition = function(value) {
+  jspb.Message.setField(this, 11, value);
+};
+
+
+/**
+ * optional int32 displayYPosition = 12;
+ * @return {number}
+ */
+proto.notekeeper.SaveUIStateRequest.prototype.getDisplayyposition = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 12, 0));
+};
+
+
+/** @param {number} value */
+proto.notekeeper.SaveUIStateRequest.prototype.setDisplayyposition = function(value) {
+  jspb.Message.setField(this, 12, value);
 };
 
 

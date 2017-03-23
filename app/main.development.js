@@ -1,14 +1,13 @@
-import { electron, app, BrowserWindow, Menu, shell } from 'electron';
+import { electron, app, BrowserWindow, Menu, shell, screen, Rectangle } from 'electron';
 import Core from './shared';
 import MenuBuilder from './menu';
 import { default as rpc } from './transports/rpc/Rpc';
 import uiStateStore from './stores/UIState';
 import { default as UIStateTransport } from './transports/rpc/UIState';
 
-let menu;
-let template;
 // Declared here so our main window doesn't get GC'd
 let mainWindow = null;
+let windowStateTimeout = null;
 
 if (process.env.NODE_ENV === 'production') {
   const sourceMapSupport = require('source-map-support'); // eslint-disable-line
@@ -81,8 +80,72 @@ const installExtensions = async () => {
   }
 };
 
-function createWindow(width, height) {
-  mainWindow = new BrowserWindow({
+// delayedWindowStateSave schedules the window state to be saved in the future
+function delayedWindowStateSave() {
+  if (windowStateTimeout) {
+    clearTimeout(windowStateTimeout);
+  }
+  windowStateTimeout = setTimeout(updateWindowState, 600);
+}
+
+// updateWindowState saves the current window state (position/size) to the db
+function updateWindowState() {
+  if (!mainWindow) {
+    return;
+  }
+  windowStateTimeout = null;
+
+  // where and how big the window is
+  const bounds = mainWindow.getBounds();
+  uiStateStore.windowWidth = bounds.width;
+  uiStateStore.windowHeight = bounds.height;
+  uiStateStore.windowXPosition = bounds.x;
+  uiStateStore.windowYPosition = bounds.y;
+
+  // how big the display is
+  const displayBounds = screen.getDisplayMatching(bounds);
+  uiStateStore.displayWidth = displayBounds.width;
+  uiStateStore.displayHeight = displayBounds.height;
+  uiStateStore.displayXPosition = displayBounds.x;
+  uiStateStore.displayYPosition = displayBounds.y;
+
+  uiStateStore.windowMaximized = mainWindow.isMaximized();
+  uiStateStore.windowMinimized = mainWindow.isMinimized();
+  uiStateStore.windowFullscreen = mainWindow.isFullScreen();
+
+  uiStateStore.save();
+}
+
+// restoreWindowState sets the current window position/size to the last saved values
+function restoreWindowState() {
+  const restoreBounds = new Rectangle();
+  restoreBounds.width = uiStateStore.windowWidth;
+  restoreBounds.height = uiStateStore.windowHeight;
+  restoreBounds.x = uiStateStore.windowXPosition;
+  restoreBounds.y = uiStateStore.windowYPosition;
+
+  const displayBounds = screen.getDisplayMatching(restoreBounds);
+
+  if (displayBounds.x === uiStateStore.displayXPosition &&
+    displayBounds.y === uiStateStore.displayYPosition &&
+    displayBounds.width === uiStateStore.displayWidth &&
+    displayBounds.height === uiStateStore.displayHeight) {
+      mainWindow.setBounds(restoreBounds);
+    }
+
+  if (uiStateStore.windowMaximized) {
+    mainWindow.maximize();
+  }
+  if (uiStateStore.windowMinimized) {
+    mainWindow.minimize();
+  }
+  if (uiStateStore.windowFullscreen) {
+    mainWindow.setFullScreen(true);
+  }
+}
+
+function createWindow(width, height, x, y) {
+  const options = {
     /*
     webPreferences: {
       nodeIntegration: false
@@ -91,7 +154,14 @@ function createWindow(width, height) {
     show: false,
     width: width,
     height: height
-  });
+  };
+  if (x >= 0) {
+    options.x = x;
+  }
+  if (y >= 0) {
+    options.y = y;
+  }
+  mainWindow = new BrowserWindow(options);
 
   mainWindow.loadURL(`file://${__dirname}/app.html`);
 
@@ -100,13 +170,8 @@ function createWindow(width, height) {
     mainWindow.focus();
   });
 
-  mainWindow.on('resize', () => {
-    // The event doesn't pass us the window size, so we call the `getBounds` method
-    // which returns an object with the height, width, and x and y coordinates.
-    const bounds = mainWindow.getBounds();
-    uiStateStore.windowWidth = bounds.width;
-    uiStateStore.windowHeight = bounds.height;
-  });
+  mainWindow.on('resize', delayedWindowStateSave);
+  mainWindow.on('move', delayedWindowStateSave);
 
   mainWindow.on('closed', () => {
     // Terminate backend process
@@ -116,6 +181,8 @@ function createWindow(width, height) {
 
   const menuBuilder = new MenuBuilder(mainWindow);
   menuBuilder.buildMenu();
+
+  restoreWindowState();
 }
 
 app.on('ready', async () => {
@@ -135,7 +202,7 @@ app.on('ready', async () => {
     height = 600;
   }
 
-  createWindow(width, height);
+  createWindow(width, height, uiStateStore.windowXPosition, uiStateStore.windowYPosition);
 
   rpc.registerTransports();
 });

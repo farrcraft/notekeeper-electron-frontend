@@ -9,11 +9,10 @@ import { default as AccountTransport } from './transports/ipc/Account';
 const accountTransport = new AccountTransport();
 accountStore.setTransport(accountTransport);
 accountStore.getState();
-// [FIXME] - pass store to app container
 
 render(
   <AppContainer>
-    <App />
+    <App account={accountStore} />
   </AppContainer>,
    document.getElementById('root')
 );
