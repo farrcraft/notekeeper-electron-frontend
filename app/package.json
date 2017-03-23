@@ -1,7 +1,9 @@
 {
   "name": "notekeeper",
+  "productName": "NoteKeeper.io",
   "version": "0.1.0",
   "description": "NoteKeeper.io desktop application",
+  "main": "./main.js",
   "license": "UNLICENSED",
   "dependencies": {
   }
