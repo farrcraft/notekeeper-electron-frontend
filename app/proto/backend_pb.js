@@ -123,42 +123,32 @@ proto.notekeeper.StatusResponse.deserializeBinaryFromReader = function(msg, read
 
 
 /**
- * Class method variant: serializes the given message to binary data
- * (in protobuf wire format), writing to the given BinaryWriter.
- * @param {!proto.notekeeper.StatusResponse} message
- * @param {!jspb.BinaryWriter} writer
- */
-proto.notekeeper.StatusResponse.serializeBinaryToWriter = function(message, writer) {
-  message.serializeBinaryToWriter(writer);
-};
-
-
-/**
  * Serializes the message to binary data (in protobuf wire format).
  * @return {!Uint8Array}
  */
 proto.notekeeper.StatusResponse.prototype.serializeBinary = function() {
   var writer = new jspb.BinaryWriter();
-  this.serializeBinaryToWriter(writer);
+  proto.notekeeper.StatusResponse.serializeBinaryToWriter(this, writer);
   return writer.getResultBuffer();
 };
 
 
 /**
- * Serializes the message to binary data (in protobuf wire format),
- * writing to the given BinaryWriter.
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.notekeeper.StatusResponse} message
  * @param {!jspb.BinaryWriter} writer
  */
-proto.notekeeper.StatusResponse.prototype.serializeBinaryToWriter = function (writer) {
+proto.notekeeper.StatusResponse.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
-  f = this.getStatus();
+  f = message.getStatus();
   if (f.length > 0) {
     writer.writeString(
       1,
       f
     );
   }
-  f = this.getCode();
+  f = message.getCode();
   if (f !== 0) {
     writer.writeInt32(
       2,
@@ -295,35 +285,25 @@ proto.notekeeper.TokenRequest.deserializeBinaryFromReader = function(msg, reader
 
 
 /**
- * Class method variant: serializes the given message to binary data
- * (in protobuf wire format), writing to the given BinaryWriter.
- * @param {!proto.notekeeper.TokenRequest} message
- * @param {!jspb.BinaryWriter} writer
- */
-proto.notekeeper.TokenRequest.serializeBinaryToWriter = function(message, writer) {
-  message.serializeBinaryToWriter(writer);
-};
-
-
-/**
  * Serializes the message to binary data (in protobuf wire format).
  * @return {!Uint8Array}
  */
 proto.notekeeper.TokenRequest.prototype.serializeBinary = function() {
   var writer = new jspb.BinaryWriter();
-  this.serializeBinaryToWriter(writer);
+  proto.notekeeper.TokenRequest.serializeBinaryToWriter(this, writer);
   return writer.getResultBuffer();
 };
 
 
 /**
- * Serializes the message to binary data (in protobuf wire format),
- * writing to the given BinaryWriter.
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.notekeeper.TokenRequest} message
  * @param {!jspb.BinaryWriter} writer
  */
-proto.notekeeper.TokenRequest.prototype.serializeBinaryToWriter = function (writer) {
+proto.notekeeper.TokenRequest.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
-  f = this.getToken();
+  f = message.getToken();
   if (f.length > 0) {
     writer.writeString(
       1,
@@ -445,35 +425,25 @@ proto.notekeeper.IdRequest.deserializeBinaryFromReader = function(msg, reader) {
 
 
 /**
- * Class method variant: serializes the given message to binary data
- * (in protobuf wire format), writing to the given BinaryWriter.
- * @param {!proto.notekeeper.IdRequest} message
- * @param {!jspb.BinaryWriter} writer
- */
-proto.notekeeper.IdRequest.serializeBinaryToWriter = function(message, writer) {
-  message.serializeBinaryToWriter(writer);
-};
-
-
-/**
  * Serializes the message to binary data (in protobuf wire format).
  * @return {!Uint8Array}
  */
 proto.notekeeper.IdRequest.prototype.serializeBinary = function() {
   var writer = new jspb.BinaryWriter();
-  this.serializeBinaryToWriter(writer);
+  proto.notekeeper.IdRequest.serializeBinaryToWriter(this, writer);
   return writer.getResultBuffer();
 };
 
 
 /**
- * Serializes the message to binary data (in protobuf wire format),
- * writing to the given BinaryWriter.
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.notekeeper.IdRequest} message
  * @param {!jspb.BinaryWriter} writer
  */
-proto.notekeeper.IdRequest.prototype.serializeBinaryToWriter = function (writer) {
+proto.notekeeper.IdRequest.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
-  f = this.getId();
+  f = message.getId();
   if (f.length > 0) {
     writer.writeString(
       1,
@@ -605,49 +575,39 @@ proto.notekeeper.IdResponse.deserializeBinaryFromReader = function(msg, reader) 
 
 
 /**
- * Class method variant: serializes the given message to binary data
- * (in protobuf wire format), writing to the given BinaryWriter.
- * @param {!proto.notekeeper.IdResponse} message
- * @param {!jspb.BinaryWriter} writer
- */
-proto.notekeeper.IdResponse.serializeBinaryToWriter = function(message, writer) {
-  message.serializeBinaryToWriter(writer);
-};
-
-
-/**
  * Serializes the message to binary data (in protobuf wire format).
  * @return {!Uint8Array}
  */
 proto.notekeeper.IdResponse.prototype.serializeBinary = function() {
   var writer = new jspb.BinaryWriter();
-  this.serializeBinaryToWriter(writer);
+  proto.notekeeper.IdResponse.serializeBinaryToWriter(this, writer);
   return writer.getResultBuffer();
 };
 
 
 /**
- * Serializes the message to binary data (in protobuf wire format),
- * writing to the given BinaryWriter.
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.notekeeper.IdResponse} message
  * @param {!jspb.BinaryWriter} writer
  */
-proto.notekeeper.IdResponse.prototype.serializeBinaryToWriter = function (writer) {
+proto.notekeeper.IdResponse.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
-  f = this.getId();
+  f = message.getId();
   if (f.length > 0) {
     writer.writeString(
       1,
       f
     );
   }
-  f = this.getStatus();
+  f = message.getStatus();
   if (f.length > 0) {
     writer.writeString(
       2,
       f
     );
   }
-  f = this.getCode();
+  f = message.getCode();
   if (f !== 0) {
     writer.writeInt32(
       3,
@@ -810,35 +770,25 @@ proto.notekeeper.UIStateResponse.deserializeBinaryFromReader = function(msg, rea
 
 
 /**
- * Class method variant: serializes the given message to binary data
- * (in protobuf wire format), writing to the given BinaryWriter.
- * @param {!proto.notekeeper.UIStateResponse} message
- * @param {!jspb.BinaryWriter} writer
- */
-proto.notekeeper.UIStateResponse.serializeBinaryToWriter = function(message, writer) {
-  message.serializeBinaryToWriter(writer);
-};
-
-
-/**
  * Serializes the message to binary data (in protobuf wire format).
  * @return {!Uint8Array}
  */
 proto.notekeeper.UIStateResponse.prototype.serializeBinary = function() {
   var writer = new jspb.BinaryWriter();
-  this.serializeBinaryToWriter(writer);
+  proto.notekeeper.UIStateResponse.serializeBinaryToWriter(this, writer);
   return writer.getResultBuffer();
 };
 
 
 /**
- * Serializes the message to binary data (in protobuf wire format),
- * writing to the given BinaryWriter.
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.notekeeper.UIStateResponse} message
  * @param {!jspb.BinaryWriter} writer
  */
-proto.notekeeper.UIStateResponse.prototype.serializeBinaryToWriter = function (writer) {
+proto.notekeeper.UIStateResponse.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
-  f = this.getStatus();
+  f = message.getStatus();
   if (f != null) {
     writer.writeMessage(
       1,
@@ -846,14 +796,14 @@ proto.notekeeper.UIStateResponse.prototype.serializeBinaryToWriter = function (w
       proto.notekeeper.StatusResponse.serializeBinaryToWriter
     );
   }
-  f = this.getWindowwidth();
+  f = message.getWindowwidth();
   if (f !== 0) {
     writer.writeInt32(
       2,
       f
     );
   }
-  f = this.getWindowheight();
+  f = message.getWindowheight();
   if (f !== 0) {
     writer.writeInt32(
       3,
@@ -1031,35 +981,25 @@ proto.notekeeper.SaveUIStateRequest.deserializeBinaryFromReader = function(msg, 
 
 
 /**
- * Class method variant: serializes the given message to binary data
- * (in protobuf wire format), writing to the given BinaryWriter.
- * @param {!proto.notekeeper.SaveUIStateRequest} message
- * @param {!jspb.BinaryWriter} writer
- */
-proto.notekeeper.SaveUIStateRequest.serializeBinaryToWriter = function(message, writer) {
-  message.serializeBinaryToWriter(writer);
-};
-
-
-/**
  * Serializes the message to binary data (in protobuf wire format).
  * @return {!Uint8Array}
  */
 proto.notekeeper.SaveUIStateRequest.prototype.serializeBinary = function() {
   var writer = new jspb.BinaryWriter();
-  this.serializeBinaryToWriter(writer);
+  proto.notekeeper.SaveUIStateRequest.serializeBinaryToWriter(this, writer);
   return writer.getResultBuffer();
 };
 
 
 /**
- * Serializes the message to binary data (in protobuf wire format),
- * writing to the given BinaryWriter.
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.notekeeper.SaveUIStateRequest} message
  * @param {!jspb.BinaryWriter} writer
  */
-proto.notekeeper.SaveUIStateRequest.prototype.serializeBinaryToWriter = function (writer) {
+proto.notekeeper.SaveUIStateRequest.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
-  f = this.getStatus();
+  f = message.getStatus();
   if (f != null) {
     writer.writeMessage(
       1,
@@ -1067,14 +1007,14 @@ proto.notekeeper.SaveUIStateRequest.prototype.serializeBinaryToWriter = function
       proto.notekeeper.StatusResponse.serializeBinaryToWriter
     );
   }
-  f = this.getWindowwidth();
+  f = message.getWindowwidth();
   if (f !== 0) {
     writer.writeInt32(
       2,
       f
     );
   }
-  f = this.getWindowheight();
+  f = message.getWindowheight();
   if (f !== 0) {
     writer.writeInt32(
       3,
@@ -1191,7 +1131,8 @@ proto.notekeeper.AccountStateResponse.prototype.toObject = function(opt_includeI
 proto.notekeeper.AccountStateResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
     signedin: jspb.Message.getFieldWithDefault(msg, 1, false),
-    locked: jspb.Message.getFieldWithDefault(msg, 2, false)
+    locked: jspb.Message.getFieldWithDefault(msg, 2, false),
+    exists: jspb.Message.getFieldWithDefault(msg, 3, false)
   };
 
   if (includeInstance) {
@@ -1236,6 +1177,10 @@ proto.notekeeper.AccountStateResponse.deserializeBinaryFromReader = function(msg
       var value = /** @type {boolean} */ (reader.readBool());
       msg.setLocked(value);
       break;
+    case 3:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setExists(value);
+      break;
     default:
       reader.skipField();
       break;
@@ -1246,45 +1191,42 @@ proto.notekeeper.AccountStateResponse.deserializeBinaryFromReader = function(msg
 
 
 /**
- * Class method variant: serializes the given message to binary data
- * (in protobuf wire format), writing to the given BinaryWriter.
- * @param {!proto.notekeeper.AccountStateResponse} message
- * @param {!jspb.BinaryWriter} writer
- */
-proto.notekeeper.AccountStateResponse.serializeBinaryToWriter = function(message, writer) {
-  message.serializeBinaryToWriter(writer);
-};
-
-
-/**
  * Serializes the message to binary data (in protobuf wire format).
  * @return {!Uint8Array}
  */
 proto.notekeeper.AccountStateResponse.prototype.serializeBinary = function() {
   var writer = new jspb.BinaryWriter();
-  this.serializeBinaryToWriter(writer);
+  proto.notekeeper.AccountStateResponse.serializeBinaryToWriter(this, writer);
   return writer.getResultBuffer();
 };
 
 
 /**
- * Serializes the message to binary data (in protobuf wire format),
- * writing to the given BinaryWriter.
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.notekeeper.AccountStateResponse} message
  * @param {!jspb.BinaryWriter} writer
  */
-proto.notekeeper.AccountStateResponse.prototype.serializeBinaryToWriter = function (writer) {
+proto.notekeeper.AccountStateResponse.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
-  f = this.getSignedin();
+  f = message.getSignedin();
   if (f) {
     writer.writeBool(
       1,
       f
     );
   }
-  f = this.getLocked();
+  f = message.getLocked();
   if (f) {
     writer.writeBool(
       2,
+      f
+    );
+  }
+  f = message.getExists();
+  if (f) {
+    writer.writeBool(
+      3,
       f
     );
   }
@@ -1322,6 +1264,23 @@ proto.notekeeper.AccountStateResponse.prototype.getLocked = function() {
 /** @param {boolean} value */
 proto.notekeeper.AccountStateResponse.prototype.setLocked = function(value) {
   jspb.Message.setField(this, 2, value);
+};
+
+
+/**
+ * optional bool exists = 3;
+ * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
+ * You should avoid comparisons like {@code val === true/false} in those cases.
+ * @return {boolean}
+ */
+proto.notekeeper.AccountStateResponse.prototype.getExists = function() {
+  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 3, false));
+};
+
+
+/** @param {boolean} value */
+proto.notekeeper.AccountStateResponse.prototype.setExists = function(value) {
+  jspb.Message.setField(this, 3, value);
 };
 
 
@@ -1422,35 +1381,25 @@ proto.notekeeper.OpenMasterDbRequest.deserializeBinaryFromReader = function(msg,
 
 
 /**
- * Class method variant: serializes the given message to binary data
- * (in protobuf wire format), writing to the given BinaryWriter.
- * @param {!proto.notekeeper.OpenMasterDbRequest} message
- * @param {!jspb.BinaryWriter} writer
- */
-proto.notekeeper.OpenMasterDbRequest.serializeBinaryToWriter = function(message, writer) {
-  message.serializeBinaryToWriter(writer);
-};
-
-
-/**
  * Serializes the message to binary data (in protobuf wire format).
  * @return {!Uint8Array}
  */
 proto.notekeeper.OpenMasterDbRequest.prototype.serializeBinary = function() {
   var writer = new jspb.BinaryWriter();
-  this.serializeBinaryToWriter(writer);
+  proto.notekeeper.OpenMasterDbRequest.serializeBinaryToWriter(this, writer);
   return writer.getResultBuffer();
 };
 
 
 /**
- * Serializes the message to binary data (in protobuf wire format),
- * writing to the given BinaryWriter.
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.notekeeper.OpenMasterDbRequest} message
  * @param {!jspb.BinaryWriter} writer
  */
-proto.notekeeper.OpenMasterDbRequest.prototype.serializeBinaryToWriter = function (writer) {
+proto.notekeeper.OpenMasterDbRequest.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
-  f = this.getPath();
+  f = message.getPath();
   if (f.length > 0) {
     writer.writeString(
       1,
@@ -1582,49 +1531,39 @@ proto.notekeeper.CreateAccountRequest.deserializeBinaryFromReader = function(msg
 
 
 /**
- * Class method variant: serializes the given message to binary data
- * (in protobuf wire format), writing to the given BinaryWriter.
- * @param {!proto.notekeeper.CreateAccountRequest} message
- * @param {!jspb.BinaryWriter} writer
- */
-proto.notekeeper.CreateAccountRequest.serializeBinaryToWriter = function(message, writer) {
-  message.serializeBinaryToWriter(writer);
-};
-
-
-/**
  * Serializes the message to binary data (in protobuf wire format).
  * @return {!Uint8Array}
  */
 proto.notekeeper.CreateAccountRequest.prototype.serializeBinary = function() {
   var writer = new jspb.BinaryWriter();
-  this.serializeBinaryToWriter(writer);
+  proto.notekeeper.CreateAccountRequest.serializeBinaryToWriter(this, writer);
   return writer.getResultBuffer();
 };
 
 
 /**
- * Serializes the message to binary data (in protobuf wire format),
- * writing to the given BinaryWriter.
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.notekeeper.CreateAccountRequest} message
  * @param {!jspb.BinaryWriter} writer
  */
-proto.notekeeper.CreateAccountRequest.prototype.serializeBinaryToWriter = function (writer) {
+proto.notekeeper.CreateAccountRequest.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
-  f = this.getName();
+  f = message.getName();
   if (f.length > 0) {
     writer.writeString(
       1,
       f
     );
   }
-  f = this.getEmail();
+  f = message.getEmail();
   if (f.length > 0) {
     writer.writeString(
       2,
       f
     );
   }
-  f = this.getPassphrase();
+  f = message.getPassphrase();
   if (f.length > 0) {
     writer.writeString(
       3,
@@ -1781,42 +1720,32 @@ proto.notekeeper.UnlockAccountRequest.deserializeBinaryFromReader = function(msg
 
 
 /**
- * Class method variant: serializes the given message to binary data
- * (in protobuf wire format), writing to the given BinaryWriter.
- * @param {!proto.notekeeper.UnlockAccountRequest} message
- * @param {!jspb.BinaryWriter} writer
- */
-proto.notekeeper.UnlockAccountRequest.serializeBinaryToWriter = function(message, writer) {
-  message.serializeBinaryToWriter(writer);
-};
-
-
-/**
  * Serializes the message to binary data (in protobuf wire format).
  * @return {!Uint8Array}
  */
 proto.notekeeper.UnlockAccountRequest.prototype.serializeBinary = function() {
   var writer = new jspb.BinaryWriter();
-  this.serializeBinaryToWriter(writer);
+  proto.notekeeper.UnlockAccountRequest.serializeBinaryToWriter(this, writer);
   return writer.getResultBuffer();
 };
 
 
 /**
- * Serializes the message to binary data (in protobuf wire format),
- * writing to the given BinaryWriter.
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.notekeeper.UnlockAccountRequest} message
  * @param {!jspb.BinaryWriter} writer
  */
-proto.notekeeper.UnlockAccountRequest.prototype.serializeBinaryToWriter = function (writer) {
+proto.notekeeper.UnlockAccountRequest.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
-  f = this.getId();
+  f = message.getId();
   if (f.length > 0) {
     writer.writeString(
       1,
       f
     );
   }
-  f = this.getPassphrase();
+  f = message.getPassphrase();
   if (f.length > 0) {
     writer.writeString(
       2,
@@ -1963,49 +1892,39 @@ proto.notekeeper.SigninAccountRequest.deserializeBinaryFromReader = function(msg
 
 
 /**
- * Class method variant: serializes the given message to binary data
- * (in protobuf wire format), writing to the given BinaryWriter.
- * @param {!proto.notekeeper.SigninAccountRequest} message
- * @param {!jspb.BinaryWriter} writer
- */
-proto.notekeeper.SigninAccountRequest.serializeBinaryToWriter = function(message, writer) {
-  message.serializeBinaryToWriter(writer);
-};
-
-
-/**
  * Serializes the message to binary data (in protobuf wire format).
  * @return {!Uint8Array}
  */
 proto.notekeeper.SigninAccountRequest.prototype.serializeBinary = function() {
   var writer = new jspb.BinaryWriter();
-  this.serializeBinaryToWriter(writer);
+  proto.notekeeper.SigninAccountRequest.serializeBinaryToWriter(this, writer);
   return writer.getResultBuffer();
 };
 
 
 /**
- * Serializes the message to binary data (in protobuf wire format),
- * writing to the given BinaryWriter.
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.notekeeper.SigninAccountRequest} message
  * @param {!jspb.BinaryWriter} writer
  */
-proto.notekeeper.SigninAccountRequest.prototype.serializeBinaryToWriter = function (writer) {
+proto.notekeeper.SigninAccountRequest.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
-  f = this.getName();
+  f = message.getName();
   if (f.length > 0) {
     writer.writeString(
       1,
       f
     );
   }
-  f = this.getEmail();
+  f = message.getEmail();
   if (f.length > 0) {
     writer.writeString(
       2,
       f
     );
   }
-  f = this.getPassphrase();
+  f = message.getPassphrase();
   if (f.length > 0) {
     writer.writeString(
       3,
@@ -2167,49 +2086,39 @@ proto.notekeeper.CreateNotebookRequest.deserializeBinaryFromReader = function(ms
 
 
 /**
- * Class method variant: serializes the given message to binary data
- * (in protobuf wire format), writing to the given BinaryWriter.
- * @param {!proto.notekeeper.CreateNotebookRequest} message
- * @param {!jspb.BinaryWriter} writer
- */
-proto.notekeeper.CreateNotebookRequest.serializeBinaryToWriter = function(message, writer) {
-  message.serializeBinaryToWriter(writer);
-};
-
-
-/**
  * Serializes the message to binary data (in protobuf wire format).
  * @return {!Uint8Array}
  */
 proto.notekeeper.CreateNotebookRequest.prototype.serializeBinary = function() {
   var writer = new jspb.BinaryWriter();
-  this.serializeBinaryToWriter(writer);
+  proto.notekeeper.CreateNotebookRequest.serializeBinaryToWriter(this, writer);
   return writer.getResultBuffer();
 };
 
 
 /**
- * Serializes the message to binary data (in protobuf wire format),
- * writing to the given BinaryWriter.
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.notekeeper.CreateNotebookRequest} message
  * @param {!jspb.BinaryWriter} writer
  */
-proto.notekeeper.CreateNotebookRequest.prototype.serializeBinaryToWriter = function (writer) {
+proto.notekeeper.CreateNotebookRequest.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
-  f = this.getName();
+  f = message.getName();
   if (f.length > 0) {
     writer.writeString(
       1,
       f
     );
   }
-  f = this.getUserId();
+  f = message.getUserId();
   if (f.length > 0) {
     writer.writeString(
       2,
       f
     );
   }
-  f = this.getShelfId();
+  f = message.getShelfId();
   if (f.length > 0) {
     writer.writeString(
       3,
