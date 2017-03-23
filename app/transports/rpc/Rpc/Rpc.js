@@ -1,6 +1,10 @@
 import grpc from 'grpc';
 import services from '../../../proto/backend_grpc_pb';
 import { default as AccountTransport } from '../Account';
+import { default as NotebookTransport } from '../Notebook';
+import { default as NoteTransport } from '../Note';
+import { default as TagTransport } from '../Tag';
+import { default as TrashTransport } from '../Trash';
 
 const RPC_PORT = 'localhost:53017';
 
@@ -8,9 +12,13 @@ class Rpc {
   client
   transports = {};
 
+  // registerTransports instantiates all of the available RPC transport classes
   registerTransports() {
-    account = new AccountTransport();
-    transports['account'] = account;
+    this.transports['account'] = new AccountTransport();
+    this.transports['notebook'] = new NotebookTransport();
+    this.transports['note'] = new NoteTransport();
+    this.transports['tag'] = new TagTransport();
+    this.transports['trash'] = new TrashTransport();
   }
 
   getClient() {
