@@ -13,7 +13,7 @@ export default class Account {
   // registerIpc registers IPC hooks mirroring the RPC calls
   registerIpc() {
     ipcMain.on('Account::create', (event, arg) => {
-      const promise = this.create(arg.accountName, arg.email, arg.password);
+      const promise = this.create(arg.accountName, arg.email, arg.passphrase);
       promise.then((val) => {
         event.sender.send('Account::create', val);
       });
@@ -27,7 +27,7 @@ export default class Account {
     });
 
     ipcMain.on('Account::signin', (event, arg) => {
-      const promise = this.create(arg.name, arg.email, arg.passphrase);
+      const promise = this.signin(arg.name, arg.email, arg.passphrase);
       promise.then((val) => {
         event.sender.send('Account::signin', val);
       });
@@ -41,7 +41,7 @@ export default class Account {
     });
 
     ipcMain.on('Account::unlock', (event, arg) => {
-      const promise = this.unlock();
+      const promise = this.unlock(arg.passphrase);
       promise.then((val) => {
         event.sender.send('Account::unlock', val);
       });
@@ -90,8 +90,11 @@ export default class Account {
   }
 
   // signin makes an RPC request to sign in to an account
-  signin() {
+  signin(name, email, passphrase) {
     const request = new messages.SigninAccountRequest();
+    request.setName(name);
+    request.setEmail(email);
+    request.setPassphrase(passphrase);
     const promise = new Promise((resolve, reject) => {
       this.client.signinAccount(request, (err, response) => {
         // [FIXME] - error handling
@@ -114,8 +117,9 @@ export default class Account {
   }
 
   // unlock makes an RPC request to unlock a locked account
-  unlock() {
+  unlock(passphrase) {
     const request = new messages.UnlockAccountRequest();
+    request.setPassphrase(passphrase);
     const promise = new Promise((resolve, reject) => {
       this.client.unlockAccount(request, (err, response) => {
         // [FIXME] - error handling

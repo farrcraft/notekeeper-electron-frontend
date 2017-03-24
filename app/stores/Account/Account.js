@@ -40,8 +40,8 @@ class Account {
     return promise;
   }
 
-  @action create(accountName, email, password) {
-    const promise = this.transportLayer.create(accountName, email, password);
+  @action create(accountName, email, passphrase) {
+    const promise = this.transportLayer.create(accountName, email, passphrase);
     promise.then((val) => {
       this.signedIn = true;
       this.exists = true;
@@ -49,24 +49,34 @@ class Account {
     });
   }
 
-  signin() {
-    // [FIXME] - implement
-    this.signedIn = true;
+  @action signin(accountName, email, passphrase) {
+    const promise = this.transportLayer.signin(accountName, email, passphrase);
+    promise.then((val) => {
+      this.signedIn = true;
+      this.locked = false;
+    });
   }
 
   signout() {
-    // [FIXME] - implement
-    this.signedIn = false;
+    const promise = this.transportLayer.signout();
+    promise.then((val) => {
+      this.signedIn = false;
+      this.locked = true;
+    });
   }
 
   lock() {
-    // [FIXME] - implement
-    this.locked = true;
+    const promise = this.transportLayer.lock();
+    promise.then((val) => {
+      this.locked = true;
+    });
   }
 
   unlock() {
-    // [FIXME] - implement
-    this.locked = false;
+    const promise = this.transportLayer.unlock();
+    promise.then((val) => {
+      this.locked = false;
+    });
   }
 
   isLocked() {

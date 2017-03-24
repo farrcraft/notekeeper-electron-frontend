@@ -24,9 +24,9 @@ export default class Account {
    * Create a new account
    * @param {*} accountName 
    * @param {*} email 
-   * @param {*} password 
+   * @param {*} passphrase 
    */
-  create(accountName, email, password) {
+  create(accountName, email, passphrase) {
     const promise = new Promise((resolve, reject) => {
       ipcRenderer.on('Account::create', (event, arg) => {
         resolve(arg);
@@ -34,9 +34,63 @@ export default class Account {
       const msg = {
         accountName: accountName,
         email: email,
-        password: password
+        passphrase: passphrase
       };
       ipcRenderer.send('Account::create', msg);
+    });
+    return promise;
+  }
+
+  signin(accountName, email, passphrase) {
+    const promise = new Promise((resolve, reject) => {
+      ipcRenderer.on('Account::signin', (event, arg) =>{
+        resolve(arg);
+      });
+      const msg = {
+        accountName: accountName,
+        email: email,
+        passphrase: passphrase
+      };
+      ipcRenderer.send('Account::signin', msg);
+    });
+    return promise;
+  }
+
+  signout() {
+    const promise = new Promise((resolve, reject) => {
+      ipcRenderer.on('Account::signout', (event, arg) =>{
+        resolve(arg);
+      });
+      const msg = {
+
+      };
+      ipcRenderer.send('Account::signout', msg);
+    });
+    return promise;
+  }
+
+  lock() {
+    const promise = new Promise((resolve, reject) => {
+      ipcRenderer.on('Account::lock', (event, arg) =>{
+        resolve(arg);
+      });
+      const msg = {
+
+      };
+      ipcRenderer.send('Account::lock', msg);
+    });
+    return promise;
+  }
+
+  unlock(passphrase) {
+    const promise = new Promise((resolve, reject) => {
+      ipcRenderer.on('Account::unlock', (event, arg) =>{
+        resolve(arg);
+      });
+      const msg = {
+        passphrase: passphrase
+      };
+      ipcRenderer.send('Account::unlock', msg);
     });
     return promise;
   }
