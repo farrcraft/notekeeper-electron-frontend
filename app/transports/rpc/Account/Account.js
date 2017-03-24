@@ -13,6 +13,10 @@ export default class Account {
   // registerIpc registers IPC hooks mirroring the RPC calls
   registerIpc() {
     ipcMain.on('Account::create', (event, arg) => {
+      const promise = this.create(arg.accountName, arg.email, arg.password);
+      promise.then((val) => {
+        event.sender.send('Account::create', val);
+      });
     });
 
     ipcMain.on('Account::getState', (event, arg) => {

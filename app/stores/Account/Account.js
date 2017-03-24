@@ -1,30 +1,52 @@
-import { observable } from 'mobx';
+import { observable, action, extendObservable } from 'mobx';
 
 class Account {
-  @observable signedIn = false;
-  @observable locked = true;
-  @observable exists = false;
+  /*
+  @observable signedIn
+  @observable locked
+  @observable exists
+  */
 
-  transportLayer = null;
+  transportLayer
 
   constructor() {
+    extendObservable(this, {
+      signedIn: false,
+      locked: true,
+      exists: false
+    });
+    this.transportLayer = null;
   }
 
   setTransport(transportLayer) {
     this.transportLayer = transportLayer;
   }
 
-  getState() {
+  get isSignedIn() {
+    return this.signedIn;
+  }
+
+  get isLocked() {
+    return this.locked;
+  }
+
+  @action getState() {
     const promise = this.transportLayer.getState();
     promise.then((val) => {
       this.signedIn = val.signedIn;
       this.locked = val.locked;
       this.exists = val.exists;
     });
+    return promise;
   }
 
-  create() {
-    // [FIXME] - implement
+  @action create(accountName, email, password) {
+    const promise = this.transportLayer.create(accountName, email, password);
+    promise.then((val) => {
+      this.signedIn = true;
+      this.exists = true;
+      this.locked = false;
+    });
   }
 
   signin() {

@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 
-class Unlock extends Component {
+class Workspace extends Component {
   render() {
     return (
       <div>
-        <h1>Unlock</h1>
+        <h1>Workspace</h1>
       </div>
     );
   }
 }
 
-export default Unlock;
+export default Workspace;

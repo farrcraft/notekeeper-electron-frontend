@@ -202,7 +202,7 @@ app.on('ready', async () => {
     height = 600;
   }
 
-  createWindow(width, height, uiStateStore.windowXPosition, uiStateStore.windowYPosition);
-
   rpc.registerTransports();
+
+  createWindow(width, height, uiStateStore.windowXPosition, uiStateStore.windowYPosition);
 });

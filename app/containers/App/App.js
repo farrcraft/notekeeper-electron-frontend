@@ -1,25 +1,40 @@
 // @flow
 import React, { Component } from 'react';
+import { Provider } from 'mobx-react';
+import CreateAccount from '../../components/Account/Create';
+import UnlockAccount from '../../components/Account/Unlock';
+import SigninAccount from '../../components/Account/Signin';
+import Workspace from '../../components/Workspace';
 
 export default class App extends Component {
-  props: {
-    children: HTMLElement
-  };
 
   componentWillMount() {
-    // [FIXME] -
-    // do we set properties here? (need to set this.props.children)
-    // need logic to determine whether we're showing the:
-    //  account login screen
-    //  unlock screen
-    //  create account screen
   }
 
   render() {
+    const { stores } = this.props;
+    let View = null;
+    if (stores.account.exists == true) {
+      if (stores.account.isSignedIn == true) {
+        if (stores.account.isLocked == false) { // signed in and not locked
+          View = Workspace;
+        } else { // signed in but locked
+          View = UnlockAccount;
+        }
+      } else { // not signed in
+        View = SigninAccount;
+      }
+    } else { // no account exists yet
+      View = CreateAccount;
+    }
+
     return (
-      <div>
-        {this.props.children}
-      </div>
+      <Provider {...stores}>
+        <div>
+          <h1>This is app</h1>
+          <View />
+        </div>
+      </Provider>
     );
   }
 }
