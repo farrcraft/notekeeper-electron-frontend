@@ -52,10 +52,14 @@ app.on('will-quit', () => {
 app.on('window-all-closed', async () => {
   try {
     await uiStateStore.save();
+
+    const accountTransport = rpc.getTransport('account');
+    if (accountTransport.store.locked === false) {
+      await accountTransport.lock();
+    }
   } catch (e) {
     console.log(e);
   }
-  // [FIXME] - should lock account in backend process here?
   Core.shutdown();
   if (process.platform !== 'darwin') {
     app.quit();
@@ -85,7 +89,7 @@ function delayedWindowStateSave() {
   if (windowStateTimeout) {
     clearTimeout(windowStateTimeout);
   }
-  windowStateTimeout = setTimeout(updateWindowState, 600);
+  windowStateTimeout = setTimeout(updateWindowState, 5000);
 }
 
 // updateWindowState saves the current window state (position/size) to the db

@@ -33,28 +33,40 @@ class Account {
   @action getState() {
     const promise = this.transportLayer.getState();
     promise.then((val) => {
-      this.signedIn = val.signedIn;
-      this.locked = val.locked;
-      this.exists = val.exists;
+      this.handleGetState(val);
     });
     return promise;
+  }
+
+  handleGetState(val) {
+    this.signedIn = val.signedIn;
+    this.locked = val.locked;
+    this.exists = val.exists;
   }
 
   @action create(accountName, email, passphrase) {
     const promise = this.transportLayer.create(accountName, email, passphrase);
     promise.then((val) => {
-      this.signedIn = true;
-      this.exists = true;
-      this.locked = false;
+      this.handleCreate(val);
     });
+  }
+
+  handleCreate(val) {
+    this.signedIn = true;
+    this.exists = true;
+    this.locked = false;
   }
 
   @action signin(accountName, email, passphrase) {
     const promise = this.transportLayer.signin(accountName, email, passphrase);
     promise.then((val) => {
-      this.signedIn = true;
-      this.locked = false;
+      this.handleSignin(val);
     });
+  }
+
+  handleSignin(val) {
+    this.signedIn = true;
+    this.locked = false;
   }
 
   signout() {

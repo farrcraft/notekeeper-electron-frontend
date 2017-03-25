@@ -4,10 +4,15 @@ import { ipcMain } from 'electron';
 
 export default class Account {
   client = null;
+  store = null;
 
   constructor() {
     this.client = rpc.getClient();
     this.registerIpc();
+  }
+
+  setStore(store) {
+    this.store = store;
   }
 
   // registerIpc registers IPC hooks mirroring the RPC calls
@@ -15,6 +20,7 @@ export default class Account {
     ipcMain.on('Account::create', (event, arg) => {
       const promise = this.create(arg.accountName, arg.email, arg.passphrase);
       promise.then((val) => {
+        this.store.handleCreate(val);
         event.sender.send('Account::create', val);
       });
     });
@@ -22,6 +28,7 @@ export default class Account {
     ipcMain.on('Account::getState', (event, arg) => {
       const promise = this.getState();
       promise.then((val) => {
+        this.store.handleGetState(val);
         event.sender.send('Account::getState', val);
       });
     });
@@ -29,6 +36,7 @@ export default class Account {
     ipcMain.on('Account::signin', (event, arg) => {
       const promise = this.signin(arg.name, arg.email, arg.passphrase);
       promise.then((val) => {
+        this.store.handleSignin(val);
         event.sender.send('Account::signin', val);
       });
     });

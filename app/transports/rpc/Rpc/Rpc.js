@@ -5,6 +5,7 @@ import { default as NotebookTransport } from '../Notebook';
 import { default as NoteTransport } from '../Note';
 import { default as TagTransport } from '../Tag';
 import { default as TrashTransport } from '../Trash';
+import accountStore from '../../../stores/Account';
 
 const RPC_PORT = 'localhost:53017';
 
@@ -19,6 +20,13 @@ class Rpc {
     this.transports['note'] = new NoteTransport();
     this.transports['tag'] = new TagTransport();
     this.transports['trash'] = new TrashTransport();
+
+    // we mirror the store in the main process in order to track some account state
+    this.transports['account'].setStore(accountStore);
+  }
+
+  getTransport(transport) {
+    return this.transports[transport];
   }
 
   getClient() {
