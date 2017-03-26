@@ -1,4 +1,4 @@
-import { electron, app, BrowserWindow, Menu, shell, screen, Rectangle } from 'electron';
+import { app, BrowserWindow, screen, Rectangle } from 'electron';
 import Core from './shared';
 import MenuBuilder from './menu';
 import { default as rpc } from './transports/rpc/Rpc';
@@ -54,9 +54,17 @@ app.on('window-all-closed', async () => {
     await uiStateStore.save();
 
     const accountTransport = rpc.getTransport('account');
+    // The most secure option is to completely sign out the user when they close the main window
+    // The user will need to do a full signin next time they open the app
+    if (accountTransport.store.signedIn === true) {
+      await accountTransport.signout();
+    }
+    // If the user has opted into the less secure "remember me" option, then we can just lock instead:
+    /*
     if (accountTransport.store.locked === false) {
       await accountTransport.lock();
     }
+    */
   } catch (e) {
     console.log(e);
   }
@@ -134,8 +142,8 @@ function restoreWindowState() {
     displayBounds.y === uiStateStore.displayYPosition &&
     displayBounds.width === uiStateStore.displayWidth &&
     displayBounds.height === uiStateStore.displayHeight) {
-      mainWindow.setBounds(restoreBounds);
-    }
+    mainWindow.setBounds(restoreBounds);
+  }
 
   if (uiStateStore.windowMaximized) {
     mainWindow.maximize();
@@ -156,8 +164,8 @@ function createWindow(width, height, x, y) {
     },
     */
     show: false,
-    width: width,
-    height: height
+    width,
+    height
   };
   if (x >= 0) {
     options.x = x;

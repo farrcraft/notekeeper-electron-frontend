@@ -22,9 +22,9 @@ export default class Account {
 
   /**
    * Create a new account
-   * @param {*} accountName 
-   * @param {*} email 
-   * @param {*} passphrase 
+   * @param {*} accountName
+   * @param {*} email
+   * @param {*} passphrase
    */
   create(accountName, email, passphrase) {
     const promise = new Promise((resolve, reject) => {
@@ -32,9 +32,9 @@ export default class Account {
         resolve(arg);
       });
       const msg = {
-        accountName: accountName,
-        email: email,
-        passphrase: passphrase
+        accountName,
+        email,
+        passphrase
       };
       ipcRenderer.send('Account::create', msg);
     });
@@ -43,13 +43,13 @@ export default class Account {
 
   signin(accountName, email, passphrase) {
     const promise = new Promise((resolve, reject) => {
-      ipcRenderer.on('Account::signin', (event, arg) =>{
+      ipcRenderer.on('Account::signin', (event, arg) => {
         resolve(arg);
       });
       const msg = {
-        accountName: accountName,
-        email: email,
-        passphrase: passphrase
+        accountName,
+        email,
+        passphrase
       };
       ipcRenderer.send('Account::signin', msg);
     });
@@ -58,7 +58,7 @@ export default class Account {
 
   signout() {
     const promise = new Promise((resolve, reject) => {
-      ipcRenderer.on('Account::signout', (event, arg) =>{
+      ipcRenderer.on('Account::signout', (event, arg) => {
         resolve(arg);
       });
       const msg = {
@@ -71,7 +71,7 @@ export default class Account {
 
   lock() {
     const promise = new Promise((resolve, reject) => {
-      ipcRenderer.on('Account::lock', (event, arg) =>{
+      ipcRenderer.on('Account::lock', (event, arg) => {
         resolve(arg);
       });
       const msg = {
@@ -84,11 +84,11 @@ export default class Account {
 
   unlock(passphrase) {
     const promise = new Promise((resolve, reject) => {
-      ipcRenderer.on('Account::unlock', (event, arg) =>{
+      ipcRenderer.on('Account::unlock', (event, arg) => {
         resolve(arg);
       });
       const msg = {
-        passphrase: passphrase
+        passphrase
       };
       ipcRenderer.send('Account::unlock', msg);
     });

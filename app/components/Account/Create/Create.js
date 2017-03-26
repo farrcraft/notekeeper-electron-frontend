@@ -13,7 +13,7 @@ class Create extends Component {
 
   handleChange = (key) => ({
     value: this.form[key],
-    onChange: e => { 
+    onChange: e => {
       this.form[key] = e.target.value;
     }
   })
@@ -34,19 +34,19 @@ class Create extends Component {
       <div>
         <h1>Create Account </h1>
         <form className="create-account-form" onSubmit={this.handleSubmit}>
-          <label>
+          <label htmlFor="accountName">
             Account Name
-            <input type="text" {...this.handleChange('accountName')} required="required"/>
+            <input id="accountName" type="text" {...this.handleChange('accountName')} required="required" />
           </label>
 
-          <label>
+          <label htmlFor="email">
             Email Address
-            <input type="email" {...this.handleChange('email')} required="required"/>
+            <input id="email" type="email" {...this.handleChange('email')} required="required" />
           </label>
 
-          <label>
+          <label htmlFor="password">
             Password
-            <input type="password" {...this.handleChange('password')} required="required"/>
+            <input id="password" type="password" {...this.handleChange('password')} required="required" />
           </label>
 
           <button>Create Account</button>

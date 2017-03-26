@@ -29,7 +29,7 @@ export default merge(baseConfig, {
       {
         test: /\.global\.css$/,
         use: ExtractTextPlugin.extract({
-          use: 'css-loader'
+          use: 'css-loader',
           fallback: 'style-loader',
         })
       },
@@ -53,43 +53,47 @@ export default merge(baseConfig, {
 
       // Fonts
       {
-        test: /\.woff(\?v=\d+\.\d+\.\d+)?$/, 
+        test: /\.woff(\?v=\d+\.\d+\.\d+)?$/,
         use: {
           loader: 'url-loader',
           options: {
             limit: 10000,
             mimetype: 'application/font-woff'
+          }
         }
       },
       {
-        test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/, 
+        test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/,
         use: {
           loader: 'url-loader',
           options: {
             limit: 10000,
             mimetype: 'application/font-woff'
+          }
         }
       },
       {
-        test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/, 
+        test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
         use: {
           loader: 'url-loader',
           options: {
             limit: 10000,
             mimetype: 'application/octet-stream'
+          }
         }
       },
       {
-        test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, 
+        test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
         use: 'file-loader'
       },
       {
-        test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, 
+        test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
         use: {
           loader: 'url-loader',
           options: {
             limit: 10000,
             mimetype: 'image/svg+xml'
+          }
         }
       },
 

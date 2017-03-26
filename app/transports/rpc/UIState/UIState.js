@@ -12,6 +12,10 @@ export default class UIState {
     const request = new messages.TokenRequest();
     const promise = new Promise((resolve, reject) => {
       this.client.uIState(request, (err, response) => {
+        if (err) {
+          reject(err);
+          return;
+        }
         // [FIXME] - error handling
         resolve(response);
       });
@@ -35,6 +39,10 @@ export default class UIState {
 
     const promise = new Promise((resolve, reject) => {
       this.client.saveUIState(request, (err, response) => {
+        if (err) {
+          reject(err);
+          return;
+        }
         const status = response.getStatus();
         // [FIXME] - error handling
         if (status !== 'OK') {

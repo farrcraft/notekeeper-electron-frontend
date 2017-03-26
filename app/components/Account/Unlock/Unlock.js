@@ -5,14 +5,12 @@ import { observer, inject } from 'mobx-react';
 @inject('account') @observer
 class Unlock extends Component {
   @observable form = {
-    accountName: '',
-    email: '',
     password: ''
   }
 
   handleChange = (key) => ({
     value: this.form[key],
-    onChange: e => { 
+    onChange: e => {
       this.form[key] = e.target.value;
     }
   })
@@ -33,9 +31,9 @@ class Unlock extends Component {
       <div>
         <h1>Unlock</h1>
         <form className="unlock-account-form" onSubmit={this.handleSubmit}>
-          <label>
+          <label htmlFor="password">
             Password
-            <input type="password" {...this.handleChange('password')} required="required"/>
+            <input id="password" type="password" {...this.handleChange('password')} required="required" />
           </label>
 
           <button>Unlock Account</button>

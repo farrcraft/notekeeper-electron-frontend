@@ -1,11 +1,6 @@
-import { observable, action, extendObservable } from 'mobx';
+import { action, extendObservable } from 'mobx';
 
 class Account {
-  /*
-  @observable signedIn
-  @observable locked
-  @observable exists
-  */
 
   transportLayer
 
@@ -57,7 +52,7 @@ class Account {
     this.locked = false;
   }
 
-  @action signin(accountName, email, passphrase) {
+  @action signin(accountName, email, passphrase, rememberMe) {
     const promise = this.transportLayer.signin(accountName, email, passphrase);
     promise.then((val) => {
       this.handleSignin(val);
@@ -84,8 +79,8 @@ class Account {
     });
   }
 
-  unlock() {
-    const promise = this.transportLayer.unlock();
+  unlock(passphrase) {
+    const promise = this.transportLayer.unlock(passphrase);
     promise.then((val) => {
       this.locked = false;
     });

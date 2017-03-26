@@ -34,7 +34,7 @@ export default class Account {
     });
 
     ipcMain.on('Account::signin', (event, arg) => {
-      const promise = this.signin(arg.name, arg.email, arg.passphrase);
+      const promise = this.signin(arg.accountName, arg.email, arg.passphrase);
       promise.then((val) => {
         this.store.handleSignin(val);
         event.sender.send('Account::signin', val);
@@ -71,9 +71,13 @@ export default class Account {
     request.setPassphrase(passphrase);
     const promise = new Promise((resolve, reject) => {
       this.client.createAccount(request, (err, response) => {
-        // [FIXME] - error handling
+        if (err) {
+          reject(err);
+          return;
+        }
         const status = response.getStatus();
         if (status !== 'OK') {
+          // [FIXME] - error handling
         }
         resolve(response);
       });
@@ -86,7 +90,10 @@ export default class Account {
     const request = new messages.TokenRequest();
     const promise = new Promise((resolve, reject) => {
       this.client.accountState(request, (err, response) => {
-        // [FIXME] - error handling
+        if (err) {
+          reject(err);
+          return;
+        }
         const state = {};
         state.signedIn = response.getSignedin();
         state.locked = response.getLocked();
@@ -105,6 +112,10 @@ export default class Account {
     request.setPassphrase(passphrase);
     const promise = new Promise((resolve, reject) => {
       this.client.signinAccount(request, (err, response) => {
+        if (err) {
+          reject(err);
+          return;
+        }
         // [FIXME] - error handling
         resolve(response);
       });
@@ -117,6 +128,10 @@ export default class Account {
     const request = new messages.IdRequest();
     const promise = new Promise((resolve, reject) => {
       this.client.signoutAccount(request, (err, response) => {
+        if (err) {
+          reject(err);
+          return;
+        }
         // [FIXME] - error handling
         resolve(response);
       });
@@ -130,6 +145,10 @@ export default class Account {
     request.setPassphrase(passphrase);
     const promise = new Promise((resolve, reject) => {
       this.client.unlockAccount(request, (err, response) => {
+        if (err) {
+          reject(err);
+          return;
+        }
         // [FIXME] - error handling
         resolve(response);
       });
@@ -142,6 +161,10 @@ export default class Account {
     const request = new messages.IdRequest();
     const promise = new Promise((resolve, reject) => {
       this.client.lockAccount(request, (err, response) => {
+        if (err) {
+          reject(err);
+          return;
+        }
         // [FIXME] - error handling
         resolve(response);
       });

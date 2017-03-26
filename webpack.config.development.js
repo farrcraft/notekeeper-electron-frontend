@@ -11,7 +11,7 @@ import { spawn } from 'child_process';
 import baseConfig from './webpack.config.base';
 
 const port = process.env.PORT || 3000;
-const publicPath = `http://localhost:${port}/dist`
+const publicPath = `http://localhost:${port}/dist`;
 
 export default merge(baseConfig, {
   devtool: 'inline-source-map',

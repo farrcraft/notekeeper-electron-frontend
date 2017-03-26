@@ -1,11 +1,12 @@
 // @flow
 import React, { Component } from 'react';
-import { Provider } from 'mobx-react';
+import { Provider, observer } from 'mobx-react';
 import CreateAccount from '../../components/Account/Create';
 import UnlockAccount from '../../components/Account/Unlock';
 import SigninAccount from '../../components/Account/Signin';
 import Workspace from '../../components/Workspace';
 
+@observer
 export default class App extends Component {
 
   componentWillMount() {
@@ -14,9 +15,9 @@ export default class App extends Component {
   render() {
     const { stores } = this.props;
     let View = null;
-    if (stores.account.exists == true) {
-      if (stores.account.isSignedIn == true) {
-        if (stores.account.isLocked == false) { // signed in and not locked
+    if (stores.account.exists === true) {
+      if (stores.account.isSignedIn === true) {
+        if (stores.account.isLocked === false) { // signed in and not locked
           View = Workspace;
         } else { // signed in but locked
           View = UnlockAccount;
