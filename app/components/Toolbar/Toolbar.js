@@ -5,6 +5,9 @@ class Toolbar extends Component {
     return (
       <div>
         <h1>Toolbar</h1>
+        <div>
+          {this.props.children}
+        </div>
       </div>
     );
   }
