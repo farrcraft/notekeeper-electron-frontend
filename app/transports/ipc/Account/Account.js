@@ -5,6 +5,19 @@ import { ipcRenderer } from 'electron';
  * It mirrors requests to the RPC transport.
  */
 export default class Account {
+  dispatcher
+
+  constructor() {
+    this.dispatcher = ipcRenderer;
+  }
+
+  /**
+   * Dispatch IPC message
+   */
+  dispatchMessage(channel, msg) {
+    this.dispatcher.send(channel, msg);
+  }
+
   /**
    * Get the current account state
    */
@@ -13,9 +26,11 @@ export default class Account {
     const token = 'secure token';
     const promise = new Promise((resolve, reject) => {
       ipcRenderer.on('Account::getState', (event, arg) => {
+        console.log('logging event next');
+        console.log(event);
         resolve(arg);
       });
-      ipcRenderer.send('Account::getState', token);
+      this.dispatchMessage('Account::getState', token);
     });
     return promise;
   }
@@ -36,7 +51,7 @@ export default class Account {
         email,
         passphrase
       };
-      ipcRenderer.send('Account::create', msg);
+      this.dispatchMessage('Account::create', msg);
     });
     return promise;
   }
@@ -51,7 +66,7 @@ export default class Account {
         email,
         passphrase
       };
-      ipcRenderer.send('Account::signin', msg);
+      this.dispatchMessage('Account::signin', msg);
     });
     return promise;
   }
@@ -64,7 +79,7 @@ export default class Account {
       const msg = {
 
       };
-      ipcRenderer.send('Account::signout', msg);
+      this.dispatchMessage('Account::signout', msg);
     });
     return promise;
   }
@@ -77,7 +92,7 @@ export default class Account {
       const msg = {
 
       };
-      ipcRenderer.send('Account::lock', msg);
+      this.dispatchMessage('Account::lock', msg);
     });
     return promise;
   }
@@ -90,7 +105,7 @@ export default class Account {
       const msg = {
         passphrase
       };
-      ipcRenderer.send('Account::unlock', msg);
+      this.dispatchMessage('Account::unlock', msg);
     });
     return promise;
   }

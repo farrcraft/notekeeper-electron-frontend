@@ -1,3 +1,3 @@
-import { default as UIState } from './UIState';
+import UIState from './UIState';
 
 export default UIState;

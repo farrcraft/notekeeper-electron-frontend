@@ -9,7 +9,7 @@ class ToolbarEntry extends Component {
   render() {
     return (
       <button onClick={this.handleClick}>
-          {this.props.children}
+        {this.props.children}
       </button>
     );
   }

@@ -3,7 +3,7 @@ import { render } from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
 import App from './containers/App';
 import accountStore from './stores/Account';
-import { default as AccountTransport } from './transports/ipc/Account';
+import AccountTransport from './transports/ipc/Account';
 
 // import './scss/general.scss';
 
@@ -14,6 +14,7 @@ const stores = {
   account: accountStore
 };
 
+console.log('getting state');
 accountStore.getState().then((val) => {
   render(
     <AppContainer>
@@ -21,6 +22,10 @@ accountStore.getState().then((val) => {
     </AppContainer>,
     document.getElementById('root')
   );
+  return val;
+})
+.catch((err) => {
+  // [FIXME]
 });
 
 if (module.hot) {

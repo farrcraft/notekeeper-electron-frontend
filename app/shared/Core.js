@@ -1,6 +1,6 @@
 import { app, dialog } from 'electron';
 import messages from '../proto/backend_pb';
-import { default as rpc } from '../transports/rpc/Rpc';
+import rpc from '../transports/rpc/Rpc';
 
 class Core {
   client = null;
@@ -17,12 +17,20 @@ class Core {
     const userDataPath = app.getPath('userData');
     const request = new messages.OpenMasterDbRequest();
     request.setPath(userDataPath);
-    const promise = new Promise((resolve, reject) => {
+    // caller is awaiting so we handle rejections immediately here
+    const promise = new Promise((resolve) => {
       this.client.openMasterDb(request, (err, response) => {
+        if (err !== null) {
+          if (rpc.handleRpcError(err)) {
+            app.quit();
+            return;
+          }
+        }
         const status = response.getStatus();
         if (status !== 'OK') {
           dialog.showErrorBox('Fatal Error', 'Could not open database.');
           app.quit();
+          return;
         }
         resolve(status);
       });
@@ -32,6 +40,7 @@ class Core {
 
   shutdown() {
     rpc.close();
+    this.client = null;
   }
 }
 

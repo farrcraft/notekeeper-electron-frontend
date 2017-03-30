@@ -1,9 +1,9 @@
 import { app, BrowserWindow, screen, Rectangle } from 'electron';
 import Core from './shared';
 import MenuBuilder from './menu';
-import { default as rpc } from './transports/rpc/Rpc';
+import rpc from './transports/rpc/Rpc';
 import uiStateStore from './stores/UIState';
-import { default as UIStateTransport } from './transports/rpc/UIState';
+import UIStateTransport from './transports/rpc/UIState';
 
 // Declared here so our main window doesn't get GC'd
 let mainWindow = null;
@@ -26,7 +26,7 @@ process.on('error', (err) => {
 });
 
 // We only want a single instance to be able to run at once
-const shouldQuit = app.makeSingleInstance((argv, workingDirectory) => {
+const shouldQuit = app.makeSingleInstance((/* argv, workingDirectory */) => {
   if (mainWindow) {
     if (mainWindow.isMinimized()) {
       mainWindow.restore();
@@ -59,7 +59,8 @@ app.on('window-all-closed', async () => {
     if (accountTransport.store.signedIn === true) {
       await accountTransport.signout();
     }
-    // If the user has opted into the less secure "remember me" option, then we can just lock instead:
+    // If the user has opted into the less secure "remember me" option
+    // then we can just lock instead:
     /*
     if (accountTransport.store.locked === false) {
       await accountTransport.lock();

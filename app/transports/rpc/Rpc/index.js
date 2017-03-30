@@ -1,3 +1,3 @@
-import { default as Rpc } from './Rpc';
+import Rpc from './Rpc';
 
 export default Rpc;

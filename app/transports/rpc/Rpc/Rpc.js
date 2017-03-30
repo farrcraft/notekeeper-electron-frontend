@@ -1,3 +1,4 @@
+import { dialog } from 'electron';
 import grpc from 'grpc';
 import services from '../../../proto/backend_grpc_pb';
 import AccountTransport from '../Account';
@@ -35,6 +36,19 @@ class Rpc {
       this.client = new services.BackendClient(RPC_PORT, grpc.credentials.createInsecure());
     }
     return this.client;
+  }
+
+  handleRpcError(err) {
+    // https://github.com/grpc/grpc/blob/master/doc/statuscodes.md
+    if (err.code === grpc.status.UNAVAILABLE) {
+      this.handleError('Service Unavailable.', 'The NoteKeeper.io service is not running.');
+      return true;
+    }
+    return false;
+  }
+
+  handleError(err) {
+    dialog.showErrorBox('Application Error', err);
   }
 
   close() {

@@ -1,6 +1,6 @@
-import { default as rpc } from '../Rpc';
-import messages from '../../../proto/backend_pb';
 import { ipcMain } from 'electron';
+import rpc from '../Rpc';
+import messages from '../../../proto/backend_pb';
 
 export default class Account {
   client = null;
@@ -22,6 +22,11 @@ export default class Account {
       promise.then((val) => {
         this.store.handleCreate(val);
         event.sender.send('Account::create', val);
+        return val;
+      })
+      .catch((err) => {
+        // [FIXME] - what does an err actually look like here?
+        rpc.handleError(err);
       });
     });
 
@@ -30,6 +35,7 @@ export default class Account {
       promise.then((val) => {
         this.store.handleGetState(val);
         event.sender.send('Account::getState', val);
+        return val;
       });
     });
 
@@ -38,6 +44,11 @@ export default class Account {
       promise.then((val) => {
         this.store.handleSignin(val);
         event.sender.send('Account::signin', val);
+        return val;
+      })
+      .catch((err) => {
+        // [FIXME] - what does an err actually look like here?
+        rpc.handleError(err);
       });
     });
 
@@ -45,6 +56,7 @@ export default class Account {
       const promise = this.signout();
       promise.then((val) => {
         event.sender.send('Account::signout', val);
+        return val;
       });
     });
 
@@ -52,6 +64,7 @@ export default class Account {
       const promise = this.unlock(arg.passphrase);
       promise.then((val) => {
         event.sender.send('Account::unlock', val);
+        return val;
       });
     });
 
@@ -59,6 +72,7 @@ export default class Account {
       const promise = this.lock();
       promise.then((val) => {
         event.sender.send('Account::lock', val);
+        return val;
       });
     });
   }

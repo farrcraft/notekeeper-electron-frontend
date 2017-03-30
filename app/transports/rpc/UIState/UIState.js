@@ -1,4 +1,5 @@
-import { default as rpc } from '../Rpc';
+import { dialog } from 'electron';
+import rpc from '../Rpc';
 import messages from '../../../proto/backend_pb';
 
 export default class UIState {
@@ -12,11 +13,19 @@ export default class UIState {
     const request = new messages.TokenRequest();
     const promise = new Promise((resolve, reject) => {
       this.client.uIState(request, (err, response) => {
-        if (err) {
-          reject(err);
+        if (err !== null) {
+          if (rpc.handleRpcError(err)) {
+            return;
+          }
+          dialog.showErrorBox('Unknown Error', 'There was a problem restoring the UI state.');
           return;
         }
-        // [FIXME] - error handling
+        const status = response.getStatus();
+        if (status.getCode() !== 1) {
+          dialog.showErrorBox('Internal Error', status.getStatus());
+          reject(response);
+          return;
+        }
         resolve(response);
       });
     });
@@ -39,13 +48,17 @@ export default class UIState {
 
     const promise = new Promise((resolve, reject) => {
       this.client.saveUIState(request, (err, response) => {
-        if (err) {
-          reject(err);
+        if (err !== null) {
+          if (rpc.handleRpcError(err)) {
+            return;
+          }
+          dialog.showErrorBox('Unknown Error', 'There was a problem saving the UI state.');
           return;
         }
-        const status = response.getStatus();
-        // [FIXME] - error handling
-        if (status !== 'OK') {
+        if (response.getCode() !== 1) {
+          dialog.showErrorBox('Internal Error', response.getStatus());
+          reject(response);
+          return;
         }
         resolve(response);
       });

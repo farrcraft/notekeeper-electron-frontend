@@ -27,22 +27,24 @@ class Account {
 
   @action getState() {
     const promise = this.transportLayer.getState();
-    promise.then((val) => {
-      this.handleGetState(val);
+    return promise.then((val) => {
+      const ok = this.handleGetState(val);
+      return ok;
     });
-    return promise;
   }
 
   handleGetState(val) {
     this.signedIn = val.signedIn;
     this.locked = val.locked;
     this.exists = val.exists;
+    return true;
   }
 
   @action create(accountName, email, passphrase) {
     const promise = this.transportLayer.create(accountName, email, passphrase);
-    promise.then((val) => {
-      this.handleCreate(val);
+    return promise.then((val) => {
+      const ok = this.handleCreate(val);
+      return ok;
     });
   }
 
@@ -50,52 +52,46 @@ class Account {
     this.signedIn = true;
     this.exists = true;
     this.locked = false;
+    return true;
   }
 
   @action signin(accountName, email, passphrase, rememberMe) {
     const promise = this.transportLayer.signin(accountName, email, passphrase);
-    promise.then((val) => {
-      this.handleSignin(val);
+    return promise.then((val) => {
+      const ok = this.handleSignin(val);
+      return ok;
     });
   }
 
   handleSignin(val) {
     this.signedIn = true;
     this.locked = false;
+    return true;
   }
 
   signout() {
     const promise = this.transportLayer.signout();
-    promise.then((val) => {
+    return promise.then((val) => {
       this.signedIn = false;
       this.locked = true;
+      return true;
     });
   }
 
   lock() {
     const promise = this.transportLayer.lock();
-    promise.then((val) => {
+    return promise.then((val) => {
       this.locked = true;
+      return this.locked;
     });
   }
 
   unlock(passphrase) {
     const promise = this.transportLayer.unlock(passphrase);
-    promise.then((val) => {
+    return promise.then((val) => {
       this.locked = false;
+      return this.locked;
     });
-  }
-
-  isLocked() {
-    return (this.locked === true);
-  }
-
-  isSignedIn() {
-    return (this.signedIn === true);
-  }
-
-  exists() {
-    // [FIXME] - implement
   }
 }
 
