@@ -16,3 +16,6 @@ proto-copy:
 # Regenerate nodejs grpc definitions
 proto:
 	./node_modules/grpc-tools/bin/protoc --js_out=import_style=commonjs,binary:./ --grpc_out=./ --plugin=protoc-gen-grpc=./node_modules/grpc-tools/bin/grpc_node_plugin.exe app/proto/backend.proto
+
+boilerplate-diff:
+	diff -ru --exclude .git --exclude flow-typed --exclude yarn.lock . ../boilerplate/electron-react-boilerplate/ > boilerplate.diff

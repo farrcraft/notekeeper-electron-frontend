@@ -1,5 +1,5 @@
 /**
- * Build config for electron 'Main Process' file
+ * Webpack config for production electron main process
  */
 
 import webpack from 'webpack';
@@ -34,9 +34,7 @@ export default merge(baseConfig, {
      * development checks
      */
     new webpack.DefinePlugin({
-      'process.env': {
-        NODE_ENV: JSON.stringify('production')
-      }
+      'process.env.NODE_ENV': JSON.stringify('production')
     })
   ],
 

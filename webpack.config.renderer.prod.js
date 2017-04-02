@@ -1,5 +1,5 @@
 /**
- * Build config for electron 'Renderer Process' file
+ * Build config for electron renderer process
  */
 
 import path from 'path';
@@ -13,10 +13,7 @@ import baseConfig from './webpack.config.base';
 export default merge(baseConfig, {
   devtool: 'cheap-module-source-map',
 
-  entry: [
-    'babel-polyfill',
-    './app/index'
-  ],
+  entry: ['babel-polyfill', './app/index'],
 
   output: {
     path: path.join(__dirname, 'app/dist'),
@@ -33,45 +30,75 @@ export default merge(baseConfig, {
           fallback: 'style-loader',
         })
       },
-
       // Pipe other styles through css modules and append to style.css
       {
         test: /^((?!\.global).)*\.css$/,
         use: ExtractTextPlugin.extract({
+          use: {
+            loader: 'css-loader',
+            options: {
+              modules: true,
+              importLoaders: 1,
+              localIdentName: '[name]__[local]__[hash:base64:5]',
+            }
+          }
+        }),
+      },
+      // Add SASS support  - compile all .global.scss files and pipe it to style.css
+      {
+        test: /\.global\.scss$/,
+        use: ExtractTextPlugin.extract({
           use: [
             {
-              loader: 'css-loader',
-              options: {
-                modules: true,
-                importLoaders: 1,
-                localIdentName: '[name]__[local]___[hash:base64:5]'
-              }
+              loader: 'css-loader'
+            },
+            {
+              loader: 'sass-loader'
             }
-          ]
+          ],
+          fallback: 'style-loader',
         })
       },
-
-      // Fonts
+      // Add SASS support  - compile all other .scss files and pipe it to style.css
+      {
+        test: /^((?!\.global).)*\.scss$/,
+        use: ExtractTextPlugin.extract({
+          use: [{
+            loader: 'css-loader',
+            options: {
+              modules: true,
+              importLoaders: 1,
+              localIdentName: '[name]__[local]__[hash:base64:5]',
+            }
+          },
+          {
+            loader: 'sass-loader'
+          }]
+        }),
+      },
+      // WOFF Font
       {
         test: /\.woff(\?v=\d+\.\d+\.\d+)?$/,
         use: {
           loader: 'url-loader',
           options: {
             limit: 10000,
-            mimetype: 'application/font-woff'
+            mimetype: 'application/font-woff',
           }
-        }
+        },
       },
+      // WOFF2 Font
       {
         test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/,
         use: {
           loader: 'url-loader',
           options: {
             limit: 10000,
-            mimetype: 'application/font-woff'
+            mimetype: 'application/font-woff',
           }
         }
       },
+      // TTF Font
       {
         test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
         use: {
@@ -82,25 +109,26 @@ export default merge(baseConfig, {
           }
         }
       },
+      // EOT Font
       {
         test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
-        use: 'file-loader'
+        use: 'file-loader',
       },
+      // SVG Font
       {
         test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
         use: {
           loader: 'url-loader',
           options: {
             limit: 10000,
-            mimetype: 'image/svg+xml'
+            mimetype: 'image/svg+xml',
           }
         }
       },
-
-      // Images
+      // Common Image Formats
       {
         test: /\.(?:ico|gif|png|jpg|jpeg|webp)$/,
-        use: 'url-loader'
+        use: 'url-loader',
       }
     ]
   },
@@ -136,6 +164,5 @@ export default merge(baseConfig, {
     })
   ],
 
-  // https://github.com/chentsulin/webpack-target-electron-renderer#how-this-module-works
   target: 'electron-renderer'
 });

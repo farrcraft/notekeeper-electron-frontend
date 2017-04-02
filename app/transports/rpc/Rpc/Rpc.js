@@ -1,5 +1,7 @@
-import { dialog } from 'electron';
+import { dialog, app } from 'electron';
 import grpc from 'grpc';
+import path from 'path';
+import fs from 'fs';
 import services from '../../../proto/backend_grpc_pb';
 import AccountTransport from '../Account';
 import NotebookTransport from '../Notebook';
@@ -9,6 +11,9 @@ import TrashTransport from '../Trash';
 import accountStore from '../../../stores/Account';
 
 const RPC_PORT = 'localhost:53017';
+
+process.env['GRPC_SSL_CIPHER_SUITES'] = 'HIGH+ECDSA';
+console.log(process.versions);
 
 class Rpc {
   client
@@ -30,12 +35,47 @@ class Rpc {
     return this.transports[transport];
   }
 
-  getClient() {
+  async getClient() {
+    console.log('getting client');
     if (!this.client) {
       // [FIXME] - need to use proper grpc TLS credentials here
-      this.client = new services.BackendClient(RPC_PORT, grpc.credentials.createInsecure());
+      const certPath = path.join(app.getPath('userData'), 'certificate');
+      console.log('getting cert from: ' + certPath);
+      let cert
+      try {
+        cert = fs.readFileSync(certPath);
+      } catch (err) {
+        if (err.code === 'ENOENT') {
+          console.log('certificate file does not exist');
+        } else if (err.code === 'EACCESS') {
+          console.log('certificate file permission denied');
+        } else {
+          console.log('certificate error - ' + err);
+        }
+      }
+      const creds = grpc.credentials.createSsl(cert);
+      console.log(cert);
+      this.client = new services.BackendClient(RPC_PORT, creds);
+      await this.readyWait();
+      // this.client = new services.BackendClient(RPC_PORT, grpc.credentials.createInsecure());
     }
     return this.client;
+  }
+
+  readyWait() {
+    const deadline = new Date();
+    const deadlineInSeconds = 2;
+    deadline.setSeconds(deadline.getSeconds()+deadlineInSeconds);
+    const promise = new Promise((resolve, reject) => {
+      console.log('going to wait');
+      grpc.waitForClientReady(this.client, deadline, (err) => {
+        if (err) {
+          return reject(err);
+        }
+        return resolve(true);
+      });
+    });
+    return promise;
   }
 
   handleRpcError(err) {
@@ -47,8 +87,8 @@ class Rpc {
     return false;
   }
 
-  handleError(err) {
-    dialog.showErrorBox('Application Error', err);
+  handleError(title, msg) {
+    dialog.showErrorBox(title, msg);
   }
 
   close() {

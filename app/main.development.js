@@ -1,3 +1,4 @@
+// @flow
 import { app, BrowserWindow, screen, Rectangle } from 'electron';
 import Core from './shared';
 import MenuBuilder from './menu';
