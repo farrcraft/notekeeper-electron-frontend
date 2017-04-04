@@ -1,66 +1,53 @@
 import { dialog } from 'electron';
 import rpc from '../Rpc';
-import messages from '../../../proto/backend_pb';
 
 export default class UIState {
-  client = null;
-
-  constructor() {
-    this.client = rpc.getClient();
-  }
 
   load() {
-    const request = new messages.TokenRequest();
+    const payload = {};
     const promise = new Promise((resolve, reject) => {
-      this.client.uIState(request, (err, response) => {
+      rpc.request('UIState::load', payload, (err, response, body) => {
         if (err !== null) {
-          if (rpc.handleRpcError(err)) {
-            return;
-          }
           dialog.showErrorBox('Unknown Error', 'There was a problem restoring the UI state.');
           return;
         }
-        const status = response.getStatus();
-        if (status.getCode() !== 1) {
-          dialog.showErrorBox('Internal Error', status.getStatus());
-          reject(response);
+        if (body.code !== 1) {
+          dialog.showErrorBox('Internal Error', body.status);
+          reject(body);
           return;
         }
-        resolve(response);
+        resolve(body);
       });
     });
     return promise;
   }
 
   save(store) {
-    const request = new messages.SaveUIStateRequest();
-    request.setWindowwidth(store.windowWidth);
-    request.setWindowheight(store.windowHeight);
-    request.setWindowxposition(store.windowXPosition);
-    request.setWindowyposition(store.windowYPosition);
-    request.setWindowmaximized(store.windowMaximized);
-    request.setWindowminimized(store.windowMinimized);
-    request.setWindowfullscreen(store.windowFullscreen);
-    request.setDisplayheight(store.displayHeight);
-    request.setDisplaywidth(store.displayWidth);
-    request.setDisplayxposition(store.displayXPosition);
-    request.setDisplayyposition(store.displayYPosition);
-
+    const payload = {
+      window_width: store.windowWidth,
+      window_height: store.windowHeight,
+      window_x_position: store.windowXPosition,
+      window_y_position: store.windowYPosition,
+      window_maximized: store.windowMaximized,
+      window_minimized: store.windowMinimized,
+      window_fullscreen: store.windowFullscreen,
+      display_height: store.displayHeight,
+      display_width: store.displayWidth,
+      display_x_position: store.displayXPosition,
+      display_y_position: store.displayYPosition
+    };
     const promise = new Promise((resolve, reject) => {
-      this.client.saveUIState(request, (err, response) => {
+      rpc.request('UIState::save', payload, (err, response, body) => {
         if (err !== null) {
-          if (rpc.handleRpcError(err)) {
-            return;
-          }
           dialog.showErrorBox('Unknown Error', 'There was a problem saving the UI state.');
           return;
         }
-        if (response.getCode() !== 1) {
+        if (body.code !== 1) {
           dialog.showErrorBox('Internal Error', response.getStatus());
-          reject(response);
+          reject(body);
           return;
         }
-        resolve(response);
+        resolve(body);
       });
     });
     return promise;

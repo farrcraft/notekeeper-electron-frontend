@@ -1,13 +1,10 @@
 import { ipcMain } from 'electron';
 import rpc from '../Rpc';
-import messages from '../../../proto/backend_pb';
 
 export default class Account {
-  client = null;
   store = null;
 
   constructor() {
-    this.client = rpc.getClient();
     this.registerIpc();
   }
 
@@ -79,21 +76,24 @@ export default class Account {
 
   // create makes an RPC request to create a new account
   create(name, email, passphrase) {
-    const request = new messages.CreateAccountRequest();
-    request.setName(name);
-    request.setEmail(email);
-    request.setPassphrase(passphrase);
     const promise = new Promise((resolve, reject) => {
-      this.client.createAccount(request, (err, response) => {
-        if (err) {
+      const payload = {
+        email: email,
+        name: name,
+        passphrase: passphrase
+      };
+      rpc.request('Account::create', payload, (err, response, body) => {
+        if (err !== null) {
+          dialog.showErrorBox('Unknown Error', 'There was a problem creating the account.');
           reject(err);
           return;
         }
-        const status = response.getStatus();
-        if (status !== 'OK') {
-          // [FIXME] - error handling
+        if (body.code !== 1) {
+          dialog.showErrorBox('Internal Error', body.status);
+          reject(body);
+          return;
         }
-        resolve(response);
+        resolve(body);
       });
     });
     return promise;
@@ -101,17 +101,23 @@ export default class Account {
 
   // getState makes an RPC request to get the current account state
   getState() {
-    const request = new messages.TokenRequest();
     const promise = new Promise((resolve, reject) => {
-      this.client.accountState(request, (err, response) => {
-        if (err) {
+      const payload = {};
+      rpc.request('AccountState::get', payload, (err, response, body) => {
+        if (err !== null) {
+          dialog.showErrorBox('Unknown Error', 'There was a problem getting the account state.');
           reject(err);
           return;
         }
+        if (body.code !== 1) {
+          dialog.showErrorBox('Internal Error', body.status);
+          reject(body);
+          return;
+        }
         const state = {};
-        state.signedIn = response.getSignedin();
-        state.locked = response.getLocked();
-        state.exists = response.getExists();
+        state.signedIn = body.signed_in;
+        state.locked = body.locked;
+        state.exists = body.exists;
         resolve(state);
       });
     });
@@ -120,18 +126,24 @@ export default class Account {
 
   // signin makes an RPC request to sign in to an account
   signin(name, email, passphrase) {
-    const request = new messages.SigninAccountRequest();
-    request.setName(name);
-    request.setEmail(email);
-    request.setPassphrase(passphrase);
     const promise = new Promise((resolve, reject) => {
-      this.client.signinAccount(request, (err, response) => {
+      const payload = {
+        name: name,
+        email: email,
+        passphrase: passphrase
+      };
+      rpc.request('Account::signin', payload, payload, (err, response, body) => {
         if (err) {
+          dialog.showErrorBox('Unknown Error', 'There was a problem signing in.');
           reject(err);
           return;
         }
-        // [FIXME] - error handling
-        resolve(response);
+        if (body.code !== 1) {
+          dialog.showErrorBox('Internal Error', body.status);
+          reject(body);
+          return;
+        }
+        resolve(body);
       });
     });
     return promise;
@@ -139,15 +151,20 @@ export default class Account {
 
   // signout makes an RPC request to sign out from a signed in account
   signout() {
-    const request = new messages.IdRequest();
     const promise = new Promise((resolve, reject) => {
-      this.client.signoutAccount(request, (err, response) => {
+      const payload = {};
+      rpc.request('Account::signout', payload, (err, response, body) => {
         if (err) {
+          dialog.showErrorBox('Unknown Error', 'There was a problem signing out.');
           reject(err);
           return;
         }
-        // [FIXME] - error handling
-        resolve(response);
+        if (body.code !== 1) {
+          dialog.showErrorBox('Internal Error', body.status);
+          reject(body);
+          return;
+        }
+        resolve(body);
       });
     });
     return promise;
@@ -155,16 +172,22 @@ export default class Account {
 
   // unlock makes an RPC request to unlock a locked account
   unlock(passphrase) {
-    const request = new messages.UnlockAccountRequest();
-    request.setPassphrase(passphrase);
     const promise = new Promise((resolve, reject) => {
-      this.client.unlockAccount(request, (err, response) => {
+      const payload = {
+        passphrase: passphrase
+      };
+      rpc.request('Account::unlock', payload, (err, response, body) => {
         if (err) {
+          dialog.showErrorBox('Unknown Error', 'There was a problem unlocking the account.');
           reject(err);
           return;
         }
-        // [FIXME] - error handling
-        resolve(response);
+        if (body.code !== 1) {
+          dialog.showErrorBox('Internal Error', body.status);
+          reject(body);
+          return;
+        }
+        resolve(body);
       });
     });
     return promise;
@@ -172,15 +195,20 @@ export default class Account {
 
   // lock makes an RPC request to lock an unlocked account
   lock() {
-    const request = new messages.IdRequest();
     const promise = new Promise((resolve, reject) => {
-      this.client.lockAccount(request, (err, response) => {
+      const payload = {};
+      rpc.request('Account::lock', payload, (err, response, body) => {
         if (err) {
+          dialog.showErrorBox('Unknown Error', 'There was a problem unlocking the account.');
           reject(err);
           return;
         }
-        // [FIXME] - error handling
-        resolve(response);
+        if (body.code !== 1) {
+          dialog.showErrorBox('Internal Error', body.status);
+          reject(body);
+          return;
+        }
+        resolve(body);
       });
     });
     return promise;
