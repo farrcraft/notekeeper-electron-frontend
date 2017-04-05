@@ -115,9 +115,9 @@ export default class Account {
           return;
         }
         const state = {};
-        state.signedIn = body.signed_in;
-        state.locked = body.locked;
-        state.exists = body.exists;
+        state.signedIn = body.payload.signed_in;
+        state.locked = body.payload.locked;
+        state.exists = body.payload.exists;
         resolve(state);
       });
     });

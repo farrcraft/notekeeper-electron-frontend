@@ -15,6 +15,7 @@ class Core {
         path: userDataPath
       };
       rpc.request('MasterDb::open', payload, (err, response, body) => {
+        console.log(body);
         if (err !== null) {
           rpc.handleError('Fatal Error', 'Could not open database.');
           app.quit();
@@ -25,6 +26,30 @@ class Core {
           app.quit();
           return;
         }
+        resolve(body.status);
+      });
+    });
+    return promise;
+  }
+
+  // keyExchange makes an RPC call to the backend, sharing the message signing keys
+  keyExchange() {
+    const promise = new Promise((resolve) => {
+      const payload = {
+        public_key = rpc.signPublicKey
+      };
+      rpc.request('KeyExchange', payload, (err, response, body) => {
+        if (err !== null) {
+          rpc.handleError('Fatal Error', 'Key exchange error.');
+          app.quit();
+          return;
+        }
+        if (body.status !== 'OK') {
+          dialog.showErrorBox('Fatal Error', 'Key exchange error.');
+          app.quit();
+          return;
+        }
+        rpc.verifyPublicKey = body.payload.public_key;
         resolve(body.status);
       });
     });

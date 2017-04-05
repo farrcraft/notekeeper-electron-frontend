@@ -2,7 +2,7 @@
 
 ## Build Dependencies
 
-* Node v6.10.0
+* Node v7.4.0
 
 The electron-rebuild tool has a dependency on python.  Even though there is a
 python environment in babun, a standard Windows install is still necessary.
@@ -16,8 +16,6 @@ Stick with a 2.7.x version.
 ```sh
 # Install node dependencies
 npm install
-# build grpc for electron
-./install_grpc.sh
 ```
 
 ## Building
@@ -39,7 +37,3 @@ npm run lint
 ```sh
 # This starts a dev hot reload server & launches the electron app:
 npm run dev
-
-# If you want to see gRPC debugging, run this instead:
-GRPC_TRACE=all GRPC_VERBOSITY=DEBUG npm run dev
-```

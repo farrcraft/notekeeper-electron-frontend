@@ -202,6 +202,7 @@ function createWindow(width, height, x, y) {
 app.on('ready', async () => {
   await installExtensions();
 
+  await Core.keyExchange();
   await Core.openMasterDb();
 
   const uiTransport = new UIStateTransport();

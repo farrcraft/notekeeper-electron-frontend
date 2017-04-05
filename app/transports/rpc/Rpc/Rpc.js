@@ -2,6 +2,7 @@ import { dialog, app } from 'electron';
 import path from 'path';
 import fs from 'fs';
 import request from 'request';
+import nacl from 'tweetnacl';
 import AccountTransport from '../Account';
 import NotebookTransport from '../Notebook';
 import NoteTransport from '../Note';
@@ -14,10 +15,16 @@ const RPC_PORT = 'localhost:53017';
 class Rpc {
   certificate = null;
   transports = {};
+  recvCounter = 0;
+  sendCounter = 0;
+  signPublicKey = null;
+  signPrivateKey = null;
+  verifyPublicKey = null;
 
   constructor() {
     this.registerTransports();
     this.loadCertificate();
+    this.createKeys();
   }
 
   // registerTransports instantiates all of the available RPC transport classes
@@ -36,6 +43,15 @@ class Rpc {
     return this.transports[transport];
   }
 
+  // createKeys creates message signing keys
+  createKeys() {
+    let keyPair = nacl.sign.keyPair();
+    this.signPublicKey = keyPair.publicKey;
+    this.signPrivatekey = keyPair.secretKey;
+    keyPair = null;
+  }
+
+  // loadCertificate loads the server's TLS certificate from disk
   loadCertificate() {
     const certPath = path.join(app.getPath('userData'), 'certificate');
     try {
@@ -51,8 +67,11 @@ class Rpc {
     }
   }
 
+  // request makes an RPC request
   request(method, payload, callback) {
     const endpoint = 'https://' + RPC_PORT + '/rpc';
+    this.sendCounter++;
+    const signature = nacl.sign.detached(payload, this.signPrivateKey);
     const options = {
       uri: endpoint,
       method: 'POST',
@@ -60,11 +79,29 @@ class Rpc {
       ca: this.certificate,
       body: {
         method: method,
+        sequence: this.sendCounter,
+        signature: signature,
         payload: payload
       },
       json: true
     };
-    request(options, callback);
+    request(options, (err, response, body) => {
+      if (!this.verifyResponse(err, response, body)) {
+        return;
+      }
+      callback(err, response, body);
+    });
+  }
+
+  // verifyResponse verifies that a response is valid
+  verifyResponse(err, response, body) {
+    this.recvCounter++;
+    if (body.sequence != this.recvCounter) {
+      // [FIXME] - need to signal the error here
+      console.log('unexpected response sequence');
+      return false;
+    }
+    return true;
   }
 
   handleRpcError(err) {
