@@ -1,4 +1,5 @@
 import { app, dialog } from 'electron';
+import { TextDecoder } from 'text-encoding';
 import rpc from '../transports/rpc/Rpc';
 
 class Core {
@@ -35,8 +36,10 @@ class Core {
   // keyExchange makes an RPC call to the backend, sharing the message signing keys
   keyExchange() {
     const promise = new Promise((resolve) => {
+      const decoder = new TextDecoder('utf-8');
+      const key = decoder.decode(rpc.signPublicKey);
       const payload = {
-        public_key = rpc.signPublicKey
+        public_key: key
       };
       rpc.request('KeyExchange', payload, (err, response, body) => {
         if (err !== null) {
