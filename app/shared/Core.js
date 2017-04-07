@@ -36,10 +36,12 @@ class Core {
   // keyExchange makes an RPC call to the backend, sharing the message signing keys
   keyExchange() {
     const promise = new Promise((resolve) => {
+      /*
       const decoder = new TextDecoder('utf-8');
       const key = decoder.decode(rpc.signPublicKey);
+      */
       const payload = {
-        public_key: key
+        public_key: rpc.signPublicKey // key
       };
       rpc.request('KeyExchange', payload, (err, response, body) => {
         if (err !== null) {

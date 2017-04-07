@@ -78,21 +78,33 @@ class Rpc {
   }
 
   createSignature(payload) {
-    const json = btoa(JSON.stringify(payload));
     const encoder = new TextEncoder('utf-8');
-    const arr = encoder.encode(json);
+    const arr = encoder.encode(payload);
     const signature = nacl.sign.detached(arr, this.signPrivateKey);
+    return signature;
+    /*
     const decoder = new TextDecoder('utf-8');
     const decoded = decoder.decode(signature);
-    return decoded;
+    const buf = new Buffer(decoded);
+    const recoded = buf.toString('base64');
+    return recoded;
+    */
   }
 
   // request makes an RPC request
   request(method, payload, callback) {
     const endpoint = `https://${RPC_PORT}/rpc`;
     this.sendCounter += 1;
-    const encPayload = btoa(JSON.stringify(payload));
-    const signature = this.createSignature(payload);
+
+    // try doing json serialization first & then signing the base64 representation:
+    const buf = new Buffer(JSON.stringify(payload));
+    const encPayload = buf.toString('base64');
+    // btoa doesn't exist in nodejs context, so this doesn't work:
+    // const encPayload = btoa(JSON.stringify(payload));
+    const signature = this.createSignature(encPayload);
+
+    // const signature = this.createSignature(JSON.stringify(payload));
+
     const options = {
       uri: endpoint,
       method: 'POST',
@@ -102,7 +114,7 @@ class Rpc {
         method,
         sequence: this.sendCounter,
         signature,
-        payload
+        payload: encPayload
       },
       json: true
     };
