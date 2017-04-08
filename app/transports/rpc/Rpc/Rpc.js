@@ -3,6 +3,7 @@ import path from 'path';
 import fs from 'fs';
 import request from 'request';
 import nacl from 'tweetnacl';
+import base64js from 'base64-js';
 import { TextEncoder, TextDecoder } from 'text-encoding';
 import AccountTransport from '../Account';
 import NotebookTransport from '../Notebook';
@@ -78,17 +79,33 @@ class Rpc {
   }
 
   createSignature(payload) {
-    const encoder = new TextEncoder('utf-8');
-    const arr = encoder.encode(payload);
-    const signature = nacl.sign.detached(arr, this.signPrivateKey);
-    return signature;
-    /*
+    // const encoder = new TextEncoder('utf-8');
+    // const arr = encoder.encode(payload);
+    const signature = nacl.sign.detached(payload, this.signPrivateKey);
+    console.log('signature');
+    console.log(signature);
+    // return signature;
     const decoder = new TextDecoder('utf-8');
     const decoded = decoder.decode(signature);
-    const buf = new Buffer(decoded);
+    const compare = this.uint8ToString(signature);
+    console.log('compare');
+    console.log(compare);
+    if (decoded !== compare) {
+      console.log('different!');
+    }
+    console.log('decoded');
+    console.log(decoded);
+    // const buf = new Buffer(decoded);
+    const buf = new Buffer(compare);
     const recoded = buf.toString('base64');
-    return recoded;
-    */
+    console.log('recoded');
+    console.log(recoded);
+
+    const rebased = base64js.fromByteArray(signature);
+    console.log('rebased');
+    console.log(rebased);
+
+    return rebased;
   }
 
   // request makes an RPC request
@@ -97,26 +114,24 @@ class Rpc {
     this.sendCounter += 1;
 
     // try doing json serialization first & then signing the base64 representation:
-    const buf = new Buffer(JSON.stringify(payload));
-    const encPayload = buf.toString('base64');
+    // const buf = new Buffer(JSON.stringify(payload));
+    // const encPayload = buf.toString('base64');
     // btoa doesn't exist in nodejs context, so this doesn't work:
     // const encPayload = btoa(JSON.stringify(payload));
-    const signature = this.createSignature(encPayload);
+    const signature = this.createSignature(payload);
 
     // const signature = this.createSignature(JSON.stringify(payload));
-
     const options = {
       uri: endpoint,
       method: 'POST',
       cert: this.certificate,
       ca: this.certificate,
-      body: {
-        method,
-        sequence: this.sendCounter,
-        signature,
-        payload: encPayload
+      headers: {
+        'NoteKeeper-Request-Signature': signature,
+        'NoteKeeper-Request-Method': method
       },
-      json: true
+      body: payload,
+      json: false
     };
     request(options, (err, response, body) => {
       if (!this.verifyResponse(err, response, body)) {
@@ -129,11 +144,13 @@ class Rpc {
   // verifyResponse verifies that a response is valid
   verifyResponse(err, response, body) {
     this.recvCounter += 1;
+    /*
     if (body.sequence !== this.recvCounter) {
       // [FIXME] - need to signal the error here
       console.log('unexpected response sequence');
       return false;
     }
+    */
     return true;
   }
 

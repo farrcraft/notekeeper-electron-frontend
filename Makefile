@@ -11,3 +11,11 @@ rebuild:
 
 boilerplate-diff:
 	diff -ru --exclude .git --exclude flow-typed --exclude yarn.lock . ../boilerplate/electron-react-boilerplate/ > boilerplate.diff
+
+# Backend repo is source of truth for proto definitions
+proto-copy:
+	cp ../notekeeper-electron-backend/src/proto/*.proto app/proto/
+
+# Regenerate nodejs protobuf definitions
+proto:
+	./node_modules/grpc-tools/bin/protoc --js_out=import_style=commonjs,binary:./ --grpc_out=./ --plugin=protoc-gen-grpc=./node_modules/grpc-tools/bin/grpc_node_plugin.exe app/proto/rpc.proto

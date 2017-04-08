@@ -1,5 +1,23 @@
 # RPC Design
 
+Communication between client & server is done over standard HTTP+TLS.
+
+Client uses the request library for talking to the server:
+https://github.com/request/request
+
+Messages are sent over the wire as protobuf encoded data.
+
+Requests include an HTTP header with the signature of the message.
+The signature is base64 encoded.
+The header is named 'NoteKeeper-Request-Signature'.
+
+Requests include an HTTP header with the rpc method of the message.
+The header is named 'NoteKeeper-Request-Method'.
+
+Server prepends response body with the signature of the response.
+
+# Legacy Implementation v2
+
 Use the request library on the client - https://github.com/request/request
 
 RPC Message structure looks like:
