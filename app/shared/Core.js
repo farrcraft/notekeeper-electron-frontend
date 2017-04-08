@@ -1,5 +1,4 @@
 import { app, dialog } from 'electron';
-import { TextDecoder } from 'text-encoding';
 import rpc from '../transports/rpc/Rpc';
 import messages from '../proto/rpc_pb';
 
@@ -46,13 +45,18 @@ class Core {
           app.quit();
           return;
         }
-        if (body.status !== 'OK') {
+
+        const responseMessage = messages.KeyExchangeResponse.deserializeBinary(body);
+        const header = responseMessage.getHeader();
+
+        const status = header.getStatus();
+        if (status !== 'OK') {
           dialog.showErrorBox('Fatal Error', 'Key exchange error.');
           app.quit();
           return;
         }
-        rpc.verifyPublicKey = body.payload.public_key;
-        resolve(body.status);
+        rpc.verifyPublicKey = responseMessage.getPublickey();
+        resolve(status);
       });
     });
     return promise;

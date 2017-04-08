@@ -4,7 +4,6 @@ import fs from 'fs';
 import request from 'request';
 import nacl from 'tweetnacl';
 import base64js from 'base64-js';
-import { TextEncoder, TextDecoder } from 'text-encoding';
 import AccountTransport from '../Account';
 import NotebookTransport from '../Notebook';
 import NoteTransport from '../Note';
@@ -69,43 +68,17 @@ class Rpc {
     }
   }
 
-  uint8ToString(u8a) {
-    const CHUNK_SZ = 0x8000;
-    const c = [];
-    for (let i = 0; i < u8a.length; i += CHUNK_SZ) {
-      c.push(String.fromCharCode.apply(null, u8a.subarray(i, i + CHUNK_SZ)));
-    }
-    return c.join('');
+  createSignature(payload) {
+    const signature = nacl.sign.detached(payload, this.signPrivateKey);
+    const rebased = base64js.fromByteArray(signature);
+    return rebased;
   }
 
-  createSignature(payload) {
-    // const encoder = new TextEncoder('utf-8');
-    // const arr = encoder.encode(payload);
-    const signature = nacl.sign.detached(payload, this.signPrivateKey);
-    console.log('signature');
-    console.log(signature);
-    // return signature;
-    const decoder = new TextDecoder('utf-8');
-    const decoded = decoder.decode(signature);
-    const compare = this.uint8ToString(signature);
-    console.log('compare');
-    console.log(compare);
-    if (decoded !== compare) {
-      console.log('different!');
-    }
-    console.log('decoded');
-    console.log(decoded);
-    // const buf = new Buffer(decoded);
-    const buf = new Buffer(compare);
-    const recoded = buf.toString('base64');
-    console.log('recoded');
-    console.log(recoded);
-
-    const rebased = base64js.fromByteArray(signature);
-    console.log('rebased');
-    console.log(rebased);
-
-    return rebased;
+  verifySignature(signature, payload) {
+    const decodedSignature = base64js.toByteArray(signature);
+    const decodedPayload = base64js.toByteArray(payload);
+    const ok = nacl.sign.detached.verify(decodedPayload, decodedSignature, this.verifyPublicKey);
+    return ok;
   }
 
   // request makes an RPC request
@@ -113,44 +86,68 @@ class Rpc {
     const endpoint = `https://${RPC_PORT}/rpc`;
     this.sendCounter += 1;
 
-    // try doing json serialization first & then signing the base64 representation:
-    // const buf = new Buffer(JSON.stringify(payload));
-    // const encPayload = buf.toString('base64');
-    // btoa doesn't exist in nodejs context, so this doesn't work:
-    // const encPayload = btoa(JSON.stringify(payload));
     const signature = this.createSignature(payload);
-
-    // const signature = this.createSignature(JSON.stringify(payload));
     const options = {
       uri: endpoint,
       method: 'POST',
       cert: this.certificate,
       ca: this.certificate,
       headers: {
-        'NoteKeeper-Request-Signature': signature,
-        'NoteKeeper-Request-Method': method
+        'NoteKeeper-Message-Signature': signature,
+        'NoteKeeper-Request-Method': method,
+        'NoteKeeper-Message-Sequence': this.sendCounter
       },
       body: payload,
       json: false
     };
+
     request(options, (err, response, body) => {
-      if (!this.verifyResponse(err, response, body)) {
-        return;
+      if (method !== 'KeyExchange') {
+        if (!this.verifyResponse(err, response, body)) {
+          return;
+        }
       }
+
       callback(err, response, body);
+
+      if (method === 'KeyExchange') {
+        if (!this.verifyResponse(err, response, body)) {
+          return;
+        }
+      }
+
     });
   }
 
   // verifyResponse verifies that a response is valid
   verifyResponse(err, response, body) {
     this.recvCounter += 1;
-    /*
-    if (body.sequence !== this.recvCounter) {
-      // [FIXME] - need to signal the error here
-      console.log('unexpected response sequence');
+    if (!('notekeeper-message-sequence' in response.headers)) {
+      // [FIXME]
+      console.log('missing sequence header');
       return false;
     }
-    */
+    const sequence = parseInt(response.headers['notekeeper-message-sequence'], 10);
+    if (sequence !== this.recvCounter) {
+      // [FIXME] - need to signal the error here
+      console.log('unexpected response sequence -', sequence);
+      return false;
+    }
+
+    if (!('notekeeper-message-signature' in response.headers)) {
+      // [FIXME]
+      console.log('missing message signature');
+      return false;
+    }
+
+    const signature = response.headers['notekeeper-message-signature'];
+    if (!this.verifySignature(signature, body)) {
+      // [FIXME]
+      console.log('failed to verify response signature');
+      return false;
+    }
+    console.log('response verified!');
+
     return true;
   }
 
