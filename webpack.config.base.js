@@ -7,6 +7,8 @@ import webpack from 'webpack';
 import { dependencies as externals } from './app/package.json';
 
 export default {
+  externals: Object.keys(externals || {}),
+
   module: {
     rules: [{
       test: /\.jsx?$/,
@@ -23,7 +25,6 @@ export default {
   output: {
     path: path.join(__dirname, 'app'),
     filename: 'bundle.js',
-
     // https://github.com/webpack/webpack/issues/1114
     libraryTarget: 'commonjs2'
   },
@@ -42,6 +43,4 @@ export default {
   plugins: [
     new webpack.NamedModulesPlugin(),
   ],
-
-  externals: Object.keys(externals || {})
 };

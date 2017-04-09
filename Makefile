@@ -10,7 +10,7 @@ rebuild:
 	./node_modules/.bin/electron-rebuild
 
 boilerplate-diff:
-	diff -ru --exclude .git --exclude flow-typed --exclude yarn.lock . ../boilerplate/electron-react-boilerplate/ > boilerplate.diff
+	diff -ru --exclude .git --exclude flow-typed --exclude yarn.lock --exclude README.md . ../boilerplate/electron-react-boilerplate/ > boilerplate.diff
 
 # Backend repo is source of truth for proto definitions
 proto-copy:

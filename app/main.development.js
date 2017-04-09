@@ -1,3 +1,4 @@
+/* eslint global-require: 1, flowtype-errors/show-errors: 0 */
 // @flow
 import { app, BrowserWindow, screen, Rectangle } from 'electron';
 import Core from './shared';
@@ -11,15 +12,15 @@ let mainWindow = null;
 let windowStateTimeout = null;
 
 if (process.env.NODE_ENV === 'production') {
-  const sourceMapSupport = require('source-map-support'); // eslint-disable-line
+  const sourceMapSupport = require('source-map-support');
   sourceMapSupport.install();
 }
 
 if (process.env.NODE_ENV === 'development') {
-  require('electron-debug')(); // eslint-disable-line global-require
-  const path = require('path'); // eslint-disable-line
-  const p = path.join(__dirname, '..', 'app', 'node_modules'); // eslint-disable-line
-  require('module').globalPaths.push(p); // eslint-disable-line
+  require('electron-debug')();
+  const path = require('path');
+  const p = path.join(__dirname, '..', 'app', 'node_modules');
+  require('module').globalPaths.push(p);
 }
 
 process.on('error', (err) => {
@@ -71,6 +72,8 @@ app.on('window-all-closed', async () => {
     console.log(e);
   }
   Core.shutdown();
+  // Respect the OSX convention of having the application in memory even
+  // after all windows have been closed
   if (process.platform !== 'darwin') {
     app.quit();
   }

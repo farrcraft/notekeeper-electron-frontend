@@ -14,7 +14,6 @@ const stores = {
   account: accountStore
 };
 
-console.log('getting state');
 accountStore.getState().then((val) => {
   render(
     <AppContainer>
