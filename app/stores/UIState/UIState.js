@@ -20,20 +20,20 @@ class UIState {
   load() {
     const transport = this.transportLayer;
     const promise = new Promise((resolve, reject) => {
-      transport.load().then((val) => {
-        const payload = val.payload;
-        this.windowWidth = payload.window_width;
-        this.windowHeight = payload.window_height;
-        this.windowXPosition = payload.window_x_position;
-        this.windowYPosition = payload.window_y_position;
-        this.windowMaximized = payload.window_maximized;
-        this.windowMinimized = payload.window_maximized;
-        this.windowFullscreen = payload.window_fullscreen;
-        this.displayHeight = payload.display_height;
-        this.displayWidth = payload.display_width;
-        this.displayXPosition = payload.display_x_position;
-        this.displayYPosition = payload.display_y_position;
+      transport.load().then((payload) => {
+        this.windowWidth = payload.getWindowwidth();
+        this.windowHeight = payload.getWindowheight();
+        this.windowXPosition = payload.getWindowxposition();
+        this.windowYPosition = payload.getWindowyposition();
+        this.windowMaximized = payload.getWindowmaximized();
+        this.windowMinimized = payload.getWindowmaximized();
+        this.windowFullscreen = payload.getWindowfullscreen();
+        this.displayHeight = payload.getDisplayheight();
+        this.displayWidth = payload.getDisplaywidth();
+        this.displayXPosition = payload.getDisplayxposition();
+        this.displayYPosition = payload.getDisplayyposition();
         resolve();
+        return true;
       });
     });
     return promise;

@@ -1,5 +1,6 @@
 import { ipcMain } from 'electron';
 import rpc from '../Rpc';
+import messages from '../../../proto/rpc_pb';
 
 export default class Account {
   store = null;
@@ -102,22 +103,29 @@ export default class Account {
   // getState makes an RPC request to get the current account state
   getState() {
     const promise = new Promise((resolve, reject) => {
-      const payload = {};
+      const message = new messages.EmptyRequest();
+      const messageHeader = new messages.RequestHeader();
+      messageHeader.setMethod('UIState::load');
+      message.setHeader(messageHeader);
+      const payload = message.serializeBinary();
       rpc.request('AccountState::get', payload, (err, response, body) => {
         if (err !== null) {
           dialog.showErrorBox('Unknown Error', 'There was a problem getting the account state.');
           reject(err);
           return;
         }
-        if (body.code !== 1) {
-          dialog.showErrorBox('Internal Error', body.status);
+        const responseMessage = messages.AccountStateResponse.deserializeBinary(body);
+        const header = responseMessage.getHeader();
+        const status = header.getStatus();
+        if (status !== 'OK') {
+          dialog.showErrorBox('Internal Error', status);
           reject(body);
           return;
         }
         const state = {};
-        state.signedIn = body.payload.signed_in;
-        state.locked = body.payload.locked;
-        state.exists = body.payload.exists;
+        state.signedIn = responseMessage.getSignedin();
+        state.locked = responseMessage.getLocked();
+        state.exists = responseMessage.getExists();
         resolve(state);
       });
     });
@@ -127,23 +135,26 @@ export default class Account {
   // signin makes an RPC request to sign in to an account
   signin(name, email, passphrase) {
     const promise = new Promise((resolve, reject) => {
-      const payload = {
-        name: name,
-        email: email,
-        passphrase: passphrase
-      };
-      rpc.request('Account::signin', payload, payload, (err, response, body) => {
+      const message = new messages.SigninAccountRequest();
+      message.setName(name);
+      message.setEmail(email);
+      message.setPassphrase(passphrase);
+      const payload = message.serializeBinary();
+      rpc.request('Account::signin', payload, (err, response, body) => {
         if (err) {
           dialog.showErrorBox('Unknown Error', 'There was a problem signing in.');
           reject(err);
           return;
         }
-        if (body.code !== 1) {
-          dialog.showErrorBox('Internal Error', body.status);
-          reject(body);
+        const responseMessage = messages.EmptyResponse.deserializeBinary(body);
+        const header = responseMessage.getHeader();
+        const status = header.getStatus();
+        if (status !== 'OK') {
+          dialog.showErrorBox('Internal Error', status);
+          reject(header);
           return;
         }
-        resolve(body);
+        resolve(status);
       });
     });
     return promise;
@@ -152,19 +163,26 @@ export default class Account {
   // signout makes an RPC request to sign out from a signed in account
   signout() {
     const promise = new Promise((resolve, reject) => {
-      const payload = {};
+      const message = new messages.EmptyRequest();
+      const messageHeader = new messages.RequestHeader();
+      messageHeader.setMethod('Account::signout');
+      message.setHeader(messageHeader);
+      const payload = message.serializeBinary();
       rpc.request('Account::signout', payload, (err, response, body) => {
         if (err) {
           dialog.showErrorBox('Unknown Error', 'There was a problem signing out.');
           reject(err);
           return;
         }
-        if (body.code !== 1) {
-          dialog.showErrorBox('Internal Error', body.status);
-          reject(body);
+        const responseMessage = messages.EmptyResponse.deserializeBinary(body);
+        const header = responseMessage.getHeader();
+        const status = header.getStatus();
+        if (status !== 'OK') {
+          dialog.showErrorBox('Internal Error', status);
+          reject(status);
           return;
         }
-        resolve(body);
+        resolve(status);
       });
     });
     return promise;
@@ -173,21 +191,24 @@ export default class Account {
   // unlock makes an RPC request to unlock a locked account
   unlock(passphrase) {
     const promise = new Promise((resolve, reject) => {
-      const payload = {
-        passphrase: passphrase
-      };
+      const message = new messages.UnlockAccountRequest();
+      message.setPassphrase(passphrase);
+      const payload = message.serializeBinary();
       rpc.request('Account::unlock', payload, (err, response, body) => {
         if (err) {
           dialog.showErrorBox('Unknown Error', 'There was a problem unlocking the account.');
           reject(err);
           return;
         }
-        if (body.code !== 1) {
-          dialog.showErrorBox('Internal Error', body.status);
-          reject(body);
+        const responseMessage = messages.EmptyResponse.deserializeBinary(body);
+        const header = responseMessage.getHeader();
+        const status = header.getStatus();
+        if (status !== 'OK') {
+          dialog.showErrorBox('Internal Error', status);
+          reject(status);
           return;
         }
-        resolve(body);
+        resolve(status);
       });
     });
     return promise;
@@ -196,19 +217,26 @@ export default class Account {
   // lock makes an RPC request to lock an unlocked account
   lock() {
     const promise = new Promise((resolve, reject) => {
-      const payload = {};
+      const message = new messages.EmptyRequest();
+      const messageHeader = new messages.RequestHeader();
+      messageHeader.setMethod('Account::lock');
+      message.setHeader(messageHeader);
+      const payload = message.serializeBinary();
       rpc.request('Account::lock', payload, (err, response, body) => {
         if (err) {
           dialog.showErrorBox('Unknown Error', 'There was a problem unlocking the account.');
           reject(err);
           return;
         }
-        if (body.code !== 1) {
-          dialog.showErrorBox('Internal Error', body.status);
-          reject(body);
+        const responseMessage = messages.EmptyResponse.deserializeBinary(body);
+        const header = responseMessage.getHeader();
+        const status = header.getStatus();
+        if (status !== 'OK') {
+          dialog.showErrorBox('Internal Error', status);
+          reject(status);
           return;
         }
-        resolve(body);
+        resolve(status);
       });
     });
     return promise;

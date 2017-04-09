@@ -12,22 +12,26 @@ class Core {
     const userDataPath = app.getPath('userData');
     // caller is awaiting so we handle rejections immediately here
     const promise = new Promise((resolve) => {
-      const payload = {
-        path: userDataPath
-      };
+      const message = new messages.OpenMasterDbRequest();
+      message.setPath(userDataPath);
+      const payload = message.serializeBinary();
       rpc.request('MasterDb::open', payload, (err, response, body) => {
-        console.log(body);
         if (err !== null) {
           rpc.handleError('Fatal Error', 'Could not open database.');
           app.quit();
           return;
         }
-        if (body.status !== 'OK') {
+
+        const responseMessage = messages.EmptyResponse.deserializeBinary(body);
+        const header = responseMessage.getHeader();
+        const status = header.getStatus();
+
+        if (status !== 'OK') {
           dialog.showErrorBox('Fatal Error', 'Could not open database.');
           app.quit();
           return;
         }
-        resolve(body.status);
+        resolve(status);
       });
     });
     return promise;
@@ -48,7 +52,6 @@ class Core {
 
         const responseMessage = messages.KeyExchangeResponse.deserializeBinary(body);
         const header = responseMessage.getHeader();
-
         const status = header.getStatus();
         if (status !== 'OK') {
           dialog.showErrorBox('Fatal Error', 'Key exchange error.');

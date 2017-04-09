@@ -59,10 +59,13 @@ class Rpc {
       this.certificate = fs.readFileSync(certPath);
     } catch (err) {
       if (err.code === 'ENOENT') {
+        // [FIXME]
         console.log('certificate file does not exist');
       } else if (err.code === 'EACCESS') {
+        // [FIXME]
         console.log('certificate file permission denied');
       } else {
+        // [FIXME]
         console.log('certificate error - ', err);
       }
     }
@@ -146,7 +149,6 @@ class Rpc {
       console.log('failed to verify response signature');
       return false;
     }
-    console.log('response verified!');
 
     return true;
   }
