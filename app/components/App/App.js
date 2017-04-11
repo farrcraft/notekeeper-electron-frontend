@@ -1,10 +1,10 @@
 // @flow
 import React, { Component } from 'react';
 import { Provider, observer } from 'mobx-react';
-import CreateAccount from '../../components/Account/Create';
-import UnlockAccount from '../../components/Account/Unlock';
-import SigninAccount from '../../components/Account/Signin';
-import Workspace from '../../components/Workspace';
+import CreateAccount from '../screens/Account/Create';
+import UnlockAccount from '../screens/Account/Unlock';
+import SigninAccount from '../screens/Account/Signin';
+import Workspace from '../screens/Workspace';
 
 @observer
 export default class App extends Component {
@@ -32,7 +32,6 @@ export default class App extends Component {
     return (
       <Provider {...stores}>
         <div>
-          <h1>This is app</h1>
           <View />
         </div>
       </Provider>

@@ -8,7 +8,15 @@ import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import merge from 'webpack-merge';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import BabiliPlugin from 'babili-webpack-plugin';
+import { includePaths } from 'node-neat';
 import baseConfig from './webpack.config.base';
+
+/*
+const sassPaths = includePaths.map((sassPath) => {
+  const addPath = `includePaths[]=${sassPath}`;
+  return addPath;
+}).join('&');
+*/
 
 export default merge.smart(baseConfig, {
   devtool: 'source-map',
@@ -74,7 +82,10 @@ export default merge.smart(baseConfig, {
             }
           },
           {
-            loader: 'sass-loader'
+            loader: 'sass-loader',
+            options: {
+              includePaths
+            }
           }]
         }),
       },
