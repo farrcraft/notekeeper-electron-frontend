@@ -10,6 +10,7 @@ import UIStateTransport from './transports/rpc/UIState';
 // Declared here so our main window doesn't get GC'd
 let mainWindow = null;
 let windowStateTimeout = null;
+let menuBuilder = null;
 
 if (process.env.NODE_ENV === 'production') {
   const sourceMapSupport = require('source-map-support');
@@ -43,6 +44,7 @@ if (shouldQuit) {
 
 app.on('activate', () => {
   if (mainWindow === null) {
+    // [FIXME] - expects some parameters here
     createWindow();
   }
 });
@@ -57,7 +59,7 @@ app.on('window-all-closed', async () => {
 
     const accountTransport = rpc.getTransport('account');
     // The most secure option is to completely sign out the user when they close the main window
-    // The user will need to do a full signin next time they open the app
+    // The user will need to do a full signin the next time they open the app
     if (accountTransport.store.signedIn === true) {
       await accountTransport.signout();
     }
@@ -196,7 +198,7 @@ function createWindow(width, height, x, y) {
     mainWindow = null;
   });
 
-  const menuBuilder = new MenuBuilder(mainWindow);
+  menuBuilder = new MenuBuilder(mainWindow);
   menuBuilder.buildMenu();
 
   restoreWindowState();

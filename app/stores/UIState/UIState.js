@@ -34,6 +34,9 @@ class UIState {
         this.displayYPosition = payload.getDisplayyposition();
         resolve();
         return true;
+      })
+      .catch((err) => {
+        console.log(err);
       });
     });
     return promise;

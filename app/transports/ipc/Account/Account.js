@@ -26,8 +26,6 @@ export default class Account {
     const token = 'secure token';
     const promise = new Promise((resolve, reject) => {
       ipcRenderer.on('Account::getState', (event, arg) => {
-        console.log('logging event next');
-        console.log(event);
         resolve(arg);
       });
       this.dispatchMessage('Account::getState', token);

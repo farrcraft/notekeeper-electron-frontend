@@ -23,8 +23,10 @@ export default class MenuBuilder {
 
     const menu = Menu.buildFromTemplate(template);
     Menu.setApplicationMenu(menu);
-
+    /*
     return menu;
+    */
+    this.mainWindow.setMenu(null);
   }
 
   setupDevelopmentEnvironment() {
@@ -93,15 +95,6 @@ export default class MenuBuilder {
         { label: 'Bring All to Front', selector: 'arrangeInFront:' }
       ]
     };
-    const subMenuHelp = {
-      label: 'Help',
-      submenu: [
-        { label: 'Learn More', click() { shell.openExternal('https://notekeeper.io'); } },
-        { label: 'Documentation', click() { shell.openExternal('https://notekeeper.io/docs'); } },
-        { label: 'Community Discussions', click() { shell.openExternal('https://notekeeper.io/community'); } },
-        { label: 'Support', click() { shell.openExternal('https://notekeeper.io/support'); } }
-      ]
-    };
 
     const subMenuView = process.env.NODE_ENV === 'development'
       ? subMenuViewDev
@@ -111,25 +104,22 @@ export default class MenuBuilder {
       subMenuAbout,
       subMenuEdit,
       subMenuView,
-      subMenuWindow,
-      subMenuHelp
+      subMenuWindow
     ];
   }
 
   buildDefaultTemplate() {
-    const templateDefault = [{
+    const subMenuFile = {
       label: '&File',
       submenu: [{
-        label: '&Open',
-        accelerator: 'Ctrl+O'
-      }, {
         label: '&Close',
         accelerator: 'Ctrl+W',
         click: () => {
           this.mainWindow.close();
         }
       }]
-    }, {
+    };
+    const subMenuView = {
       label: '&View',
       submenu: (process.env.NODE_ENV === 'development') ? [{
         label: '&Reload',
@@ -156,31 +146,11 @@ export default class MenuBuilder {
           this.mainWindow.setFullScreen(!this.mainWindow.isFullScreen());
         }
       }]
-    }, {
-      label: 'Help',
-      submenu: [{
-        label: 'Learn More',
-        click() {
-          shell.openExternal('https://notekeeper.io');
-        }
-      }, {
-        label: 'Documentation',
-        click() {
-          shell.openExternal('https://notekeeper.io/docs');
-        }
-      }, {
-        label: 'Community Discussions',
-        click() {
-          shell.openExternal('https://notekeeper.io/community');
-        }
-      }, {
-        label: 'Support',
-        click() {
-          shell.openExternal('https://notekeeper.io/support');
-        }
-      }]
-    }];
+    };
 
-    return templateDefault;
+    return [
+      subMenuFile,
+      subMenuView
+    ];
   }
 }

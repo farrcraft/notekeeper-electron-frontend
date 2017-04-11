@@ -21,6 +21,7 @@ class Rpc {
   signPublicKey = null;
   signPrivateKey = null;
   verifyPublicKey = null;
+  lastError = {};
 
   constructor() {
     this.registerTransports();
@@ -59,14 +60,11 @@ class Rpc {
       this.certificate = fs.readFileSync(certPath);
     } catch (err) {
       if (err.code === 'ENOENT') {
-        // [FIXME]
-        console.log('certificate file does not exist');
+        this.handleError('Certificate Error', 'Certificate file does not exist');
       } else if (err.code === 'EACCESS') {
-        // [FIXME]
-        console.log('certificate file permission denied');
+        this.handleError('Certificate Error', 'Certificate file permission denied');
       } else {
-        // [FIXME]
-        console.log('certificate error - ', err);
+        this.handleError('Certificate Error', err);
       }
     }
   }
@@ -118,7 +116,6 @@ class Rpc {
           return;
         }
       }
-
     });
   }
 
@@ -126,38 +123,32 @@ class Rpc {
   verifyResponse(err, response, body) {
     this.recvCounter += 1;
     if (!('notekeeper-message-sequence' in response.headers)) {
-      // [FIXME]
-      console.log('missing sequence header');
+      this.handleError('Transport Error', 'Missing sequence header');
       return false;
     }
     const sequence = parseInt(response.headers['notekeeper-message-sequence'], 10);
     if (sequence !== this.recvCounter) {
-      // [FIXME] - need to signal the error here
-      console.log('unexpected response sequence -', sequence);
+      this.handleError('Transport Error', 'Unexpected sequence');
       return false;
     }
 
     if (!('notekeeper-message-signature' in response.headers)) {
-      // [FIXME]
-      console.log('missing message signature');
+      this.handleError('Transport Error', 'Missing message signature');
       return false;
     }
 
     const signature = response.headers['notekeeper-message-signature'];
     if (!this.verifySignature(signature, body)) {
-      // [FIXME]
-      console.log('failed to verify response signature');
+      this.handleError('Transport Error', 'Failed to verify response signature');
       return false;
     }
 
     return true;
   }
 
-  handleRpcError(err) {
-    return false;
-  }
-
   handleError(title, msg) {
+    this.lastError.title = title;
+    this.lastError.message = msg;
     dialog.showErrorBox(title, msg);
   }
 }
