@@ -43,6 +43,18 @@ export default class Note {
         rpc.handleError(err);
       });
     });
+
+    ipcMain.on('Note::list', (event, arg) => {
+    });
+
+    ipcMain.on('Note::save', (event, arg) => {
+    });
+
+    ipcMain.on('Note::get', (event, arg) => {
+    });
+
+    ipcMain.on('Note::delete', (event, arg) => {
+    });
   }
 
   /**

@@ -43,6 +43,22 @@ export default class Notebook {
         rpc.handleError(err);
       });
     });
+
+    ipcMain.on('Notebook::list', (event, arg) => {
+
+    });
+
+    ipcMain.on('Notebook::load', (event, arg) => {
+
+    });
+
+    ipcMain.on('Notebook::save', (event, arg) => {
+
+    });
+
+    ipcMain.on('Notebook::delete', (event, arg) => {
+
+    });
   }
 
   /**

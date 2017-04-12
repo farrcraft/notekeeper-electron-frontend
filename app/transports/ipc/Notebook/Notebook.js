@@ -1,25 +1,12 @@
-import { ipcRenderer } from 'electron';
+import Ipc from '../Ipc';
 
-export default class Notebook {
-  dispatcher
-
-  constructor() {
-    this.dispatcher = ipcRenderer;
-  }
-
-  /**
-   * Dispatch IPC message
-   */
-  dispatchMessage(channel, msg) {
-    this.dispatcher.send(channel, msg);
-  }
-
+export default class Notebook extends Ipc {
   create(name) {
     const promise = new Promise((resolve, reject) => {
-      ipcRenderer.on('Notebook::create', (event, arg) => {
+      this.dispatcher.on('Notebook::create', (event, arg) => {
         resolve(arg);
       });
-      ipcRenderer.send('Notebook::create', name);
+      this.dispatchMessage('Notebook::create', name);
     });
     return promise;
   }

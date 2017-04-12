@@ -1,8 +1,13 @@
 class Notebook {
   transportLayer;
+  notebooks = [];
 
   setTransport(transportLayer) {
     this.transportLayer = transportLayer;
+  }
+
+  create(title) {
+
   }
 
 }
