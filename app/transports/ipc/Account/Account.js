@@ -1,23 +1,10 @@
-import { ipcRenderer } from 'electron';
+import Ipc from '../Ipc';
 
 /**
  * This is the Account IPC transport
  * It mirrors requests to the RPC transport.
  */
-export default class Account {
-  dispatcher
-
-  constructor() {
-    this.dispatcher = ipcRenderer;
-  }
-
-  /**
-   * Dispatch IPC message
-   */
-  dispatchMessage(channel, msg) {
-    this.dispatcher.send(channel, msg);
-  }
-
+export default class Account extends Ipc {
   /**
    * Get the current account state
    */
@@ -25,7 +12,7 @@ export default class Account {
     // [FIXME] - use real token
     const token = 'secure token';
     const promise = new Promise((resolve, reject) => {
-      ipcRenderer.on('Account::getState', (event, arg) => {
+      this.dispatcher.on('Account::getState', (event, arg) => {
         resolve(arg);
       });
       this.dispatchMessage('Account::getState', token);
@@ -41,7 +28,7 @@ export default class Account {
    */
   create(accountName, email, passphrase) {
     const promise = new Promise((resolve, reject) => {
-      ipcRenderer.on('Account::create', (event, arg) => {
+      this.dispatcher.on('Account::create', (event, arg) => {
         resolve(arg);
       });
       const msg = {
@@ -56,7 +43,7 @@ export default class Account {
 
   signin(accountName, email, passphrase) {
     const promise = new Promise((resolve, reject) => {
-      ipcRenderer.on('Account::signin', (event, arg) => {
+      this.dispatcher.on('Account::signin', (event, arg) => {
         resolve(arg);
       });
       const msg = {
@@ -71,7 +58,7 @@ export default class Account {
 
   signout() {
     const promise = new Promise((resolve, reject) => {
-      ipcRenderer.on('Account::signout', (event, arg) => {
+      this.dispatcher.on('Account::signout', (event, arg) => {
         resolve(arg);
       });
       const msg = {
@@ -84,7 +71,7 @@ export default class Account {
 
   lock() {
     const promise = new Promise((resolve, reject) => {
-      ipcRenderer.on('Account::lock', (event, arg) => {
+      this.dispatcher.on('Account::lock', (event, arg) => {
         resolve(arg);
       });
       const msg = {
@@ -97,7 +84,7 @@ export default class Account {
 
   unlock(passphrase) {
     const promise = new Promise((resolve, reject) => {
-      ipcRenderer.on('Account::unlock', (event, arg) => {
+      this.dispatcher.on('Account::unlock', (event, arg) => {
         resolve(arg);
       });
       const msg = {

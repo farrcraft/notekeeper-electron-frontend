@@ -1,20 +1,15 @@
 import { action, extendObservable } from 'mobx';
+import Store from '../Store';
 
-class Account {
-
-  transportLayer
-
+class Account extends Store {
   constructor() {
+    super();
+
     extendObservable(this, {
       signedIn: false,
       locked: true,
       exists: false
     });
-    this.transportLayer = null;
-  }
-
-  setTransport(transportLayer) {
-    this.transportLayer = transportLayer;
   }
 
   get isSignedIn() {

@@ -1,3 +1,7 @@
-export default class User {
+import Handler from '../Handler';
 
+export default class User extends Handler {
+  constructor() {
+    super();
+  }
 }

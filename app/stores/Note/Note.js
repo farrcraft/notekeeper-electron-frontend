@@ -1,8 +1,8 @@
-class Note {
-  transportLayer;
+import Store from '../Store';
 
-  setTransport(transportLayer) {
-    this.transportLayer = transportLayer;
+class Note extends Store {
+  constructor() {
+    super();
   }
 }
 

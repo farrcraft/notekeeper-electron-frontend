@@ -1,21 +1,16 @@
-import { ipcMain } from 'electron';
+import Handler from '../Handler';
 import rpc from '../Rpc';
 import messages from '../../../proto/rpc_pb';
 
-export default class Account {
-  store = null;
-
+export default class Account extends Handler {
   constructor() {
+    super();
     this.registerIpc();
-  }
-
-  setStore(store) {
-    this.store = store;
   }
 
   // registerIpc registers IPC hooks mirroring the RPC calls
   registerIpc() {
-    ipcMain.on('Account::create', (event, arg) => {
+    this.listener.on('Account::create', (event, arg) => {
       const promise = this.create(arg.accountName, arg.email, arg.passphrase);
       promise.then((val) => {
         this.store.handleCreate(val);
@@ -27,7 +22,7 @@ export default class Account {
       });
     });
 
-    ipcMain.on('Account::getState', (event) => {
+    this.listener.on('Account::getState', (event) => {
       const promise = this.getState();
       promise.then((val) => {
         this.store.handleGetState(val);
@@ -39,7 +34,7 @@ export default class Account {
       });
     });
 
-    ipcMain.on('Account::signin', (event, arg) => {
+    this.listener.on('Account::signin', (event, arg) => {
       const promise = this.signin(arg.accountName, arg.email, arg.passphrase);
       promise.then((val) => {
         this.store.handleSignin(val);
@@ -51,7 +46,7 @@ export default class Account {
       });
     });
 
-    ipcMain.on('Account::signout', (event) => {
+    this.listener.on('Account::signout', (event) => {
       const promise = this.signout();
       promise.then((val) => {
         event.sender.send('Account::signout', val);
@@ -62,7 +57,7 @@ export default class Account {
       });
     });
 
-    ipcMain.on('Account::unlock', (event, arg) => {
+    this.listener.on('Account::unlock', (event, arg) => {
       const promise = this.unlock(arg.passphrase);
       promise.then((val) => {
         event.sender.send('Account::unlock', val);
@@ -73,7 +68,7 @@ export default class Account {
       });
     });
 
-    ipcMain.on('Account::lock', (event) => {
+    this.listener.on('Account::lock', (event) => {
       const promise = this.lock();
       promise.then((val) => {
         event.sender.send('Account::lock', val);
@@ -186,7 +181,7 @@ export default class Account {
         const responseMessage = messages.EmptyResponse.deserializeBinary(body);
         const ok = this.checkResponseStatus(responseMessage, reject);
         if (ok) {
-          resolve(status);
+          resolve(ok);
         }
       });
     });

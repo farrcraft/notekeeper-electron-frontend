@@ -1,9 +1,10 @@
-class Notebook {
-  transportLayer;
+import Store from '../Store';
+
+class Notebook extends Store {
   notebooks = [];
 
-  setTransport(transportLayer) {
-    this.transportLayer = transportLayer;
+  constructor() {
+    super();
   }
 
   create(title) {

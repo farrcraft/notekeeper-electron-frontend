@@ -1,7 +1,5 @@
 # TODO
 
-[ ] refactor IPC/RPC base classes
-[ ] add base store class
 [ ] add test suite
 [ ] create notebook button
 [ ] create notebook logic
@@ -22,5 +20,7 @@
 
 # DONE
 
+[+] refactor IPC/RPC base classes
+[+] add base store class
 [+] modal component
 [+] Add rpc design doc (currently in main readme)

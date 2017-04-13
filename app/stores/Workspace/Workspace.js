@@ -1,25 +1,17 @@
 import { extendObservable } from 'mobx';
+import Store from '../Store';
 
 /**
  * The workspace store keeps track of the current state of the workspace
  *
  * @class Workspace
  */
-class Workspace {
-
-  transportLayer;
-
+class Workspace extends Store {
   constructor() {
+    super();
     extendObservable(this, {
       notebookTitleModalVisible: false
     });
-
-    this.transportLayer = null;
-  }
-
-
-  setTransport(transportLayer) {
-    this.transportLayer = transportLayer;
   }
 }
 

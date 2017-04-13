@@ -1,4 +1,4 @@
-import { ipcRenderer } from 'electron';
+import Ipc from '../Ipc';
 
-export default class Trash {
+export default class Trash extends Ipc {
 }

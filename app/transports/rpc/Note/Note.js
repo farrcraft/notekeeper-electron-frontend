@@ -1,28 +1,16 @@
-import { ipcMain } from 'electron';
+import Handler from '../Handler';
 import rpc from '../Rpc';
 import messages from '../../../proto/rpc_pb';
 
-export default class Note {
-  store = null;
-
+export default class Note extends Handler {
   /**
    * Creates an instance of Note.
    *
    * @memberOf Note
    */
   constructor() {
+    super();
     this.registerIpc();
-  }
-
-  /**
-   * setStore sets the store this transport operates on
-   *
-   * @param {any} store
-   *
-   * @memberOf Note
-   */
-  setStore(store) {
-    this.store = store;
   }
 
   /**
@@ -32,7 +20,7 @@ export default class Note {
    * @memberOf Note
    */
   registerIpc() {
-    ipcMain.on('Note::create', (event, arg) => {
+    this.listener.on('Note::create', (event, arg) => {
       const promise = this.create();
       promise.then((val) => {
         this.store.handleCreate(val);
@@ -44,16 +32,16 @@ export default class Note {
       });
     });
 
-    ipcMain.on('Note::list', (event, arg) => {
+    this.listener.on('Note::list', (event, arg) => {
     });
 
-    ipcMain.on('Note::save', (event, arg) => {
+    this.listener.on('Note::save', (event, arg) => {
     });
 
-    ipcMain.on('Note::get', (event, arg) => {
+    this.listener.on('Note::get', (event, arg) => {
     });
 
-    ipcMain.on('Note::delete', (event, arg) => {
+    this.listener.on('Note::delete', (event, arg) => {
     });
   }
 

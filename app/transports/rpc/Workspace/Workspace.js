@@ -1,3 +1,7 @@
-export default class Workspace {
+import Handler from '../Handler';
 
+export default class Workspace extends Handler {
+  constructor() {
+    super();
+  }
 }
