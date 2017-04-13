@@ -14,7 +14,7 @@ The header is named 'NoteKeeper-Request-Signature'.
 Requests include an HTTP header with the rpc method of the message.
 The header is named 'NoteKeeper-Request-Method'.
 
-Server prepends response body with the signature of the response.
+Server sends headers with the signature & sequence of the response.
 
 # Legacy Implementation v2
 
