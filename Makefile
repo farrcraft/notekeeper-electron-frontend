@@ -18,4 +18,4 @@ proto-copy:
 
 # Regenerate nodejs protobuf definitions
 proto:
-	./node_modules/grpc-tools/bin/protoc --js_out=import_style=commonjs,binary:./ app/proto/rpc.proto
+	cd app/proto; ../../../protoc -I . *.proto --js_out=import_style=commonjs,binary:.

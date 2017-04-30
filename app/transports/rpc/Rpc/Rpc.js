@@ -25,7 +25,6 @@ class Rpc {
 
   constructor() {
     this.registerTransports();
-    this.loadCertificate();
     this.createKeys();
   }
 
@@ -82,6 +81,32 @@ class Rpc {
     return ok;
   }
 
+  backendReady(callback) {
+    const endpoint = `https://${RPC_PORT}/rpc`;
+    const options = {
+      uri: endpoint,
+      method: 'POST',
+      strictSSL: false,
+      headers: {
+        'NoteKeeper-Request-Method': 'SERVICE-READY',
+      },
+      rejectUnauthorized: false,
+      json: false
+    };
+    request(options, (err, response, body) => {
+      if (err != null) {
+        callback(false);
+        return;
+      }
+      if (body === 'OK') {
+        this.loadCertificate();
+        callback(true);
+        return;
+      }
+      callback(false);
+    });
+  }
+
   // request makes an RPC request
   request(method, payload, callback) {
     const endpoint = `https://${RPC_PORT}/rpc`;
@@ -103,6 +128,10 @@ class Rpc {
     };
 
     request(options, (err, response, body) => {
+      if (err !== null) {
+        this.handleRequestError(err);
+        return;
+      }
       if (method !== 'KeyExchange') {
         if (!this.verifyResponse(err, response, body)) {
           return;
@@ -117,6 +146,10 @@ class Rpc {
         }
       }
     });
+  }
+
+  handleRequestError(err) {
+    this.handleError('Service Error', err.message);
   }
 
   // verifyResponse verifies that a response is valid
@@ -149,7 +182,11 @@ class Rpc {
   handleError(title, msg) {
     this.lastError.title = title;
     this.lastError.message = msg;
-    dialog.showErrorBox(title, msg);
+    if (msg === undefined || msg === null) {
+      this.lastError.message = title;
+      this.lastError.title = 'Internal Error';
+    }
+    dialog.showErrorBox(this.lastError.title, this.lastError.message);
   }
 }
 

@@ -1,6 +1,7 @@
 import Handler from '../Handler';
 import rpc from '../Rpc';
-import messages from '../../../proto/rpc_pb';
+import messagesRpc from '../../../proto/rpc_pb';
+import messagesAccount from '../../../proto/account_pb';
 
 export default class Account extends Handler {
   constructor() {
@@ -93,9 +94,9 @@ export default class Account extends Handler {
   // create makes an RPC request to create a new account
   create(name, email, passphrase) {
     const promise = new Promise((resolve, reject) => {
-      const message = new messages.CreateAccountRequest();
+      const message = new messagesAccount.CreateAccountRequest();
       message.setEmail(email);
-      message.setname(name);
+      message.setName(name);
       message.setPassphrase(passphrase);
       const payload = message.serializeBinary();
       rpc.request('Account::create', payload, (err, response, body) => {
@@ -103,7 +104,7 @@ export default class Account extends Handler {
           reject(err);
           return;
         }
-        const responseMessage = messages.IdResponse.deserializeBinary(body);
+        const responseMessage = messagesRpc.IdResponse.deserializeBinary(body);
         const ok = this.checkResponseStatus(responseMessage, reject);
         if (ok) {
           resolve(ok);
@@ -116,8 +117,8 @@ export default class Account extends Handler {
   // getState makes an RPC request to get the current account state
   getState() {
     const promise = new Promise((resolve, reject) => {
-      const message = new messages.EmptyRequest();
-      const messageHeader = new messages.RequestHeader();
+      const message = new messagesRpc.EmptyRequest();
+      const messageHeader = new messagesRpc.RequestHeader();
       messageHeader.setMethod('UIState::load');
       message.setHeader(messageHeader);
       const payload = message.serializeBinary();
@@ -126,7 +127,7 @@ export default class Account extends Handler {
           reject(err);
           return;
         }
-        const responseMessage = messages.AccountStateResponse.deserializeBinary(body);
+        const responseMessage = messagesAccount.AccountStateResponse.deserializeBinary(body);
         const ok = this.checkResponseStatus(responseMessage, reject);
         if (!ok) {
           return;
@@ -144,7 +145,7 @@ export default class Account extends Handler {
   // signin makes an RPC request to sign in to an account
   signin(name, email, passphrase) {
     const promise = new Promise((resolve, reject) => {
-      const message = new messages.SigninAccountRequest();
+      const message = new messagesAccount.SigninAccountRequest();
       message.setName(name);
       message.setEmail(email);
       message.setPassphrase(passphrase);
@@ -154,10 +155,9 @@ export default class Account extends Handler {
           reject(err);
           return;
         }
-        const responseMessage = messages.EmptyResponse.deserializeBinary(body);
+        const responseMessage = messagesRpc.EmptyResponse.deserializeBinary(body);
         const ok = this.checkResponseStatus(responseMessage, reject);
         if (ok) {
-          // [FIXME] - trigger menu rebuild
           resolve(ok);
         }
       });
@@ -168,8 +168,8 @@ export default class Account extends Handler {
   // signout makes an RPC request to sign out from a signed in account
   signout() {
     const promise = new Promise((resolve, reject) => {
-      const message = new messages.EmptyRequest();
-      const messageHeader = new messages.RequestHeader();
+      const message = new messagesRpc.EmptyRequest();
+      const messageHeader = new messagesRpc.RequestHeader();
       messageHeader.setMethod('Account::signout');
       message.setHeader(messageHeader);
       const payload = message.serializeBinary();
@@ -178,7 +178,7 @@ export default class Account extends Handler {
           reject(err);
           return;
         }
-        const responseMessage = messages.EmptyResponse.deserializeBinary(body);
+        const responseMessage = messagesRpc.EmptyResponse.deserializeBinary(body);
         const ok = this.checkResponseStatus(responseMessage, reject);
         if (ok) {
           resolve(ok);
@@ -191,7 +191,7 @@ export default class Account extends Handler {
   // unlock makes an RPC request to unlock a locked account
   unlock(passphrase) {
     const promise = new Promise((resolve, reject) => {
-      const message = new messages.UnlockAccountRequest();
+      const message = new messagesAccount.UnlockAccountRequest();
       message.setPassphrase(passphrase);
       const payload = message.serializeBinary();
       rpc.request('Account::unlock', payload, (err, response, body) => {
@@ -199,10 +199,10 @@ export default class Account extends Handler {
           reject(err);
           return;
         }
-        const responseMessage = messages.EmptyResponse.deserializeBinary(body);
+        const responseMessage = messagesRpc.EmptyResponse.deserializeBinary(body);
         const ok = this.checkResponseStatus(responseMessage, reject);
         if (ok) {
-          resolve(status);
+          resolve(ok);
         }
       });
     });
@@ -212,8 +212,8 @@ export default class Account extends Handler {
   // lock makes an RPC request to lock an unlocked account
   lock() {
     const promise = new Promise((resolve, reject) => {
-      const message = new messages.EmptyRequest();
-      const messageHeader = new messages.RequestHeader();
+      const message = new messagesRpc.EmptyRequest();
+      const messageHeader = new messagesRpc.RequestHeader();
       messageHeader.setMethod('Account::lock');
       message.setHeader(messageHeader);
       const payload = message.serializeBinary();
@@ -222,10 +222,10 @@ export default class Account extends Handler {
           reject(err);
           return;
         }
-        const responseMessage = messages.EmptyResponse.deserializeBinary(body);
+        const responseMessage = messagesRpc.EmptyResponse.deserializeBinary(body);
         const ok = this.checkResponseStatus(responseMessage, reject);
         if (ok) {
-          resolve(status);
+          resolve(ok);
         }
       });
     });

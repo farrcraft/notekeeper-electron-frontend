@@ -1,12 +1,13 @@
 import { dialog } from 'electron';
 import rpc from '../Rpc';
-import messages from '../../../proto/rpc_pb';
+import messagesRpc from '../../../proto/rpc_pb';
+import messagesUIState from '../../../proto/ui_state_pb';
 
 export default class UIState {
 
   load() {
-    const message = new messages.EmptyRequest();
-    const messageHeader = new messages.RequestHeader();
+    const message = new messagesRpc.EmptyRequest();
+    const messageHeader = new messagesRpc.RequestHeader();
     messageHeader.setMethod('UIState::load');
     message.setHeader(messageHeader);
     const payload = message.serializeBinary();
@@ -17,7 +18,7 @@ export default class UIState {
           return;
         }
 
-        const responseMessage = messages.LoadUIStateResponse.deserializeBinary(body);
+        const responseMessage = messagesUIState.LoadUIStateResponse.deserializeBinary(body);
         const header = responseMessage.getHeader();
         const status = header.getStatus();
         if (status !== 'OK') {
@@ -32,7 +33,7 @@ export default class UIState {
   }
 
   save(store) {
-    const message = new messages.SaveUIStateRequest();
+    const message = new messagesUIState.SaveUIStateRequest();
     message.setWindowwidth(store.windowWidth);
     message.setWindowheight(store.windowHeight);
     message.setWindowxposition(store.windowXPosition);
@@ -51,7 +52,7 @@ export default class UIState {
           dialog.showErrorBox('Unknown Error', 'There was a problem saving the UI state.');
           return;
         }
-        const responseMessage = messages.EmptyResponse.deserializeBinary(body);
+        const responseMessage = messagesRpc.EmptyResponse.deserializeBinary(body);
         const header = responseMessage.getHeader();
         const status = header.getStatus();
         if (status !== 'OK') {

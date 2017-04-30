@@ -1,6 +1,7 @@
 /* eslint global-require: 1, flowtype-errors/show-errors: 0 */
 // @flow
 import { app, BrowserWindow, screen, Rectangle } from 'electron';
+import childProcess from 'child_process';
 import Core from './shared';
 import MenuBuilder from './menu';
 import rpc from './transports/rpc/Rpc';
@@ -11,6 +12,7 @@ import UIStateTransport from './transports/rpc/UIState';
 let mainWindow = null;
 let windowStateTimeout = null;
 let menuBuilder = null;
+let backendServer = null;
 
 if (process.env.NODE_ENV === 'production') {
   const sourceMapSupport = require('source-map-support');
@@ -51,6 +53,7 @@ app.on('activate', () => {
 
 app.on('will-quit', () => {
   // all windows have been closed & app is about to quit
+  destroyBackendServer();
 });
 
 app.on('window-all-closed', async () => {
@@ -99,6 +102,39 @@ const installExtensions = async () => {
   }
 };
 
+const createBackendServer = async () => {
+  const promise = new Promise((resolve, reject) => {
+    backendServer = childProcess.spawn('./app/resources/backend');
+    backendServer.stdout.on('data', (data) => {
+      const out = data.toString();
+      if (out === 'NOTEKEEPER_SERVICE_READY\n') {
+        Core.waitForReady(10, () => {
+          resolve(out);
+        });
+      } else {
+        // [FIXME] - need to capture this in a frontend log file
+        console.log(out);
+        reject(out);
+      }
+    });
+    backendServer.stderr.on('data', (data) => {
+      // [FIXME] - need to capture this in a frontend log file
+      console.log(data.toString());
+    });
+    backendServer.on('exit', (code) => {
+      if (code !== 0 && code !== null) {
+        // [FIXME] - need to capture this in a frontend log file
+        console.log(`Child exited with code ${code}`);
+      }
+    });
+  });
+  return promise;
+};
+
+function destroyBackendServer() {
+  backendServer.kill();
+}
+
 // delayedWindowStateSave schedules the window state to be saved in the future
 function delayedWindowStateSave() {
   if (windowStateTimeout) {
@@ -137,7 +173,7 @@ function updateWindowState() {
 
 // restoreWindowState sets the current window position/size to the last saved values
 function restoreWindowState() {
-  const restoreBounds = new Rectangle();
+  const restoreBounds = {};
   restoreBounds.width = uiStateStore.windowWidth;
   restoreBounds.height = uiStateStore.windowHeight;
   restoreBounds.x = uiStateStore.windowXPosition;
@@ -205,6 +241,8 @@ function createWindow(width, height, x, y) {
 }
 
 app.on('ready', async () => {
+  await createBackendServer();
+
   await installExtensions();
 
   await Core.keyExchange();

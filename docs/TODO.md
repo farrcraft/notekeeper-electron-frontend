@@ -8,6 +8,10 @@
 [ ] draft js integration
 [ ] create note 
 [ ] display note
+[ ] tray icon
+[ ] tray icon context menu
+[ ] don't terminate app when main window is closed
+[ ] terminate app from tray icon context menu
 [ ] account creation flow
 [ ] account creation ui
 [ ] logout account
@@ -20,6 +24,7 @@
 
 # DONE
 
+[+] start backend process on start
 [+] refactor IPC/RPC base classes
 [+] add base store class
 [+] modal component
