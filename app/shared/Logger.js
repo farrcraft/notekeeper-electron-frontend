@@ -17,6 +17,7 @@ class Logger {
       transports.push(new (winston.transports.Console)());
     }
     this.logger.configure({
+      level: 'debug',
       transports
     });
   }
