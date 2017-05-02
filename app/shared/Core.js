@@ -1,4 +1,5 @@
 import { app, dialog } from 'electron';
+import { Logger } from '../shared';
 import rpc from '../transports/rpc/Rpc';
 import messagesRpc from '../proto/rpc_pb';
 import messagesDb from '../proto/db_pb';
@@ -63,7 +64,7 @@ class Core {
       const payload = message.serializeBinary();
       rpc.request('KeyExchange', payload, (err, response, body) => {
         if (err !== null) {
-          console.log(err);
+          Logger.debug(err);
           rpc.handleError('Fatal Error', 'Key exchange error.');
           app.quit();
           return;

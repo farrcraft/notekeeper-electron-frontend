@@ -4,8 +4,14 @@ import { AppContainer } from 'react-hot-loader';
 import App from './components/App';
 import accountStore from './stores/Account';
 import AccountTransport from './transports/ipc/Account';
+import Logger from './shared/Logger';
 
 import './scss/general.scss';
+
+const { app } = require('electron').remote;
+
+const userDataPath = app.getPath('userData');
+Logger.configure(userDataPath);
 
 const accountTransport = new AccountTransport();
 accountStore.setTransport(accountTransport);
@@ -24,7 +30,7 @@ accountStore.getState().then((val) => {
   return val;
 })
 .catch((err) => {
-  // [FIXME]
+  Logger.debug(err);
 });
 
 if (module.hot) {

@@ -1,3 +1,4 @@
 import Core from './Core';
+import Logger from './Logger';
 
-export default Core;
+export { Core, Logger };

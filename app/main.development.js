@@ -1,8 +1,8 @@
 /* eslint global-require: 1, flowtype-errors/show-errors: 0 */
 // @flow
-import { app, BrowserWindow, screen, Rectangle } from 'electron';
+import { app, BrowserWindow, screen } from 'electron';
 import childProcess from 'child_process';
-import Core from './shared';
+import { Core, Logger } from './shared';
 import MenuBuilder from './menu';
 import rpc from './transports/rpc/Rpc';
 import uiStateStore from './stores/UIState';
@@ -13,6 +13,9 @@ let mainWindow = null;
 let windowStateTimeout = null;
 let menuBuilder = null;
 let backendServer = null;
+
+const userDataPath = app.getPath('userData');
+Logger.configure(userDataPath);
 
 if (process.env.NODE_ENV === 'production') {
   const sourceMapSupport = require('source-map-support');
@@ -27,7 +30,7 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 process.on('error', (err) => {
-  console.log(err);
+  Logger.debug(err);
 });
 
 // We only want a single instance to be able to run at once
@@ -74,7 +77,7 @@ app.on('window-all-closed', async () => {
     }
     */
   } catch (e) {
-    console.log(e);
+    Logger.debug(e);
   }
   Core.shutdown();
   // Respect the OSX convention of having the application in memory even
@@ -112,19 +115,16 @@ const createBackendServer = async () => {
           resolve(out);
         });
       } else {
-        // [FIXME] - need to capture this in a frontend log file
-        console.log(out);
+        Logger.debug(out);
         reject(out);
       }
     });
     backendServer.stderr.on('data', (data) => {
-      // [FIXME] - need to capture this in a frontend log file
-      console.log(data.toString());
+      Logger.debug(data.toString());
     });
     backendServer.on('exit', (code) => {
       if (code !== 0 && code !== null) {
-        // [FIXME] - need to capture this in a frontend log file
-        console.log(`Child exited with code ${code}`);
+        Logger.debug(`Child exited with code ${code}`);
       }
     });
   });
