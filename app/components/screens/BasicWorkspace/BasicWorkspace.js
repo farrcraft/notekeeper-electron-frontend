@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react';
+import RaisedButton from 'material-ui/RaisedButton';
+import { Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle } from 'material-ui/Toolbar';
 import SplitPane from 'react-split-pane';
-import Toolbar from '../../ui/Toolbar';
-import ToolbarEntry from '../../ui/ToolbarEntry';
 import NoteView from '../../views/NoteView';
 import NotebookList from '../../views/NotebookList';
 import NoteList from '../../views/NoteList';
 import NotebookTitleModal from '../../modals/NotebookTitle';
 
 @inject('account', 'notebook', 'note') @observer
-class Workspace extends Component {
+class BasicWorkspace extends Component {
   handleLockAccount() {
     const { account } = this.props;
     account.lock();
@@ -29,15 +29,11 @@ class Workspace extends Component {
     return (
       <div className="workspace">
         <Toolbar>
-          <ToolbarEntry onClick={() => this.handleLockAccount()}>
-            Lock Account
-          </ToolbarEntry>
-          <ToolbarEntry onClick={() => this.handleNewNotebook()}>
-            New Notebook
-          </ToolbarEntry>
-          <ToolbarEntry onClick={() => this.handleNewNote()}>
-            New Note
-          </ToolbarEntry>
+          <ToolbarGroup firstChild>
+            <RaisedButton label="New Note" onTouchTap={() => this.handleNewNote()} />
+            <RaisedButton label="New Notebook" onTouchTap={() => this.handleNewNotebook()} />
+            <RaisedButton label="Lock Account" onTouchTap={() => this.handleLockAccount()} />
+          </ToolbarGroup>
         </Toolbar>
         <h1>Workspace</h1>
         <SplitPane split="vertical">
@@ -53,4 +49,4 @@ class Workspace extends Component {
   }
 }
 
-export default Workspace;
+export default BasicWorkspace;

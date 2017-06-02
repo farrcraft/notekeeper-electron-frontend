@@ -1,5 +1,13 @@
 # TODO
 
+[ ] notebook store - create notebook
+[ ] notebook rpc transport - create notebook
+[ ] notebook ipc transport - create notebook
+[ ] notebook store - get notebooks
+[ ] notebook rpc transport - get notebooks
+[ ] notebook ipc transport - get notebooks
+[ ] get notebooks when workspace is loaded
+[ ] list notebooks in workspace sidebar
 [ ] add test suite
 [ ] create notebook button
 [ ] create notebook logic

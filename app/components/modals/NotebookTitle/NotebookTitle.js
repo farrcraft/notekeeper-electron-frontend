@@ -7,8 +7,10 @@ class NotebookTitle extends Component {
       <Modal
         isOpen={false}
       >
-        <h2>Notebook</h2>
+        <h2>Notebook Title</h2>
         <input type="text" />
+        <div className="title-format">
+        </div>
         <button>Save</button>
       </Modal>
     );

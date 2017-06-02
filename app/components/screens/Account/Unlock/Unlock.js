@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { observable } from 'mobx';
 import { observer, inject } from 'mobx-react';
+import FlatButton from 'material-ui/FlatButton';
+import RaisedButton from 'material-ui/RaisedButton';
+import TextField from 'material-ui/TextField';
 
 @inject('account') @observer
 class Unlock extends Component {
@@ -8,16 +11,36 @@ class Unlock extends Component {
     password: ''
   }
 
+  @observable formError = {
+    password: ''
+  }
+
   handleChange = (key) => ({
     value: this.form[key],
-    onChange: e => {
-      this.form[key] = e.target.value;
+    onChange: (e, v) => {
+      this.form[key] = v;
     }
   })
 
   handleSubmit = (e) => {
     e.preventDefault();
+    if (this.checkFieldErrors(['password'])) {
+      return;
+    }
     this.handleUnlockAccount();
+  }
+
+  checkFieldErrors(keys) {
+    let status = false;
+    keys.forEach((key) => {
+      if (this.form[key] === '') {
+        this.formError[key] = 'This field is required';
+        status = true;
+      } else {
+        this.formError[key] = '';
+      }
+    });
+    return status;
   }
 
   handleUnlockAccount() {
@@ -26,18 +49,25 @@ class Unlock extends Component {
     account.unlock(this.form.password);
   }
 
+  handleSignoutAccount = (e) => {
+    const { account } = this.props;
+    account.signout();
+  }
+
   render() {
     return (
       <div>
         <h1>Unlock</h1>
-        <form className="unlock-account-form" onSubmit={this.handleSubmit}>
-          <label htmlFor="password">
-            Password
-            <input id="password" type="password" {...this.handleChange('password')} required="required" />
-          </label>
-
-          <button>Unlock Account</button>
-        </form>
+        <TextField
+          id="password"
+          type="password"
+          hintText="Password"
+          errorText={this.formError.password}
+          {...this.handleChange('password')}
+        />
+        <br />
+        <FlatButton onTouchTap={this.handleSignoutAccount} label="Signout" secondary />
+        <RaisedButton label="Unlock Account" primary onTouchTap={this.handleSubmit} />
       </div>
     );
   }

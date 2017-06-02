@@ -8,7 +8,8 @@ class Account extends Store {
     extendObservable(this, {
       signedIn: false,
       locked: true,
-      exists: false
+      exists: false,
+      viewOverride: null
     });
   }
 
@@ -35,6 +36,11 @@ class Account extends Store {
     return true;
   }
 
+  @action overrideView(view) {
+    this.viewOverride = view;
+    return true;
+  }
+
   @action create(accountName, email, passphrase) {
     const promise = this.transportLayer.create(accountName, email, passphrase);
     return promise.then((val) => {
@@ -47,6 +53,7 @@ class Account extends Store {
     this.signedIn = true;
     this.exists = true;
     this.locked = false;
+    this.viewOverride = null;
     return true;
   }
 
@@ -61,6 +68,7 @@ class Account extends Store {
   handleSignin(val) {
     this.signedIn = true;
     this.locked = false;
+    this.viewOverride = null;
     return true;
   }
 
@@ -69,6 +77,7 @@ class Account extends Store {
     return promise.then((val) => {
       this.signedIn = false;
       this.locked = true;
+      this.viewOverride = null;
       return true;
     });
   }
@@ -77,6 +86,7 @@ class Account extends Store {
     const promise = this.transportLayer.lock();
     return promise.then((val) => {
       this.locked = true;
+      this.viewOverride = null;
       return this.locked;
     });
   }

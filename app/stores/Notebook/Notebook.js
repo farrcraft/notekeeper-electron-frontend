@@ -1,13 +1,33 @@
+import { action, extendObservable } from 'mobx';
 import Store from '../Store';
 
 class Notebook extends Store {
-  notebooks = [];
-
   constructor() {
     super();
+
+    extendObservable(this, {
+      notebooks: []
+    });
   }
 
-  create(title) {
+  @action create(title) {
+    const promise = this.transportLayer.create(title);
+    return promise.then((val) => {
+      const ok = this.handleCreate(val);
+      return ok;
+    });
+  }
+
+  handleCreate(val) {
+    /*
+    this.signedIn = true;
+    this.exists = true;
+    this.locked = false;
+    */
+    return true;
+  }
+
+  @action list() {
 
   }
 

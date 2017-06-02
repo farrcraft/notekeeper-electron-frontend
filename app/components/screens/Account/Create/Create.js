@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { observable } from 'mobx';
 import { observer, inject } from 'mobx-react';
+import RaisedButton from 'material-ui/RaisedButton';
+import TextField from 'material-ui/TextField';
 
 @inject('account') @observer
 class Create extends Component {
@@ -11,16 +13,46 @@ class Create extends Component {
     password: ''
   }
 
+  @observable formError = {
+    accountName: '',
+    password: '',
+    email: ''
+  }
+
   handleChange = (key) => ({
     value: this.form[key],
-    onChange: e => {
-      this.form[key] = e.target.value;
+    onChange: (e, v) => {
+      this.form[key] = v;
     }
   })
 
   handleSubmit = (e) => {
     e.preventDefault();
+    if (this.checkFieldErrors(['email', 'password', 'accountName'])) {
+      return;
+    }
     this.handleCreateAccount();
+  }
+
+  /**
+   *
+   *
+   * @param {any} key
+   * @returns boolean true if any field has an error.
+   *
+   * @memberof Signin
+   */
+  checkFieldErrors(keys) {
+    let status = false;
+    keys.forEach((key) => {
+      if (this.form[key] === '') {
+        this.formError[key] = 'This field is required';
+        status = true;
+      } else {
+        this.formError[key] = '';
+      }
+    });
+    return status;
   }
 
   handleCreateAccount() {
@@ -33,24 +65,29 @@ class Create extends Component {
     return (
       <div>
         <h1>Create Account </h1>
-        <form className="create-account-form" onSubmit={this.handleSubmit}>
-          <label htmlFor="accountName">
-            Account Name
-            <input id="accountName" type="text" {...this.handleChange('accountName')} required="required" />
-          </label>
-
-          <label htmlFor="email">
-            Email Address
-            <input id="email" type="email" {...this.handleChange('email')} required="required" />
-          </label>
-
-          <label htmlFor="password">
-            Password
-            <input id="password" type="password" {...this.handleChange('password')} required="required" />
-          </label>
-
-          <button>Create Account</button>
-        </form>
+        <TextField
+          id="accountName"
+          hintText="Account Name"
+          errorText={this.formError.accountName}
+          {...this.handleChange('accountName')}
+        />
+        <br />
+        <TextField
+          id="email"
+          hintText="Email"
+          errorText={this.formError.email}
+          {...this.handleChange('email')}
+        />
+        <br />
+        <TextField
+          id="password"
+          type="password"
+          hintText="Password"
+          errorText={this.formError.password}
+          {...this.handleChange('password')}
+        />
+        <br />
+        <RaisedButton label="Create Account" primary onTouchTap={this.handleSubmit} />
       </div>
     );
   }
