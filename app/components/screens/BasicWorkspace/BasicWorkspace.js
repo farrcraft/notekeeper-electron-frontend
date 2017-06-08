@@ -15,12 +15,6 @@ class BasicWorkspace extends Component {
     account.lock();
   }
 
-  handleNewNotebook() {
-    // show notebook title modal
-
-    // const { notebook } = this.props;
-  }
-
   handleNewNote() {
     // const { note } = this.props;
   }
@@ -31,7 +25,6 @@ class BasicWorkspace extends Component {
         <Toolbar>
           <ToolbarGroup firstChild>
             <RaisedButton label="New Note" onTouchTap={() => this.handleNewNote()} />
-            <RaisedButton label="New Notebook" onTouchTap={() => this.handleNewNotebook()} />
             <RaisedButton label="Lock Account" onTouchTap={() => this.handleLockAccount()} />
           </ToolbarGroup>
         </Toolbar>

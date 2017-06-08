@@ -1,5 +1,6 @@
 # TODO
 
+[ ] figure out where logic needs to live for create notebook functionality
 [ ] notebook store - create notebook
 [ ] notebook rpc transport - create notebook
 [ ] notebook ipc transport - create notebook
