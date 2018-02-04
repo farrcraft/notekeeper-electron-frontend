@@ -3,8 +3,11 @@
   "productName": "NoteKeeper.io",
   "version": "0.1.0",
   "description": "NoteKeeper.io desktop application",
-  "main": "./main.js",
+  "main": "./main.prod.js",
+  "scripts": {
+    "electron-rebuild": "node -r babel-register ../internals/scripts/ElectronRebuild.js",
+    "postinstall": "npm run electron-rebuild"
+  },
   "license": "UNLICENSED",
-  "dependencies": {
-  }
+  "dependencies": {}
 }

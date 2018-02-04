@@ -5,12 +5,15 @@
 import path from 'path';
 import webpack from 'webpack';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
+import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import merge from 'webpack-merge';
-import HtmlWebpackPlugin from 'html-webpack-plugin';
-import BabiliPlugin from 'babili-webpack-plugin';
 import { includePaths as bourbonPaths } from 'bourbon';
 import { includePaths as neatPaths } from 'bourbon-neat';
+import UglifyJSPlugin from 'uglifyjs-webpack-plugin';
 import baseConfig from './webpack.config.base';
+import CheckNodeEnv from './internals/scripts/CheckNodeEnv';
+
+CheckNodeEnv('production');
 
 const includePaths = [...bourbonPaths, ...neatPaths];
 /*
@@ -25,11 +28,12 @@ export default merge.smart(baseConfig, {
 
   target: 'electron-renderer',
 
-  entry: ['babel-polyfill', './app/index'],
+  entry: './app/index',
 
   output: {
     path: path.join(__dirname, 'app/dist'),
-    publicPath: '../dist/'
+    publicPath: './dist/',
+    filename: 'renderer.prod.js'
   },
 
   module: {
@@ -38,7 +42,13 @@ export default merge.smart(baseConfig, {
       {
         test: /\.global\.css$/,
         use: ExtractTextPlugin.extract({
-          use: 'css-loader',
+          publicPath: './',
+          use: {
+            loader: 'css-loader',
+            options: {
+              minimize: true,
+            }
+          },
           fallback: 'style-loader',
         })
       },
@@ -50,6 +60,7 @@ export default merge.smart(baseConfig, {
             loader: 'css-loader',
             options: {
               modules: true,
+              minimize: true,
               importLoaders: 1,
               localIdentName: '[name]__[local]__[hash:base64:5]',
             }
@@ -67,7 +78,8 @@ export default merge.smart(baseConfig, {
             {
               loader: 'sass-loader',
               options: {
-                includePaths
+                includePaths,
+                minimize: true,
               }
             }
           ],
@@ -82,6 +94,7 @@ export default merge.smart(baseConfig, {
             loader: 'css-loader',
             options: {
               modules: true,
+              minimize: true,
               importLoaders: 1,
               localIdentName: '[name]__[local]__[hash:base64:5]',
             }
@@ -161,24 +174,20 @@ export default merge.smart(baseConfig, {
      * NODE_ENV should be production so that modules do not perform certain
      * development checks
      */
-    new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'production')
+    new webpack.EnvironmentPlugin({
+      NODE_ENV: 'production'
     }),
 
-    /**
-     * Babli is an ES6+ aware minifier based on the Babel toolchain (beta)
-     */
-    new BabiliPlugin(),
+    new UglifyJSPlugin({
+      parallel: true,
+      sourceMap: true
+    }),
 
     new ExtractTextPlugin('style.css'),
 
-    /**
-     * Dynamically generate index.html page
-     */
-    new HtmlWebpackPlugin({
-      filename: '../app.html',
-      template: 'app/app.html',
-      inject: false
-    })
+    new BundleAnalyzerPlugin({
+      analyzerMode: process.env.OPEN_ANALYZER === 'true' ? 'server' : 'disabled',
+      openAnalyzer: process.env.OPEN_ANALYZER === 'true'
+    }),
   ],
 });

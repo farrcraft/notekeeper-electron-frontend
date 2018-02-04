@@ -18,8 +18,6 @@ const { app } = require('electron').remote;
 const userDataPath = app.getPath('userData');
 Logger.configure(userDataPath);
 
-Modal.setAppElement('#notekeeper-app');
-
 const accountTransport = new AccountTransport();
 accountStore.setTransport(accountTransport);
 const notebookTransport = new NotebookTransport();
@@ -40,6 +38,9 @@ accountStore.getState().then((val) => {
     </AppContainer>,
     document.getElementById('root')
   );
+
+  Modal.setAppElement('#notekeeper-app');
+
   return val;
 })
 .catch((err) => {
