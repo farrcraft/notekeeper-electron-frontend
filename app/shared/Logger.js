@@ -5,16 +5,16 @@ class Logger {
   logger = null;
 
   constructor() {
-    this.logger = new (winston.Logger)({});
+    this.logger = winston.createLogger();
   }
 
   configure(userDataPath) {
-    const logPath = path.normalize(path.join(userDataPath, 'notekeeper-client.log'));
-    const transports = [
-      new (winston.transports.File)({ filename: logPath })
-    ];
+    const logPath = path.normalize(
+      path.join(userDataPath, 'notekeeper-client.log')
+    );
+    const transports = [new winston.transports.File({ filename: logPath })];
     if (process.env.NODE_ENV === 'development') {
-      transports.push(new (winston.transports.Console)());
+      transports.push(new winston.transports.Console());
     }
     this.logger.configure({
       level: 'debug',
