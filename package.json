@@ -242,7 +242,6 @@
     "react-hot-loader": "4.3.12",
     "react-modal": "3.6.1",
     "react-split-pane": "0.1.84",
-    "react-tap-event-plugin": "3.0.3",
     "request": "2.88.0",
     "source-map-support": "0.5.9",
     "tweetnacl": "1.0.0",

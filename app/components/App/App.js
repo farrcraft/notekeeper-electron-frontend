@@ -1,13 +1,10 @@
 // @flow
 import React, { Component } from 'react';
 import { Provider, observer } from 'mobx-react';
-import injectTapEventPlugin from 'react-tap-event-plugin';
 import CreateAccount from '../screens/Account/Create';
 import UnlockAccount from '../screens/Account/Unlock';
 import SigninAccount from '../screens/Account/Signin';
 import Workspace from '../screens/BasicWorkspace';
-
-injectTapEventPlugin();
 
 export default
 @observer
