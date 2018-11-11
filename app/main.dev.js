@@ -1,12 +1,32 @@
-/* eslint global-require: 1, flowtype-errors/show-errors: 0 */
-// @flow
+/* eslint global-require: off */
+
+/**
+ * This module executes inside of electron's main process. You can start
+ * electron renderer process from here and communicate with the other processes
+ * through IPC.
+ *
+ * When running `yarn build` or `yarn build-main`, this file is compiled to
+ * `./app/main.prod.js` using webpack. This gives us some performance wins.
+ *
+ * @flow
+ */
 import { app, BrowserWindow, screen } from 'electron';
+import { autoUpdater } from 'electron-updater';
+import log from 'electron-log';
 import childProcess from 'child_process';
 import { Core, Logger } from './shared';
 import MenuBuilder from './menu';
 import rpc from './transports/rpc/Rpc';
 import uiStateStore from './stores/UIState';
 import UIStateTransport from './transports/rpc/UIState';
+
+export default class AppUpdater {
+  constructor() {
+    log.transports.file.level = 'info';
+    autoUpdater.logger = log;
+    autoUpdater.checkForUpdatesAndNotify();
+  }
+}
 
 // Declared here so our main window doesn't get GC'd
 let mainWindow = null;
@@ -29,7 +49,7 @@ if (process.env.NODE_ENV === 'development') {
   require('module').globalPaths.push(p);
 }
 
-process.on('error', (err) => {
+process.on('error', err => {
   Logger.debug(err);
 });
 
@@ -91,24 +111,22 @@ const installExtensions = async () => {
   if (process.env.NODE_ENV === 'development') {
     const installer = require('electron-devtools-installer'); // eslint-disable-line global-require
 
-    const extensions = [
-      'REACT_DEVELOPER_TOOLS'
-    ];
+    const extensions = ['REACT_DEVELOPER_TOOLS'];
     const forceDownload = !!process.env.UPGRADE_EXTENSIONS;
 
     // TODO: Use async interation statement.
     //       Waiting on https://github.com/tc39/proposal-async-iteration
     //       Promises will fail silently, which isn't what we want in development
-    return Promise
-      .all(extensions.map(name => installer.default(installer[name], forceDownload)))
-      .catch(console.log);
+    return Promise.all(
+      extensions.map(name => installer.default(installer[name], forceDownload))
+    ).catch(console.log);
   }
 };
 
 const createBackendServer = async () => {
   const promise = new Promise((resolve, reject) => {
     backendServer = childProcess.spawn('./app/resources/backend');
-    backendServer.stdout.on('data', (data) => {
+    backendServer.stdout.on('data', data => {
       const out = data.toString();
       if (out === 'NOTEKEEPER_SERVICE_READY\n') {
         Core.waitForReady(10, () => {
@@ -119,10 +137,10 @@ const createBackendServer = async () => {
         reject(out);
       }
     });
-    backendServer.stderr.on('data', (data) => {
+    backendServer.stderr.on('data', data => {
       Logger.debug(data.toString());
     });
-    backendServer.on('exit', (code) => {
+    backendServer.on('exit', code => {
       if (code !== 0 && code !== null) {
         Logger.debug(`Child exited with code ${code}`);
       }
@@ -181,10 +199,12 @@ function restoreWindowState() {
 
   const displayBounds = screen.getDisplayMatching(restoreBounds);
 
-  if (displayBounds.x === uiStateStore.displayXPosition &&
+  if (
+    displayBounds.x === uiStateStore.displayXPosition &&
     displayBounds.y === uiStateStore.displayYPosition &&
     displayBounds.width === uiStateStore.displayWidth &&
-    displayBounds.height === uiStateStore.displayHeight) {
+    displayBounds.height === uiStateStore.displayHeight
+  ) {
     mainWindow.setBounds(restoreBounds);
   }
 
@@ -260,5 +280,10 @@ app.on('ready', async () => {
     height = 600;
   }
 
-  createWindow(width, height, uiStateStore.windowXPosition, uiStateStore.windowYPosition);
+  createWindow(
+    width,
+    height,
+    uiStateStore.windowXPosition,
+    uiStateStore.windowYPosition
+  );
 });
