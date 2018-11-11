@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
-import { observer, inject } from 'mobx-react';
-import RaisedButton from 'material-ui/RaisedButton';
-import { Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle } from 'material-ui/Toolbar';
+import { observer, inject, PropTypes } from 'mobx-react';
+import Button from '@material-ui/core/Button';
+import { Toolbar, ToolbarGroup } from '@material-ui/core/Toolbar';
 import SplitPane from 'react-split-pane';
 import NoteView from '../../views/NoteView';
 import NotebookList from '../../views/NotebookList';
 import NoteList from '../../views/NoteList';
 import NotebookTitleModal from '../../modals/NotebookTitle';
 
-@inject('account', 'notebook', 'note') @observer
+@inject('account', 'notebook', 'note')
+@observer
 class BasicWorkspace extends Component {
   handleLockAccount() {
     const { account } = this.props;
@@ -16,7 +17,8 @@ class BasicWorkspace extends Component {
   }
 
   handleNewNote() {
-    // const { note } = this.props;
+    const { note } = this.props;
+    note.create();
   }
 
   render() {
@@ -24,8 +26,11 @@ class BasicWorkspace extends Component {
       <div className="workspace">
         <Toolbar>
           <ToolbarGroup firstChild>
-            <RaisedButton label="New Note" onTouchTap={() => this.handleNewNote()} />
-            <RaisedButton label="Lock Account" onTouchTap={() => this.handleLockAccount()} />
+            <Button label="New Note" onTouchTap={() => this.handleNewNote()} />
+            <Button
+              label="Lock Account"
+              onTouchTap={() => this.handleLockAccount()}
+            />
           </ToolbarGroup>
         </Toolbar>
         <h1>Workspace</h1>
@@ -41,5 +46,10 @@ class BasicWorkspace extends Component {
     );
   }
 }
+
+BasicWorkspace.propTypes = {
+  account: PropTypes.observableObject.isRequired,
+  note: PropTypes.observableObject.isRequired
+};
 
 export default BasicWorkspace;

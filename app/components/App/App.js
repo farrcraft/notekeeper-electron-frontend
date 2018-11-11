@@ -1,22 +1,17 @@
 // @flow
 import React, { Component } from 'react';
 import { Provider, observer } from 'mobx-react';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import CreateAccount from '../screens/Account/Create';
 import UnlockAccount from '../screens/Account/Unlock';
 import SigninAccount from '../screens/Account/Signin';
 import Workspace from '../screens/BasicWorkspace';
 
-const muiTheme = getMuiTheme({
-});
-
 injectTapEventPlugin();
 
+export default
 @observer
-export default class App extends Component {
-
+class App extends Component {
   componentWillMount() {
     // might need to put this in a screen base class instead
     // not sure account store is the right place for screen overrides either
@@ -29,15 +24,19 @@ export default class App extends Component {
     let View = null;
     if (stores.account.exists === true) {
       if (stores.account.isSignedIn === true) {
-        if (stores.account.isLocked === false) { // signed in and not locked
+        if (stores.account.isLocked === false) {
+          // signed in and not locked
           View = Workspace;
-        } else { // signed in but locked
+        } else {
+          // signed in but locked
           View = UnlockAccount;
         }
-      } else { // not signed in
+      } else {
+        // not signed in
         View = SigninAccount;
       }
-    } else { // no account exists yet
+    } else {
+      // no account exists yet
       View = CreateAccount;
     }
     if (stores.account.viewOverride !== null) {
@@ -45,16 +44,16 @@ export default class App extends Component {
         case 'CreateAccount':
           View = CreateAccount;
           break;
+        default:
+          break;
       }
     }
 
     return (
       <Provider {...stores}>
-        <MuiThemeProvider muiTheme={muiTheme}>
-          <div className="notekeeper-app">
-            <View />
-          </div>
-        </MuiThemeProvider>
+        <div className="notekeeper-app">
+          <View />
+        </div>
       </Provider>
     );
   }

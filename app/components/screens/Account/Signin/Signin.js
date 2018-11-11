@@ -1,39 +1,38 @@
 import React, { Component } from 'react';
 import { observable } from 'mobx';
 import { observer, inject } from 'mobx-react';
-import FlatButton from 'material-ui/FlatButton';
-import RaisedButton from 'material-ui/RaisedButton';
-import TextField from 'material-ui/TextField';
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
 
-@inject('account') @observer
+@inject('account')
+@observer
 class Signin extends Component {
-
   @observable form = {
     accountName: '',
     email: '',
     password: ''
-  }
+  };
 
   @observable formError = {
     accountName: '',
     password: '',
     email: ''
-  }
+  };
 
-  handleChange = (key) => ({
+  handleChange = key => ({
     value: this.form[key],
     onChange: (e, v) => {
       this.form[key] = v;
     }
-  })
+  });
 
-  handleSubmit = (e) => {
+  handleSubmit = e => {
     e.preventDefault();
     if (this.checkFieldErrors(['email', 'password', 'accountName'])) {
       return;
     }
     this.handleSigninAccount();
-  }
+  };
 
   /**
    *
@@ -45,7 +44,7 @@ class Signin extends Component {
    */
   checkFieldErrors(keys) {
     let status = false;
-    keys.forEach((key) => {
+    keys.forEach(key => {
       if (this.form[key] === '') {
         this.formError[key] = 'This field is required';
         status = true;
@@ -61,11 +60,11 @@ class Signin extends Component {
     account.signin(this.form.accountName, this.form.email, this.form.password);
   }
 
-  handleCreateAccount = (e) => {
+  handleCreateAccount = () => {
     // switch to the create account screen
     const { account } = this.props;
     account.overrideView('CreateAccount');
-  }
+  };
 
   render() {
     return (
@@ -93,8 +92,12 @@ class Signin extends Component {
           {...this.handleChange('password')}
         />
         <br />
-        <FlatButton onTouchTap={this.handleCreateAccount} label="Create an Account" secondary />
-        <RaisedButton label="Signin Account" primary onTouchTap={this.handleSubmit} />
+        <Button
+          onTouchTap={this.handleCreateAccount}
+          label="Create an Account"
+          secondary
+        />
+        <Button label="Signin Account" primary onTouchTap={this.handleSubmit} />
       </div>
     );
   }

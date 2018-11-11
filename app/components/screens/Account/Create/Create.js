@@ -1,38 +1,38 @@
 import React, { Component } from 'react';
 import { observable } from 'mobx';
 import { observer, inject } from 'mobx-react';
-import RaisedButton from 'material-ui/RaisedButton';
-import TextField from 'material-ui/TextField';
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
 
-@inject('account') @observer
+@inject('account')
+@observer
 class Create extends Component {
-
   @observable form = {
     accountName: '',
     email: '',
     password: ''
-  }
+  };
 
   @observable formError = {
     accountName: '',
     password: '',
     email: ''
-  }
+  };
 
-  handleChange = (key) => ({
+  handleChange = key => ({
     value: this.form[key],
     onChange: (e, v) => {
       this.form[key] = v;
     }
-  })
+  });
 
-  handleSubmit = (e) => {
+  handleSubmit = e => {
     e.preventDefault();
     if (this.checkFieldErrors(['email', 'password', 'accountName'])) {
       return;
     }
     this.handleCreateAccount();
-  }
+  };
 
   /**
    *
@@ -44,7 +44,7 @@ class Create extends Component {
    */
   checkFieldErrors(keys) {
     let status = false;
-    keys.forEach((key) => {
+    keys.forEach(key => {
       if (this.form[key] === '') {
         this.formError[key] = 'This field is required';
         status = true;
@@ -87,7 +87,7 @@ class Create extends Component {
           {...this.handleChange('password')}
         />
         <br />
-        <RaisedButton label="Create Account" primary onTouchTap={this.handleSubmit} />
+        <Button label="Create Account" primary onTouchTap={this.handleSubmit} />
       </div>
     );
   }

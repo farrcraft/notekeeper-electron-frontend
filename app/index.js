@@ -11,8 +11,6 @@ import noteStore from './stores/Note';
 import NoteTransport from './transports/ipc/Note';
 import Logger from './shared/Logger';
 
-import './scss/general.scss';
-
 const { app } = require('electron').remote;
 
 const userDataPath = app.getPath('userData');
@@ -31,21 +29,23 @@ const stores = {
   note: noteStore
 };
 
-accountStore.getState().then((val) => {
-  render(
-    <AppContainer>
-      <App stores={stores} />
-    </AppContainer>,
-    document.getElementById('root')
-  );
+accountStore
+  .getState()
+  .then(val => {
+    render(
+      <AppContainer>
+        <App stores={stores} />
+      </AppContainer>,
+      document.getElementById('root')
+    );
 
-  Modal.setAppElement('#notekeeper-app');
+    Modal.setAppElement('#notekeeper-app');
 
-  return val;
-})
-.catch((err) => {
-  Logger.debug(err);
-});
+    return val;
+  })
+  .catch(err => {
+    Logger.debug(err);
+  });
 
 if (module.hot) {
   module.hot.accept('./components/App', () => {
