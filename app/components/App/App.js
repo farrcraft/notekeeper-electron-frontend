@@ -1,6 +1,8 @@
 // @flow
 import React, { Component } from 'react';
 import { Provider, observer } from 'mobx-react';
+import CssBaseline from '@material-ui/core/CssBaseline';
+
 import CreateAccount from '../screens/Account/Create';
 import UnlockAccount from '../screens/Account/Unlock';
 import SigninAccount from '../screens/Account/Signin';
@@ -48,9 +50,10 @@ class App extends Component {
 
     return (
       <Provider {...stores}>
-        <div className="notekeeper-app">
+        <main className="notekeeper-app">
+          <CssBaseline />
           <View />
-        </div>
+        </main>
       </Provider>
     );
   }
