@@ -11,6 +11,7 @@
     ".flowconfig": "ignore"
   },
 
+  "eslint.packageManager": "yarn",
   "javascript.validate.enable": false,
   "javascript.format.enable": false,
   "typescript.validate.enable": false,
