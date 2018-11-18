@@ -4,7 +4,19 @@ import messagesRpc from '../../../proto/rpc_pb';
 import messagesUIState from '../../../proto/ui_state_pb';
 
 export default class UIState {
-  static load() {
+  lastStatus;
+
+  checkResponseHeader(responseMessage) {
+    const header = responseMessage.getHeader();
+    this.lastStatus = header.getStatus();
+    if (this.lastStatus !== 'OK') {
+      dialog.showErrorBox('Internal Error', this.lastStatus);
+      return false;
+    }
+    return true;
+  }
+
+  load() {
     const message = new messagesRpc.EmptyRequest();
     const messageHeader = new messagesRpc.RequestHeader();
     messageHeader.setMethod('UIState::load');
@@ -23,10 +35,7 @@ export default class UIState {
         const responseMessage = messagesUIState.LoadUIStateResponse.deserializeBinary(
           body
         );
-        const header = responseMessage.getHeader();
-        const status = header.getStatus();
-        if (status !== 'OK') {
-          dialog.showErrorBox('Internal Error', status);
+        if (!this.checkResponseHeader(responseMessage)) {
           reject(body);
           return;
         }
@@ -36,7 +45,7 @@ export default class UIState {
     return promise;
   }
 
-  static save(store) {
+  save(store) {
     const message = new messagesUIState.SaveUIStateRequest();
     message.setWindowwidth(store.windowWidth);
     message.setWindowheight(store.windowHeight);
@@ -62,14 +71,11 @@ export default class UIState {
         const responseMessage = messagesRpc.EmptyResponse.deserializeBinary(
           body
         );
-        const header = responseMessage.getHeader();
-        const status = header.getStatus();
-        if (status !== 'OK') {
-          dialog.showErrorBox('Internal Error', status);
+        if (!this.checkResponseHeader(responseMessage)) {
           reject(body);
           return;
         }
-        resolve(status);
+        resolve(this.lastStatus);
       });
     });
     return promise;

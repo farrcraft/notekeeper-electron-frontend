@@ -183,9 +183,9 @@ class Signin extends Component {
   }
 }
 
-Signin.propTypes = {
+Signin.wrappedComponent.propTypes = {
   account: PropTypes.observableObject.isRequired,
-  classes: PropTypes.isRequired
+  classes: PropTypes.objectOrObservableObject.isRequired
 };
 
 export default withStyles(styles)(Signin);

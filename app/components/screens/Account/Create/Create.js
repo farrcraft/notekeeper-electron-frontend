@@ -162,9 +162,9 @@ class Create extends Component {
   }
 }
 
-Create.propTypes = {
+Create.wrappedComponent.propTypes = {
   account: PropTypes.observableObject.isRequired,
-  classes: PropTypes.isRequired
+  classes: PropTypes.objectOrObservableObject.isRequired
 };
 
 export default withStyles(styles)(Create);

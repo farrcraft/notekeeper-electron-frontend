@@ -41,7 +41,7 @@ class Core {
     return promise;
   }
 
-  waitForReady(ticks, ready) {
+  static waitForReady(ticks, ready) {
     rpc.backendReady(ok => {
       if (!ok) {
         setTimeout(() => {
@@ -49,7 +49,7 @@ class Core {
             ready(true);
             return;
           }
-          this.waitForReady(ticks - 1, ready);
+          Core.waitForReady(ticks - 1, ready);
         }, 1000);
       } else {
         ready(true);
@@ -91,6 +91,4 @@ class Core {
   static shutdown() {}
 }
 
-const core = new Core();
-
-export default core;
+export default Core;
