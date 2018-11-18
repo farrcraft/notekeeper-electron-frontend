@@ -1,8 +1,9 @@
 import { ipcMain } from 'electron';
 
 export default class Handler {
-  listener
-  store
+  listener;
+
+  store;
 
   constructor() {
     this.listener = ipcMain;

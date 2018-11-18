@@ -3,6 +3,7 @@ import Store from '../Store';
 class Tag extends Store {
   tags = [];
 
+  /*
   constructor() {
     super();
   }
@@ -10,7 +11,7 @@ class Tag extends Store {
   create(title) {
 
   }
-
+  */
 }
 
 const tagStore = new Tag();

@@ -23,7 +23,7 @@ class Account extends Store {
 
   @action getState() {
     const promise = this.transportLayer.getState();
-    return promise.then((val) => {
+    return promise.then(val => {
       const ok = this.handleGetState(val);
       return ok;
     });
@@ -43,13 +43,13 @@ class Account extends Store {
 
   @action create(accountName, email, passphrase) {
     const promise = this.transportLayer.create(accountName, email, passphrase);
-    return promise.then((val) => {
+    return promise.then(val => {
       const ok = this.handleCreate(val);
       return ok;
     });
   }
 
-  handleCreate(val) {
+  handleCreate(/* val */) {
     this.signedIn = true;
     this.exists = true;
     this.locked = false;
@@ -57,15 +57,15 @@ class Account extends Store {
     return true;
   }
 
-  @action signin(accountName, email, passphrase, rememberMe) {
+  @action signin(accountName, email, passphrase /* , rememberMe */) {
     const promise = this.transportLayer.signin(accountName, email, passphrase);
-    return promise.then((val) => {
+    return promise.then(val => {
       const ok = this.handleSignin(val);
       return ok;
     });
   }
 
-  handleSignin(val) {
+  handleSignin(/* val */) {
     this.signedIn = true;
     this.locked = false;
     this.viewOverride = null;
@@ -74,7 +74,7 @@ class Account extends Store {
 
   signout() {
     const promise = this.transportLayer.signout();
-    return promise.then((val) => {
+    return promise.then((/* val */) => {
       this.signedIn = false;
       this.locked = true;
       this.viewOverride = null;
@@ -84,7 +84,7 @@ class Account extends Store {
 
   lock() {
     const promise = this.transportLayer.lock();
-    return promise.then((val) => {
+    return promise.then((/* val */) => {
       this.locked = true;
       this.viewOverride = null;
       return this.locked;
@@ -93,7 +93,7 @@ class Account extends Store {
 
   unlock(passphrase) {
     const promise = this.transportLayer.unlock(passphrase);
-    return promise.then((val) => {
+    return promise.then((/* val */) => {
       this.locked = false;
       return this.locked;
     });

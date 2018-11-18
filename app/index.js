@@ -11,6 +11,13 @@ import noteStore from './stores/Note';
 import NoteTransport from './transports/ipc/Note';
 import Logger from './shared/Logger';
 
+// Security - Override & Disable eval
+// ESLint will warn about any use of eval(), even this one
+// eslint-disable-next-line
+window.eval = global.eval = function() {
+  throw new Error(`Sorry, this app does not support window.eval().`);
+};
+
 const { app } = require('electron').remote;
 
 const userDataPath = app.getPath('userData');
@@ -49,7 +56,8 @@ accountStore
 
 if (module.hot) {
   module.hot.accept('./components/App', () => {
-    const NextApp = require('./components/App'); // eslint-disable-line global-require
+    // eslint-disable-next-line global-require
+    const NextApp = require('./components/App');
     render(
       <AppContainer>
         <NextApp stores={stores} />

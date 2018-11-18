@@ -4,8 +4,7 @@ import messagesRpc from '../../../proto/rpc_pb';
 import messagesUIState from '../../../proto/ui_state_pb';
 
 export default class UIState {
-
-  load() {
+  static load() {
     const message = new messagesRpc.EmptyRequest();
     const messageHeader = new messagesRpc.RequestHeader();
     messageHeader.setMethod('UIState::load');
@@ -14,11 +13,16 @@ export default class UIState {
     const promise = new Promise((resolve, reject) => {
       rpc.request('UIState::load', payload, (err, response, body) => {
         if (err !== null) {
-          dialog.showErrorBox('Unknown Error', 'There was a problem restoring the UI state.');
+          dialog.showErrorBox(
+            'Unknown Error',
+            'There was a problem restoring the UI state.'
+          );
           return;
         }
 
-        const responseMessage = messagesUIState.LoadUIStateResponse.deserializeBinary(body);
+        const responseMessage = messagesUIState.LoadUIStateResponse.deserializeBinary(
+          body
+        );
         const header = responseMessage.getHeader();
         const status = header.getStatus();
         if (status !== 'OK') {
@@ -32,7 +36,7 @@ export default class UIState {
     return promise;
   }
 
-  save(store) {
+  static save(store) {
     const message = new messagesUIState.SaveUIStateRequest();
     message.setWindowwidth(store.windowWidth);
     message.setWindowheight(store.windowHeight);
@@ -49,10 +53,15 @@ export default class UIState {
     const promise = new Promise((resolve, reject) => {
       rpc.request('UIState::save', payload, (err, response, body) => {
         if (err !== null) {
-          dialog.showErrorBox('Unknown Error', 'There was a problem saving the UI state.');
+          dialog.showErrorBox(
+            'Unknown Error',
+            'There was a problem saving the UI state.'
+          );
           return;
         }
-        const responseMessage = messagesRpc.EmptyResponse.deserializeBinary(body);
+        const responseMessage = messagesRpc.EmptyResponse.deserializeBinary(
+          body
+        );
         const header = responseMessage.getHeader();
         const status = header.getStatus();
         if (status !== 'OK') {

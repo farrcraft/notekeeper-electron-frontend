@@ -11,7 +11,7 @@ export default class Account extends Ipc {
   getState() {
     // [FIXME] - use real token
     const token = 'secure token';
-    const promise = new Promise((resolve, reject) => {
+    const promise = new Promise((resolve /* , reject */) => {
       this.dispatcher.on('Account::getState', (event, arg) => {
         resolve(arg);
       });
@@ -27,7 +27,7 @@ export default class Account extends Ipc {
    * @param {*} passphrase
    */
   create(accountName, email, passphrase) {
-    const promise = new Promise((resolve, reject) => {
+    const promise = new Promise((resolve /* , reject */) => {
       this.dispatcher.on('Account::create', (event, arg) => {
         resolve(arg);
       });
@@ -42,7 +42,7 @@ export default class Account extends Ipc {
   }
 
   signin(accountName, email, passphrase) {
-    const promise = new Promise((resolve, reject) => {
+    const promise = new Promise((resolve /* , reject */) => {
       this.dispatcher.on('Account::signin', (event, arg) => {
         resolve(arg);
       });
@@ -57,33 +57,29 @@ export default class Account extends Ipc {
   }
 
   signout() {
-    const promise = new Promise((resolve, reject) => {
+    const promise = new Promise((resolve /* , reject */) => {
       this.dispatcher.on('Account::signout', (event, arg) => {
         resolve(arg);
       });
-      const msg = {
-
-      };
+      const msg = {};
       this.dispatchMessage('Account::signout', msg);
     });
     return promise;
   }
 
   lock() {
-    const promise = new Promise((resolve, reject) => {
+    const promise = new Promise((resolve /* , reject */) => {
       this.dispatcher.on('Account::lock', (event, arg) => {
         resolve(arg);
       });
-      const msg = {
-
-      };
+      const msg = {};
       this.dispatchMessage('Account::lock', msg);
     });
     return promise;
   }
 
   unlock(passphrase) {
-    const promise = new Promise((resolve, reject) => {
+    const promise = new Promise((resolve /* , reject */) => {
       this.dispatcher.on('Account::unlock', (event, arg) => {
         resolve(arg);
       });

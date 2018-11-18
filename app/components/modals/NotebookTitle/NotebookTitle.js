@@ -4,14 +4,11 @@ import Modal from 'react-modal';
 class NotebookTitle extends Component {
   render() {
     return (
-      <Modal
-        isOpen={false}
-      >
+      <Modal isOpen={false}>
         <h2>Notebook Title</h2>
         <input type="text" />
-        <div className="title-format">
-        </div>
-        <button>Save</button>
+        <div className="title-format" />
+        <button type="submit">Save</button>
       </Modal>
     );
   }

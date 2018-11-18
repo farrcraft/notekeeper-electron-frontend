@@ -1,6 +1,6 @@
 import Handler from '../Handler';
 import rpc from '../Rpc';
-import messages from '../../../proto/rpc_pb';
+// import messages from '../../../proto/rpc_pb';
 
 export default class Notebook extends Handler {
   /**
@@ -20,41 +20,31 @@ export default class Notebook extends Handler {
    * @memberOf Notebook
    */
   registerIpc() {
-    this.listener.on('Notebook::create', (event, arg) => {
-      const promise = this.create();
-      promise.then((val) => {
-        this.store.handleCreate(val);
-        event.sender.send('Notebook::create', val);
-        return val;
-      })
-      .catch((err) => {
-        rpc.handleError(err);
-      });
+    this.listener.on('Notebook::create', (event /* , arg */) => {
+      const promise = createNotebook();
+      promise
+        .then(val => {
+          this.store.handleCreate(val);
+          event.sender.send('Notebook::create', val);
+          return val;
+        })
+        .catch(err => {
+          rpc.handleError(err);
+        });
     });
 
-    this.listener.on('Notebook::list', (event, arg) => {
+    this.listener.on('Notebook::list', (/* event, arg */) => {});
 
-    });
+    this.listener.on('Notebook::load', (/* event, arg */) => {});
 
-    this.listener.on('Notebook::load', (event, arg) => {
+    this.listener.on('Notebook::save', (/* event, arg */) => {});
 
-    });
-
-    this.listener.on('Notebook::save', (event, arg) => {
-
-    });
-
-    this.listener.on('Notebook::delete', (event, arg) => {
-
-    });
-  }
-
-  /**
-   * create makes an RPC call to create a new notebook
-   *
-   *
-   * @memberOf Notebook
-   */
-  create() {
+    this.listener.on('Notebook::delete', (/* event, arg */) => {});
   }
 }
+
+/**
+ * createNotebook makes an RPC call to create a new notebook
+ *
+ */
+function createNotebook() {}

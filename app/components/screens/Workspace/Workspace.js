@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { observer, inject } from 'mobx-react';
+import { observer, inject, PropTypes } from 'mobx-react';
 import SplitPane from 'react-split-pane';
 import Toolbar from '../../ui/Toolbar';
 import ToolbarEntry from '../../ui/ToolbarEntry';
@@ -8,22 +8,25 @@ import NotebookList from '../../views/NotebookList';
 import NoteList from '../../views/NoteList';
 import NotebookTitleModal from '../../modals/NotebookTitle';
 
-@inject('account', 'notebook', 'note') @observer
+@inject('account', 'notebook', 'note')
+@observer
 class Workspace extends Component {
   handleLockAccount() {
     const { account } = this.props;
     account.lock();
   }
 
+  // WIP - can't use this rule quite yet
+  /* eslint-disable class-methods-use-this */
   handleNewNotebook() {
     // show notebook title modal
-
     // const { notebook } = this.props;
   }
 
   handleNewNote() {
     // const { note } = this.props;
   }
+  /* eslint-enable class-methods-use-this */
 
   render() {
     return (
@@ -52,5 +55,9 @@ class Workspace extends Component {
     );
   }
 }
+
+Workspace.propTypes = {
+  account: PropTypes.observableObject.isRequired
+};
 
 export default Workspace;

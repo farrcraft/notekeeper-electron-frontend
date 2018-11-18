@@ -1,20 +1,19 @@
 import { app, dialog } from 'electron';
-import { Logger } from '../shared';
+import { Logger } from '.';
 import rpc from '../transports/rpc/Rpc';
 import messagesRpc from '../proto/rpc_pb';
 import messagesDb from '../proto/db_pb';
 import messagesKex from '../proto/kex_pb';
 
 class Core {
-
   // openMasterDb makes an RPC call to the backend, instructing it to open the master DB
-  openMasterDb() {
+  static openMasterDb() {
     // Renderer process has to get `app` module via `remote`,
     // whereas the main process can get it directly
     // app.getPath('userData') will return a string of the user's app data directory path.
     const userDataPath = app.getPath('userData');
     // caller is awaiting so we handle rejections immediately here
-    const promise = new Promise((resolve) => {
+    const promise = new Promise(resolve => {
       const message = new messagesDb.OpenMasterDbRequest();
       message.setPath(userDataPath);
       const payload = message.serializeBinary();
@@ -25,7 +24,9 @@ class Core {
           return;
         }
 
-        const responseMessage = messagesRpc.EmptyResponse.deserializeBinary(body);
+        const responseMessage = messagesRpc.EmptyResponse.deserializeBinary(
+          body
+        );
         const header = responseMessage.getHeader();
         const status = header.getStatus();
 
@@ -41,7 +42,7 @@ class Core {
   }
 
   waitForReady(ticks, ready) {
-    rpc.backendReady((ok) => {
+    rpc.backendReady(ok => {
       if (!ok) {
         setTimeout(() => {
           if (ticks === 0) {
@@ -57,8 +58,8 @@ class Core {
   }
 
   // keyExchange makes an RPC call to the backend, sharing the message signing keys
-  keyExchange() {
-    const promise = new Promise((resolve) => {
+  static keyExchange() {
+    const promise = new Promise(resolve => {
       const message = new messagesKex.KeyExchangeRequest();
       message.setPublickey(rpc.signPublicKey);
       const payload = message.serializeBinary();
@@ -70,7 +71,9 @@ class Core {
           return;
         }
 
-        const responseMessage = messagesKex.KeyExchangeResponse.deserializeBinary(body);
+        const responseMessage = messagesKex.KeyExchangeResponse.deserializeBinary(
+          body
+        );
         const header = responseMessage.getHeader();
         const status = header.getStatus();
         if (status !== 'OK') {
@@ -85,8 +88,7 @@ class Core {
     return promise;
   }
 
-  shutdown() {
-  }
+  static shutdown() {}
 }
 
 const core = new Core();

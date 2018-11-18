@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { observable } from 'mobx';
-import { observer, inject } from 'mobx-react';
+import { observer, inject, PropTypes } from 'mobx-react';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Paper from '@material-ui/core/Paper';
@@ -61,12 +61,9 @@ class Create extends Component {
     email: false
   };
 
-  handleChange = key => ({
-    value: this.form[key],
-    onChange: (e, v) => {
-      this.form[key] = v;
-    }
-  });
+  handleChange = key => event => {
+    this.form[key] = event.target.value;
+  };
 
   handleSubmit = e => {
     e.preventDefault();
@@ -113,30 +110,49 @@ class Create extends Component {
           <Typography component="h1" variant="h5">
             Create Account
           </Typography>
-          <form className={classes.form}>
+          <form className={classes.form} onSubmit={this.handleSubmit}>
             <TextField
               id="accountName"
               label="Account Name"
+              margin="normal"
+              required
+              fullWidth
+              value={this.form.accountName}
               helperText={this.formError.accountName}
               error={this.formErrorState.accountName}
-              {...this.handleChange('accountName')}
+              onChange={this.handleChange('accountName')}
             />
             <TextField
               id="email"
               label="Email"
+              margin="normal"
+              required
+              fullWidth
+              value={this.form.email}
               helperText={this.formError.email}
               error={this.formErrorState.email}
-              {...this.handleChange('email')}
+              onChange={this.handleChange('email')}
             />
             <TextField
               id="password"
               type="password"
               label="Password"
+              margin="normal"
+              required
+              fullWidth
+              value={this.form.password}
               helperText={this.formError.password}
               error={this.formErrorState.password}
-              {...this.handleChange('password')}
+              onChange={this.handleChange('password')}
             />
-            <Button label="Create Account" primary onClick={this.handleSubmit}>
+            <Button
+              label="Create Account"
+              type="submit"
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+              onClick={this.handleSubmit}
+            >
               Create Account
             </Button>
           </form>
@@ -145,5 +161,10 @@ class Create extends Component {
     );
   }
 }
+
+Create.propTypes = {
+  account: PropTypes.observableObject.isRequired,
+  classes: PropTypes.isRequired
+};
 
 export default withStyles(styles)(Create);

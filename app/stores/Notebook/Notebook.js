@@ -12,13 +12,15 @@ class Notebook extends Store {
 
   @action create(title) {
     const promise = this.transportLayer.create(title);
-    return promise.then((val) => {
+    return promise.then(val => {
       const ok = this.handleCreate(val);
       return ok;
     });
   }
 
-  handleCreate(val) {
+  // WIP - can't use this rule quite yet
+  /* eslint-disable class-methods-use-this */
+  handleCreate(/* val */) {
     /*
     this.signedIn = true;
     this.exists = true;
@@ -27,10 +29,8 @@ class Notebook extends Store {
     return true;
   }
 
-  @action list() {
-
-  }
-
+  @action list() {}
+  /* eslint-enable class-methods-use-this */
 }
 
 const notebookStore = new Notebook();

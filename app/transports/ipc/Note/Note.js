@@ -2,7 +2,7 @@ import Ipc from '../Ipc';
 
 export default class Note extends Ipc {
   create(name) {
-    const promise = new Promise((resolve, reject) => {
+    const promise = new Promise((resolve /* , reject */) => {
       this.dispatcher.on('Note::create', (event, arg) => {
         resolve(arg);
       });

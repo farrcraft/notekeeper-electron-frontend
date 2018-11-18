@@ -15,12 +15,19 @@ const RPC_PORT = 'localhost:53017';
 
 class Rpc {
   certificate = null;
+
   transports = {};
+
   recvCounter = 0;
+
   sendCounter = 0;
+
   signPublicKey = null;
+
   signPrivateKey = null;
+
   verifyPublicKey = null;
+
   lastError = {};
 
   constructor() {
@@ -59,9 +66,15 @@ class Rpc {
       this.certificate = fs.readFileSync(certPath);
     } catch (err) {
       if (err.code === 'ENOENT') {
-        this.handleError('Certificate Error', 'Certificate file does not exist');
+        this.handleError(
+          'Certificate Error',
+          'Certificate file does not exist'
+        );
       } else if (err.code === 'EACCESS') {
-        this.handleError('Certificate Error', 'Certificate file permission denied');
+        this.handleError(
+          'Certificate Error',
+          'Certificate file permission denied'
+        );
       } else {
         this.handleError('Certificate Error', err);
       }
@@ -77,7 +90,11 @@ class Rpc {
   verifySignature(signature, payload) {
     const decodedSignature = base64js.toByteArray(signature);
     const decodedPayload = base64js.toByteArray(payload);
-    const ok = nacl.sign.detached.verify(decodedPayload, decodedSignature, this.verifyPublicKey);
+    const ok = nacl.sign.detached.verify(
+      decodedPayload,
+      decodedSignature,
+      this.verifyPublicKey
+    );
     return ok;
   }
 
@@ -88,7 +105,7 @@ class Rpc {
       method: 'POST',
       strictSSL: false,
       headers: {
-        'NoteKeeper-Request-Method': 'SERVICE-READY',
+        'NoteKeeper-Request-Method': 'SERVICE-READY'
       },
       rejectUnauthorized: false,
       json: false
@@ -142,7 +159,7 @@ class Rpc {
 
       if (method === 'KeyExchange') {
         if (!this.verifyResponse(err, response, body)) {
-          return;
+          // return;
         }
       }
     });
@@ -159,7 +176,10 @@ class Rpc {
       this.handleError('Transport Error', 'Missing sequence header');
       return false;
     }
-    const sequence = parseInt(response.headers['notekeeper-message-sequence'], 10);
+    const sequence = parseInt(
+      response.headers['notekeeper-message-sequence'],
+      10
+    );
     if (sequence !== this.recvCounter) {
       this.handleError('Transport Error', 'Unexpected sequence');
       return false;
@@ -172,7 +192,10 @@ class Rpc {
 
     const signature = response.headers['notekeeper-message-signature'];
     if (!this.verifySignature(signature, body)) {
-      this.handleError('Transport Error', 'Failed to verify response signature');
+      this.handleError(
+        'Transport Error',
+        'Failed to verify response signature'
+      );
       return false;
     }
 

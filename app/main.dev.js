@@ -10,10 +10,11 @@
  *
  * @flow
  */
-import { app, BrowserWindow, screen } from 'electron';
+import { app, BrowserWindow, screen, session, shell } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 import childProcess from 'child_process';
+import { URL } from 'url';
 import { Core, Logger } from './shared';
 import MenuBuilder from './menu';
 import rpc from './transports/rpc/Rpc';
@@ -31,7 +32,6 @@ export default class AppUpdater {
 // Declared here so our main window doesn't get GC'd
 let mainWindow = null;
 let windowStateTimeout = null;
-let menuBuilder = null;
 let backendServer = null;
 
 const userDataPath = app.getPath('userData');
@@ -44,9 +44,6 @@ if (process.env.NODE_ENV === 'production') {
 
 if (process.env.NODE_ENV === 'development') {
   require('electron-debug')();
-  const path = require('path');
-  const p = path.join(__dirname, '..', 'app', 'node_modules');
-  require('module').globalPaths.push(p);
 }
 
 process.on('error', err => {
@@ -54,7 +51,12 @@ process.on('error', err => {
 });
 
 // We only want a single instance to be able to run at once
-const shouldQuit = app.makeSingleInstance((/* argv, workingDirectory */) => {
+const gotTheLock = app.requestSingleInstanceLock();
+if (!gotTheLock) {
+  app.quit();
+}
+
+app.on('second-instance', (/* event, commandLine, workingDirectory */) => {
   if (mainWindow) {
     if (mainWindow.isMinimized()) {
       mainWindow.restore();
@@ -62,10 +64,6 @@ const shouldQuit = app.makeSingleInstance((/* argv, workingDirectory */) => {
     mainWindow.focus();
   }
 });
-
-if (shouldQuit) {
-  app.quit();
-}
 
 app.on('activate', () => {
   if (mainWindow === null) {
@@ -107,19 +105,77 @@ app.on('window-all-closed', async () => {
   }
 });
 
+// Security-related configuration
+// See: https://electronjs.org/docs/tutorial/security
+
+// Security - Disable navigation
+app.on('web-contents-created', (event, contents) => {
+  contents.on('will-navigate', (navEvent, navigationUrl) => {
+    const parsedUrl = new URL(navigationUrl);
+    if (parsedUrl.origin !== 'https://notekeeper.io') {
+      navEvent.preventDefault();
+    }
+  });
+});
+
+// Security - Prevent opening new windows
+app.on('web-contents-created', (event, contents) => {
+  contents.on('new-window', (windowEvent, navigationUrl) => {
+    // Allow new devtools to be updated when in dev
+    if (
+      process.env.NODE_ENV === 'development' &&
+      navigationUrl.startsWith('chrome-devtools://')
+    ) {
+      return;
+    }
+
+    windowEvent.preventDefault();
+    // Open event's url in the default browser
+    shell.openExternal(navigationUrl);
+  });
+});
+
+// Security - Verify webview options
+app.on('web-contents-created', (event, contents) => {
+  contents.on('will-attach-webview', (viewEvent, webPreferences, params) => {
+    // Strip away preload scripts if unused or verify their location is legitimate
+    const webPrefs = webPreferences;
+    delete webPrefs.preload;
+    delete webPrefs.preloadURL;
+
+    // Disable Node.js integration
+    webPrefs.nodeIntegration = false;
+
+    // Verify URL being loaded
+    if (!params.src.startsWith('https://notekeeper.io/')) {
+      viewEvent.preventDefault();
+    }
+  });
+});
+
+// Security - Set CSP HTTP Header
+function setContentSecurityPolicy() {
+  session.defaultSession.webRequest.onHeadersReceived((details, callback) => {
+    callback({
+      responseHeaders: {
+        ...details.responseHeaders,
+        'Content-Security-Policy': ["default-src 'self'"]
+      }
+    });
+  });
+}
+
 const installExtensions = async () => {
   if (process.env.NODE_ENV === 'development') {
-    const installer = require('electron-devtools-installer'); // eslint-disable-line global-require
+    const {
+      default: installExtension,
+      REACT_DEVELOPER_TOOLS,
+      MOBX_DEVTOOLS
+    } = require('electron-devtools-installer');
 
-    const extensions = ['REACT_DEVELOPER_TOOLS'];
-    const forceDownload = !!process.env.UPGRADE_EXTENSIONS;
-
-    // TODO: Use async interation statement.
-    //       Waiting on https://github.com/tc39/proposal-async-iteration
-    //       Promises will fail silently, which isn't what we want in development
-    return Promise.all(
-      extensions.map(name => installer.default(installer[name], forceDownload))
-    ).catch(console.log);
+    return installExtension([REACT_DEVELOPER_TOOLS.id, MOBX_DEVTOOLS.id])
+      .then(name => console.log(`Added Extension:  ${name}`))
+      .catch(err => console.log('An error occurred: ', err));
   }
 };
 
@@ -240,9 +296,18 @@ function createWindow(width, height, x, y) {
 
   mainWindow.loadURL(`file://${__dirname}/app.html`);
 
+  // @TODO: Use 'ready-to-show' event
+  //        https://github.com/electron/electron/blob/master/docs/api/browser-window.md#using-ready-to-show-event
   mainWindow.webContents.on('did-finish-load', () => {
-    mainWindow.show();
-    mainWindow.focus();
+    if (!mainWindow) {
+      throw new Error('"mainWindow" is not defined');
+    }
+    if (process.env.START_MINIMIZED) {
+      mainWindow.minimize();
+    } else {
+      mainWindow.show();
+      mainWindow.focus();
+    }
   });
 
   mainWindow.on('resize', delayedWindowStateSave);
@@ -254,7 +319,7 @@ function createWindow(width, height, x, y) {
     mainWindow = null;
   });
 
-  menuBuilder = new MenuBuilder(mainWindow);
+  const menuBuilder = new MenuBuilder(mainWindow);
   menuBuilder.buildMenu();
 
   restoreWindowState();
@@ -264,6 +329,8 @@ app.on('ready', async () => {
   await createBackendServer();
 
   await installExtensions();
+
+  setContentSecurityPolicy();
 
   await Core.keyExchange();
   await Core.openMasterDb();
@@ -286,4 +353,7 @@ app.on('ready', async () => {
     uiStateStore.windowXPosition,
     uiStateStore.windowYPosition
   );
+  // Remove this if your app does not use auto updates
+  // eslint-disable-next-line
+  new AppUpdater();
 });

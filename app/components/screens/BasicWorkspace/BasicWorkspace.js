@@ -26,10 +26,10 @@ class BasicWorkspace extends Component {
       <div className="workspace">
         <Toolbar>
           <ToolbarGroup firstChild>
-            <Button label="New Note" onTouchTap={() => this.handleNewNote()} />
+            <Button label="New Note" onClick={() => this.handleNewNote()} />
             <Button
               label="Lock Account"
-              onTouchTap={() => this.handleLockAccount()}
+              onClick={() => this.handleLockAccount()}
             />
           </ToolbarGroup>
         </Toolbar>
