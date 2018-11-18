@@ -3,21 +3,13 @@
   <head>
     <meta charset="utf-8">
     <title>NoteKeeper.io</title>
-    <script>
-      (() => {
-        if (!process.env.HOT) {
-          const link = document.createElement('link');
-          link.rel = 'stylesheet';
-          link.href = './dist/style.css';
-          // HACK: Writing the script path should be done with webpack
-          document.getElementsByTagName('head')[0].appendChild(link);
-        }
-      })();
-    </script>
   </head>
   <body>
     <div id="root"></div>
+    <script src="./app.js"></script>
     <script>
+      /*
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' http://localhost:1212">
       {
         const scripts = [];
 
@@ -41,6 +33,7 @@
             .join('')
         );
       }
+      */
     </script>
   </body>
 </html>
