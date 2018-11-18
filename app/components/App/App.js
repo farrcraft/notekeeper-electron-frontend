@@ -3,9 +3,11 @@ import React, { Component } from 'react';
 import { Provider, observer } from 'mobx-react';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
-import CreateAccount from '../screens/Account/Create';
-import UnlockAccount from '../screens/Account/Unlock';
-import SigninAccount from '../screens/Account/Signin';
+import {
+  CreateAccount,
+  UnlockAccount,
+  SigninAccount
+} from '../screens/Account';
 import Workspace from '../screens/BasicWorkspace';
 
 export default
