@@ -15,7 +15,7 @@
 [ ] display notebooks
 [ ] create note button
 [ ] draft js integration
-[ ] create note 
+[ ] create note
 [ ] display note
 [ ] tray icon
 [ ] tray icon context menu
@@ -30,11 +30,3 @@
 [ ] form styling
 [ ] toolbar styling
 [ ] handle failure states if backend service isn't running
-
-# DONE
-
-[+] start backend process on start
-[+] refactor IPC/RPC base classes
-[+] add base store class
-[+] modal component
-[+] Add rpc design doc (currently in main readme)

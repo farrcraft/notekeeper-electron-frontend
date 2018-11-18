@@ -16,5 +16,5 @@ Download Win64 OpenSSL v1.1.0e - https://slproweb.com/products/Win32OpenSSL.html
 In an admin powershell, run:
 
 ```bash
-npm install --global --production windows-build-tools
+yarn install --global --production windows-build-tools
 ```
