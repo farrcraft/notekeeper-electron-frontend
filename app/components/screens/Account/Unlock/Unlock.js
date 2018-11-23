@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { observable } from 'mobx';
-import { observer, inject } from 'mobx-react';
+import { observer, inject, PropTypes } from 'mobx-react';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Paper from '@material-ui/core/Paper';
@@ -55,12 +55,9 @@ class Unlock extends Component {
     password: false
   };
 
-  handleChange = key => ({
-    value: this.form[key],
-    onChange: (e, v) => {
-      this.form[key] = v;
-    }
-  });
+  handleChange = key => event => {
+    this.form[key] = event.target.value;
+  };
 
   handleSubmit = e => {
     e.preventDefault();
@@ -109,14 +106,32 @@ class Unlock extends Component {
               id="password"
               type="password"
               label="Password"
+              margin="normal"
+              required
+              fullWidth
+              value={this.form.password}
               helperText={this.formError.password}
               error={this.formErrorState.password}
-              {...this.handleChange('password')}
+              onChange={this.handleChange('password')}
             />
-            <Button onClick={this.handleSignoutAccount} secondary>
+            <Button
+              onClick={this.handleSignoutAccount}
+              type="submit"
+              label="Signout Account"
+              variant="contained"
+              color="secondary"
+              className={classes.submit}
+            >
               Signout
             </Button>
-            <Button primary onClick={this.handleSubmit}>
+            <Button
+              onClick={this.handleSubmit}
+              type="submit"
+              label="Unlock Account"
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+            >
               Unlock Account
             </Button>
           </form>
@@ -125,5 +140,10 @@ class Unlock extends Component {
     );
   }
 }
+
+Unlock.wrappedComponent.propTypes = {
+  account: PropTypes.observableObject.isRequired,
+  classes: PropTypes.objectOrObservableObject.isRequired
+};
 
 export default withStyles(styles)(Unlock);
