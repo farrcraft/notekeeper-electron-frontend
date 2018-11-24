@@ -6,6 +6,8 @@ import TextField from '@material-ui/core/TextField';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
+import LockIcon from '@material-ui/icons/LockOutlined';
+import Avatar from '@material-ui/core/Avatar';
 
 const styles = theme => ({
   section: {
@@ -98,6 +100,9 @@ class Unlock extends Component {
     return (
       <section className={classes.section}>
         <Paper className={classes.paper}>
+          <Avatar className={classes.avatar}>
+            <LockIcon />
+          </Avatar>
           <Typography component="h1" variant="h5">
             Unlock
           </Typography>
@@ -115,24 +120,27 @@ class Unlock extends Component {
               onChange={this.handleChange('password')}
             />
             <Button
-              onClick={this.handleSignoutAccount}
-              type="submit"
-              label="Signout Account"
-              variant="contained"
-              color="secondary"
-              className={classes.submit}
-            >
-              Signout
-            </Button>
-            <Button
               onClick={this.handleSubmit}
               type="submit"
               label="Unlock Account"
               variant="contained"
               color="primary"
+              fullWidth
               className={classes.submit}
             >
               Unlock Account
+            </Button>
+            <br />
+            <Button
+              onClick={this.handleSignoutAccount}
+              type="submit"
+              label="Sign Out of Account"
+              size="small"
+              color="secondary"
+              fullWidth
+              className={classes.submit}
+            >
+              Sign Out
             </Button>
           </form>
         </Paper>

@@ -6,6 +6,8 @@ import TextField from '@material-ui/core/TextField';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
+import AccountCircleIcon from '@material-ui/icons/AccountCircleOutlined';
+import Avatar from '@material-ui/core/Avatar';
 
 const styles = theme => ({
   section: {
@@ -73,6 +75,12 @@ class Create extends Component {
     this.handleCreateAccount();
   };
 
+  handleSignin = () => {
+    // switch to the create account screen
+    const { account } = this.props;
+    account.overrideView('SigninAccount');
+  };
+
   /**
    *
    *
@@ -103,10 +111,31 @@ class Create extends Component {
   }
 
   render() {
-    const { classes } = this.props;
+    const { account, classes } = this.props;
+
+    let signinButton = null;
+    // if there is already an existing account, give us a way to get back to the signin view
+    if (account.exists === true) {
+      signinButton = (
+        <Button
+          label="Sign In to Account"
+          size="small"
+          color="secondary"
+          fullWidth
+          className={classes.submit}
+          onClick={this.handleSignin}
+        >
+          Sign In
+        </Button>
+      );
+    }
+
     return (
       <section className={classes.section}>
         <Paper className={classes.paper}>
+          <Avatar className={classes.avatar}>
+            <AccountCircleIcon />
+          </Avatar>
           <Typography component="h1" variant="h5">
             Create Account
           </Typography>
@@ -150,11 +179,14 @@ class Create extends Component {
               type="submit"
               variant="contained"
               color="primary"
+              fullWidth
               className={classes.submit}
               onClick={this.handleSubmit}
             >
               Create Account
             </Button>
+            <br />
+            {signinButton}
           </form>
         </Paper>
       </section>

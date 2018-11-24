@@ -157,24 +157,26 @@ class Signin extends Component {
               onChange={this.handleChange('password')}
             />
             <Button
-              onClick={this.handleCreateAccount}
               type="submit"
-              variant="contained"
-              label="Create an Account"
-              color="secondary"
-              className={classes.submit}
-            >
-              Create an Account
-            </Button>
-            <Button
-              type="submit"
-              label="Signin Account"
+              label="Sign In to Account"
               variant="contained"
               color="primary"
+              fullWidth
               className={classes.submit}
               onClick={this.handleSubmit}
             >
               Sign in
+            </Button>
+            <br />
+            <Button
+              onClick={this.handleCreateAccount}
+              size="small"
+              label="Create an Account"
+              fullWidth
+              color="secondary"
+              className={classes.submit}
+            >
+              Create an Account
             </Button>
           </form>
         </Paper>
