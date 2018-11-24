@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
+import Typography from '@material-ui/core/Typography';
 
 class NoteView extends Component {
   render() {
     return (
       <div>
-        <h1>NoteView</h1>
+        <Typography variant="h1" color="inherit" noWrap>
+          NoteView
+        </Typography>
       </div>
     );
   }
