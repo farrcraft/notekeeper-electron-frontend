@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import { Provider, observer } from 'mobx-react';
 import CssBaseline from '@material-ui/core/CssBaseline';
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
 import {
   CreateAccount,
@@ -9,6 +10,12 @@ import {
   SigninAccount
 } from '../screens/Account';
 import Workspace from '../screens/BasicWorkspace';
+
+const theme = createMuiTheme({
+  typography: {
+    useNextVariants: true
+  }
+});
 
 export default
 @observer
@@ -52,10 +59,10 @@ class App extends Component {
 
     return (
       <Provider {...stores}>
-        <main className="notekeeper-app">
+        <MuiThemeProvider theme={theme}>
           <CssBaseline />
           <View />
-        </main>
+        </MuiThemeProvider>
       </Provider>
     );
   }
