@@ -1,34 +1,54 @@
 import React, { Component } from 'react';
 import { observer, inject, PropTypes } from 'mobx-react';
 
+import Drawer from '@material-ui/core/Drawer';
 import IconButton from '@material-ui/core/IconButton';
 import Toolbar from '@material-ui/core/Toolbar';
 import AppBar from '@material-ui/core/AppBar';
 import Typography from '@material-ui/core/Typography';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import Divider from '@material-ui/core/Divider';
 
+import classNames from 'classnames';
 import { withStyles } from '@material-ui/styles';
 import { fade } from '@material-ui/core/styles/colorManipulator';
 
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import HttpsIcon from '@material-ui/icons/Https';
 import NoteAddIcon from '@material-ui/icons/NoteAdd';
-
-import SplitPane from 'react-split-pane';
-
+import FolderIcon from '@material-ui/icons/Folder';
+import MenuIcon from '@material-ui/icons/Menu';
+/*
 import NoteView from '../../views/NoteView';
 import NotebookList from '../../views/NotebookList';
 import NoteList from '../../views/NoteList';
 import NotebookTitleModal from '../../modals/NotebookTitle';
+*/
+const drawerWidth = 240;
 
 const styles = theme => ({
   root: {
-    width: '100%'
+    display: 'flex'
   },
-  grow: {
-    flexGrow: 1
+  appBar: {
+    transition: theme.transitions.create(['margin', 'width'], {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen
+    })
   },
-  menuButton: {
-    marginLeft: -12,
-    marginRight: 20
+  appBarShift: {
+    width: `calc(100% - ${drawerWidth}px)`,
+    marginLeft: drawerWidth,
+    transition: theme.transitions.create(['margin', 'width'], {
+      easing: theme.transitions.easing.easeOut,
+      duration: theme.transitions.duration.enteringScreen
+    })
+  },
+  hide: {
+    display: 'none'
   },
   title: {
     display: 'none',
@@ -86,12 +106,58 @@ const styles = theme => ({
     [theme.breakpoints.up('md')]: {
       display: 'none'
     }
+  },
+  menuButton: {
+    marginLeft: 12,
+    marginRight: 20
+  },
+  drawer: {
+    width: drawerWidth,
+    flexShrink: 0
+  },
+  drawerPaper: {
+    width: drawerWidth
+  },
+  drawerHeader: {
+    display: 'flex',
+    alignItems: 'center',
+    padding: '0 8px',
+    ...theme.mixins.toolbar,
+    justifyContent: 'flex-end'
+  },
+  content: {
+    flexGrow: 1,
+    padding: theme.spacing.unit * 3,
+    transition: theme.transitions.create('margin', {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen
+    }),
+    marginLeft: -drawerWidth
+  },
+  contentShift: {
+    transition: theme.transitions.create('margin', {
+      easing: theme.transitions.easing.easeOut,
+      duration: theme.transitions.duration.enteringScreen
+    }),
+    marginLeft: 0
   }
 });
 
 @inject('account', 'notebook', 'note')
 @observer
 class BasicWorkspace extends Component {
+  state = {
+    open: false
+  };
+
+  handleDrawerOpen = () => {
+    this.setState({ open: true });
+  };
+
+  handleDrawerClose = () => {
+    this.setState({ open: false });
+  };
+
   handleLockAccount = () => {
     const { account } = this.props;
     account.lock();
@@ -104,11 +170,25 @@ class BasicWorkspace extends Component {
 
   render() {
     const { classes } = this.props;
+    const { open } = this.state;
 
     return (
       <div className={classes.root}>
-        <AppBar position="static">
-          <Toolbar>
+        <AppBar
+          position="fixed"
+          className={classNames(classes.appBar, {
+            [classes.appBarShift]: open
+          })}
+        >
+          <Toolbar disableGutters={!open}>
+            <IconButton
+              color="inherit"
+              aria-label="Open drawer"
+              onClick={this.handleDrawerOpen}
+              className={classNames(classes.menuButton, open && classes.hide)}
+            >
+              <MenuIcon />
+            </IconButton>
             <IconButton
               color="inherit"
               label="New Note"
@@ -125,22 +205,61 @@ class BasicWorkspace extends Component {
             </IconButton>
           </Toolbar>
         </AppBar>
-        <Typography
-          className={classes.title}
-          variant="h1"
-          color="inherit"
-          noWrap
+        <Drawer
+          className={classes.drawer}
+          variant="persistent"
+          anchor="left"
+          open={open}
+          classes={{
+            paper: classes.drawerPaper
+          }}
         >
-          Workspace
-        </Typography>
-        <SplitPane split="vertical">
-          <NotebookList />
-          <SplitPane split="horizontal">
-            <NoteList />
-            <NoteView />
-          </SplitPane>
-        </SplitPane>
-        <NotebookTitleModal />
+          <div className={classes.drawerHeader}>
+            <IconButton onClick={this.handleDrawerClose}>
+              <ChevronLeftIcon />
+            </IconButton>
+          </div>
+          <Divider />
+          <List>
+            {['Account Shelf', 'Starred Account Shelf'].map((
+              text /* , index */
+            ) => (
+              <ListItem button key={text}>
+                <ListItemIcon>
+                  <FolderIcon />
+                </ListItemIcon>
+                <ListItemText primary={text} />
+              </ListItem>
+            ))}
+          </List>
+          <Divider />
+          <List>
+            {['User Shelf', 'Another User Shelf'].map((text /* , index */) => (
+              <ListItem button key={text}>
+                <ListItemIcon>
+                  <FolderIcon />
+                </ListItemIcon>
+                <ListItemText primary={text} />
+              </ListItem>
+            ))}
+          </List>
+        </Drawer>
+        <main
+          className={classNames(classes.content, {
+            [classes.contentShift]: open
+          })}
+        >
+          <div className={classes.drawerHeader} />
+          <Typography
+            className={classes.title}
+            variant="h1"
+            color="inherit"
+            noWrap
+          >
+            Workspace
+          </Typography>
+          <Typography paragraph>Active Note Content</Typography>
+        </main>
       </div>
     );
   }
@@ -152,4 +271,4 @@ BasicWorkspace.wrappedComponent.propTypes = {
   classes: PropTypes.objectOrObservableObject.isRequired
 };
 
-export default withStyles(styles)(BasicWorkspace);
+export default withStyles(styles, { withTheme: true })(BasicWorkspace);
