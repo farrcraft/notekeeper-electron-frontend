@@ -27,7 +27,8 @@ import NotebookList from '../../views/NotebookList';
 import NoteList from '../../views/NoteList';
 import NotebookTitleModal from '../../modals/NotebookTitle';
 */
-const drawerWidth = 240;
+let drawerWidth = 240;
+const drawerAlign = 'left';
 
 const styles = theme => ({
   root: {
@@ -140,15 +141,42 @@ const styles = theme => ({
       duration: theme.transitions.duration.enteringScreen
     }),
     marginLeft: 0
+  },
+  dragger: {
+    width: '5px',
+    cursor: 'ew-resize',
+    padding: '4px 0 0',
+    borderTop: '1px solid #ddd',
+    position: 'absolute',
+    top: 0,
+    left: `calc(100% - 5px)`,
+    bottom: 0,
+    zIndex: '100',
+    backgroundColor: '#f4f7f9'
   }
 });
 
 @inject('account', 'notebook', 'note')
 @observer
 class BasicWorkspace extends Component {
+  /*
+  constructor(props) {
+    super(props);
+    // this.handleMouseMove.bind(this);
+  }
+  */
+
   state = {
-    open: false
+    open: false,
+    isResizing: false,
+    // lastDownX: 0,
+    newWidth: {}
   };
+
+  componentDidMount() {
+    document.addEventListener('mousemove', e => this.handleMouseMove(e));
+    document.addEventListener('mouseup', e => this.handleMouseUp(e));
+  }
 
   handleDrawerOpen = () => {
     this.setState({ open: true });
@@ -168,9 +196,45 @@ class BasicWorkspace extends Component {
     note.create();
   };
 
+  handleMouseMove = e => {
+    const { isResizing } = this.state;
+
+    if (!isResizing) {
+      return;
+    }
+
+    const minWidth = 50;
+    const maxWidth = 600;
+    // if our drawer is anchored on the right side
+    if (drawerAlign === 'right') {
+      const offsetRight =
+        document.body.offsetWidth - (e.clientX - document.body.offsetLeft);
+      if (offsetRight > minWidth && offsetRight < maxWidth) {
+        this.setState({ newWidth: { width: offsetRight } });
+      }
+    } else {
+      // if our drawer is anchored on the left side
+      this.setState({ newWidth: { width: e.clientX } });
+    }
+    drawerWidth = e.clientX;
+  };
+
+  handleMouseUp = (/* e */) => {
+    this.setState({
+      isResizing: false
+    });
+  };
+
+  handleDrawerDraggerMouseDown = (/* e */) => {
+    this.setState({
+      isResizing: true
+      // lastDownX: e.clientX,
+    });
+  };
+
   render() {
     const { classes } = this.props;
-    const { open } = this.state;
+    const { open, newWidth } = this.state;
 
     return (
       <div className={classes.root}>
@@ -179,6 +243,13 @@ class BasicWorkspace extends Component {
           className={classNames(classes.appBar, {
             [classes.appBarShift]: open
           })}
+          style={
+            open
+              ? {
+                  width: `calc(100% - ${drawerWidth}px)`
+                }
+              : {}
+          }
         >
           <Toolbar disableGutters={!open}>
             <IconButton
@@ -206,14 +277,24 @@ class BasicWorkspace extends Component {
           </Toolbar>
         </AppBar>
         <Drawer
-          className={classes.drawer}
           variant="persistent"
           anchor="left"
           open={open}
           classes={{
             paper: classes.drawerPaper
           }}
+          ModalProps={{
+            keepMounted: true // Better open performance on mobile.
+          }}
+          PaperProps={{ style: newWidth }}
+          style={{ width: drawerWidth, flexShrink: 0 }}
         >
+          <div
+            id="dragger"
+            onMouseDown={this.handleDrawerDraggerMouseDown}
+            className={classes.dragger}
+            role="presentation"
+          />
           <div className={classes.drawerHeader}>
             <IconButton onClick={this.handleDrawerClose}>
               <ChevronLeftIcon />
