@@ -9,6 +9,10 @@ lint:
 rebuild:
 	./node_modules/.bin/electron-rebuild
 
+# Check to see if any dependencies in package.json are outdated
+check-dep-updates:
+	yarn outdated
+
 boilerplate-diff:
 	diff -ru --exclude .git --exclude flow-typed --exclude yarn.lock --exclude README.md . ../boilerplate/electron-react-boilerplate/ > boilerplate.diff
 
