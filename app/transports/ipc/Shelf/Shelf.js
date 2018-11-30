@@ -1,15 +1,15 @@
 import Ipc from '../Ipc';
 
 export default class Shelf extends Ipc {
-  /*
-  create(name) {
-    const promise = new Promise((resolve, reject) => {
-      this.dispatcher.on('Note::create', (event, arg) => {
+  list(shelfType) {
+    const handler =
+      shelfType === 'account' ? 'Account::shelves' : 'User::shelves';
+    const promise = new Promise((resolve /* , reject */) => {
+      this.dispatcher.on(handler, (event, arg) => {
         resolve(arg);
       });
-      this.dispatchMessage('Note::create', name);
+      this.dispatchMessage(handler);
     });
     return promise;
   }
-  */
 }

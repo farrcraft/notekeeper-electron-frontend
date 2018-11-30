@@ -126,7 +126,8 @@ function getAccountState() {
   const promise = new Promise((resolve, reject) => {
     const message = new messagesRpc.EmptyRequest();
     const messageHeader = new messagesRpc.RequestHeader();
-    messageHeader.setMethod('UIState::load');
+    // messageHeader.setMethod('UIState::load');
+    messageHeader.setMethod('AccountState::get');
     message.setHeader(messageHeader);
     const payload = message.serializeBinary();
     rpc.request('AccountState::get', payload, (err, response, body) => {
