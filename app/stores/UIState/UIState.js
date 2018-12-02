@@ -1,4 +1,6 @@
-class UIState {
+import Store from '../Store';
+
+export default class UIState extends Store {
   windowHeight = -1;
 
   windowWidth = -1;
@@ -20,12 +22,6 @@ class UIState {
   displayXPosition = 0;
 
   displayYPosition = 0;
-
-  transportLayer;
-
-  setTransport(transport) {
-    this.transportLayer = transport;
-  }
 
   load() {
     const transport = this.transportLayer;
@@ -59,7 +55,3 @@ class UIState {
     return promise;
   }
 }
-
-const uiStore = new UIState();
-
-export default uiStore;

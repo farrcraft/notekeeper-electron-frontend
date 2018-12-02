@@ -1,7 +1,7 @@
 import { action, extendObservable } from 'mobx';
 import Store from '../Store';
 
-class Notebook extends Store {
+export default class Notebook extends Store {
   constructor() {
     super();
 
@@ -32,7 +32,3 @@ class Notebook extends Store {
   @action list() {}
   /* eslint-enable class-methods-use-this */
 }
-
-const notebookStore = new Notebook();
-
-export default notebookStore;

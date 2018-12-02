@@ -1,13 +1,7 @@
 import Store from '../Store';
 
-class Collection extends Store {
-  /*
-  constructor() {
-    super();
-  }
-  */
-}
-
-const collectionStore = new Collection();
-
-export default collectionStore;
+/**
+ * The store for interacting with the collection domain objects & their transport layer
+ * Collection domain objects themselves are stored within their parent shelf domain objects
+ */
+export default class Collection extends Store {}

@@ -1,6 +1,6 @@
 import Store from '../Store';
 
-class Tag extends Store {
+export default class Tag extends Store {
   tags = [];
 
   /*
@@ -13,7 +13,3 @@ class Tag extends Store {
   }
   */
 }
-
-const tagStore = new Tag();
-
-export default tagStore;

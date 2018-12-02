@@ -1,17 +1,26 @@
-import { action, extendObservable } from 'mobx';
+import { action, observable } from 'mobx';
 import Store from '../Store';
 
-class Account extends Store {
-  constructor() {
-    super();
+export default class Account extends Store {
+  /**
+   * Is the account signed in?
+   */
+  @observable signedIn = false;
 
-    extendObservable(this, {
-      signedIn: false,
-      locked: true,
-      exists: false,
-      viewOverride: null
-    });
-  }
+  /**
+   * Is the account locked?
+   */
+  @observable locked = true;
+
+  /**
+   * Does an account exist?
+   */
+  @observable exists = false;
+
+  /**
+   * A view to override any current view with
+   */
+  @observable viewOverride = null;
 
   get isSignedIn() {
     return this.signedIn;
@@ -99,7 +108,3 @@ class Account extends Store {
     });
   }
 }
-
-const accountStore = new Account();
-
-export default accountStore;

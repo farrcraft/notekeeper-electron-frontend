@@ -6,7 +6,7 @@ import Store from '../Store';
  *
  * @class Workspace
  */
-class Workspace extends Store {
+export default class Workspace extends Store {
   constructor() {
     super();
     extendObservable(this, {
@@ -14,7 +14,3 @@ class Workspace extends Store {
     });
   }
 }
-
-const workspaceStore = new Workspace();
-
-export default workspaceStore;
