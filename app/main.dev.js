@@ -17,9 +17,10 @@ import childProcess from 'child_process';
 import { URL } from 'url';
 import { Core, Logger } from './shared';
 import MenuBuilder from './menu';
-import rpc from './transports/rpc/Rpc';
-import uiStateStore from './stores/UIState';
-import UIStateTransport from './transports/rpc/UIState';
+import Rpc from './transports/rpc/Rpc';
+import bindTransports from './transport_bindings/rpc';
+import AccountStore from './stores/Account';
+import UIStateStore from './stores/UIState';
 
 export default class AppUpdater {
   constructor() {
@@ -56,6 +57,18 @@ if (!gotTheLock) {
   app.quit();
 }
 
+// Setup main RPC mechanism for communicating with the backend service
+const rpcMain = new Rpc();
+bindTransports(rpcMain);
+// we mirror the store in the main process in order to track some account state
+const accountTransport = rpcMain.getTransport('account');
+const accountStore = new AccountStore(null);
+accountTransport.setStore(accountStore);
+// we also need the main
+const uiStateStore = new UIStateStore(null);
+const uiStateTransport = rpcMain.getTransport('uiState');
+uiStateStore.setTransport(uiStateTransport);
+
 app.on('second-instance', (/* event, commandLine, workingDirectory */) => {
   if (mainWindow) {
     if (mainWindow.isMinimized()) {
@@ -81,10 +94,9 @@ app.on('window-all-closed', async () => {
   try {
     await uiStateStore.save();
 
-    const accountTransport = rpc.getTransport('account');
     // The most secure option is to completely sign out the user when they close the main window
     // The user will need to do a full signin the next time they open the app
-    if (accountTransport.store.signedIn === true) {
+    if (accountStore.signedIn === true) {
       await accountTransport.signout();
     }
     // If the user has opted into the less secure "remember me" option
@@ -335,8 +347,6 @@ app.on('ready', async () => {
   await Core.keyExchange();
   await Core.openMasterDb();
 
-  const uiTransport = new UIStateTransport();
-  uiStateStore.setTransport(uiTransport);
   await uiStateStore.load();
   let width = uiStateStore.windowWidth;
   let height = uiStateStore.windowHeight;

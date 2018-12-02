@@ -1,5 +1,4 @@
 import Handler from '../Handler';
-import rpc from '../Rpc';
 // import messages from '../../../proto/rpc_pb';
 
 export default class Note extends Handler {
@@ -29,7 +28,7 @@ export default class Note extends Handler {
           return val;
         })
         .catch(err => {
-          rpc.handleError(err);
+          this.rpc.handleError(err);
         });
     });
 

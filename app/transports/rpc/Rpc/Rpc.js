@@ -5,19 +5,9 @@ import request from 'request';
 import nacl from 'tweetnacl';
 import base64js from 'base64-js';
 
-import AccountTransport from '../Account';
-import NotebookTransport from '../Notebook';
-import NoteTransport from '../Note';
-import TagTransport from '../Tag';
-import TrashTransport from '../Trash';
-import ShelfTransport from '../Shelf';
-import CollectionTransport from '../Collection';
-
-import accountStore from '../../../stores/Account';
-
 const RPC_PORT = 'localhost:53017';
 
-class Rpc {
+export default class Rpc {
   certificate = null;
 
   transports = {};
@@ -35,22 +25,12 @@ class Rpc {
   lastError = {};
 
   constructor() {
-    this.registerTransports();
     this.createKeys();
   }
 
-  // registerTransports instantiates all of the available RPC transport classes
-  registerTransports() {
-    this.transports.account = new AccountTransport();
-    this.transports.notebook = new NotebookTransport();
-    this.transports.note = new NoteTransport();
-    this.transports.tag = new TagTransport();
-    this.transports.trash = new TrashTransport();
-    this.transports.shelf = new ShelfTransport();
-    this.transports.collection = new CollectionTransport();
-
-    // we mirror the store in the main process in order to track some account state
-    this.transports.account.setStore(accountStore);
+  registerTransport(name, transport) {
+    transport.setRpc(this);
+    this.transports[name] = transport;
   }
 
   getTransport(transport) {
@@ -218,7 +198,3 @@ class Rpc {
     dialog.showErrorBox(this.lastError.title, this.lastError.message);
   }
 }
-
-const rpcTransport = new Rpc();
-
-export default rpcTransport;

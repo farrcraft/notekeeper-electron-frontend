@@ -6,4 +6,5 @@ export { default as ShelfRPC } from './Shelf';
 export { default as TagRPC } from './Tag';
 export { default as TrashRPC } from './Trash';
 export { default as UserRPC } from './User';
+export { default as UIStateRPC } from './UIState';
 export { default as WorkspaceRPC } from './Workspace';

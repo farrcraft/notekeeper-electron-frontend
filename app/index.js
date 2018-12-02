@@ -4,7 +4,7 @@ import Modal from 'react-modal';
 import { AppContainer } from 'react-hot-loader';
 
 import Root from './stores/Root';
-import bindTransports from './core/transport_bindings';
+import bindTransports from './transport_bindings/ipc';
 import App from './components/App';
 import Logger from './shared/Logger';
 
