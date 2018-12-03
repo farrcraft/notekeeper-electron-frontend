@@ -84,6 +84,22 @@ export default class Rpc {
     return ok;
   }
 
+  waitForReady(ticks, ready) {
+    this.backendReady(ok => {
+      if (!ok) {
+        setTimeout(() => {
+          if (ticks === 0) {
+            ready(true);
+            return;
+          }
+          this.waitForReady(ticks - 1, ready);
+        }, 1000);
+      } else {
+        ready(true);
+      }
+    });
+  }
+
   backendReady(callback) {
     const endpoint = `https://${RPC_PORT}/rpc`;
     const options = {

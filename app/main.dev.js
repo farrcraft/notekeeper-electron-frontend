@@ -15,12 +15,13 @@ import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 import childProcess from 'child_process';
 import { URL } from 'url';
-import { Core, Logger } from './shared';
+import Logger from './shared/Logger';
 import MenuBuilder from './menu';
 import Rpc from './transports/rpc/Rpc';
 import bindTransports from './transport_bindings/rpc';
 import AccountStore from './stores/Account';
 import UIStateStore from './stores/UIState';
+import { KexRPC, DbRPC } from './transports/rpc';
 
 export default class AppUpdater {
   constructor() {
@@ -109,7 +110,10 @@ app.on('window-all-closed', async () => {
   } catch (e) {
     Logger.debug(e);
   }
-  Core.shutdown();
+
+  // Used to be in shared/Core.js - there is currently not RPC shutdown logic
+  // Core.shutdown();
+
   // Respect the OSX convention of having the application in memory even
   // after all windows have been closed
   if (process.platform !== 'darwin') {
@@ -197,7 +201,7 @@ const createBackendServer = async () => {
     backendServer.stdout.on('data', data => {
       const out = data.toString();
       if (out === 'NOTEKEEPER_SERVICE_READY\n') {
-        Core.waitForReady(10, () => {
+        rpcMain.waitForReady(10, () => {
           resolve(out);
         });
       } else {
@@ -344,8 +348,14 @@ app.on('ready', async () => {
 
   setContentSecurityPolicy();
 
-  await Core.keyExchange();
-  await Core.openMasterDb();
+  const kexMain = new KexRPC(rpcMain);
+  const dbMain = new DbRPC(rpcMain);
+  // register our kex & db transports should we need them later on
+  rpcMain.registerTransport('kex', kexMain);
+  rpcMain.registerTransport('db', dbMain);
+
+  await kexMain.keyExchange();
+  await dbMain.openMasterDb();
 
   await uiStateStore.load();
   let width = uiStateStore.windowWidth;
