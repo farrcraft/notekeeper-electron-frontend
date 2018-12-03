@@ -1,8 +1,9 @@
 import { dialog } from 'electron';
+import Handler from '../Handler';
 import messagesRpc from '../../../proto/rpc_pb';
 import messagesUIState from '../../../proto/ui_state_pb';
 
-export default class UIState {
+export default class UIState extends Handler {
   lastStatus;
 
   checkResponseHeader(responseMessage) {
