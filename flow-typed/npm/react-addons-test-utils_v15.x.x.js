@@ -1,12 +1,10 @@
-// flow-typed signature: 7472160d3f2bbd92465a51c99d03752e
-// flow-typed version: da30fe6876/react-addons-test-utils_v15.x.x/flow_>=v0.25.x
+// flow-typed signature: 7b19420260dabf6f3bd4ba5986351ffd
+// flow-typed version: c6154227d1/react-addons-test-utils_v15.x.x/flow_>=v0.104.x
 
 import React from "react";
 
 declare module "react-addons-test-utils" {
-  declare var Simulate: {
-    [eventName: string]: (element: Element, eventData?: Object) => void
-  };
+  declare var Simulate: { [eventName: string]: (element: Element, eventData?: Object) => void, ... };
   declare function renderIntoDocument(
     instance: React.Element<any>
   ): React.Component;
