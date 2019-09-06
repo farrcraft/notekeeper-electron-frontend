@@ -40,7 +40,9 @@ export default class Handler {
     const header = message.getHeader();
     const status = header.getStatus();
     if (status !== 'OK') {
-      reject(status);
+      const code = header.getCode();
+      const err = `RPC error code - ${code}`;
+      reject(err);
       this.isOK = false;
       return false;
     }

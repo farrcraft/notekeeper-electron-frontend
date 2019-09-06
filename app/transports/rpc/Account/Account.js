@@ -109,9 +109,15 @@ export default class Account extends Handler {
         }
         const responseMessage = messagesRpc.IdResponse.deserializeBinary(body);
         const ok = this.checkResponseStatus(responseMessage, reject);
-        if (ok) {
-          resolve(ok);
+        if (!ok) {
+          return;
         }
+        const state = {
+        };
+        const user = responseMessage.getUser();
+        state.accountId = user.getAccountId();
+        state.userId = user.getUserId();
+        resolve(state);
       });
     });
     return promise;
@@ -165,9 +171,15 @@ export default class Account extends Handler {
           body
         );
         const ok = this.checkResponseStatus(responseMessage, reject);
-        if (ok) {
-          resolve(ok);
+        if (!ok) {
+          return;
         }
+        const state = {
+        };
+        const user = responseMessage.getUser();
+        state.accountId = user.getAccountId();
+        state.userId = user.getUserId();
+        resolve(state);
       });
     });
     return promise;

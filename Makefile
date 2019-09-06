@@ -14,11 +14,11 @@ check-dep-updates:
 	yarn outdated
 
 boilerplate-diff:
-	diff -ru --exclude .git --exclude flow-typed --exclude yarn.lock --exclude README.md . ../boilerplate/electron-react-boilerplate/ > boilerplate.diff
+	diff -ru --exclude .git --exclude flow-typed --exclude yarn.lock --exclude README.md . ../boilerplate/erb/electron-react-boilerplate/ > boilerplate.diff
 
 # Backend repo is source of truth for proto definitions
 proto-copy:
-	cp ../notekeeper-electron-backend/src/proto/*.proto app/proto/
+	cp ../notekeeper-electron-backend/proto/*.proto app/proto/
 
 # Regenerate nodejs protobuf definitions
 proto:

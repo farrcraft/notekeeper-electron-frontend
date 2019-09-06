@@ -159,12 +159,14 @@ const styles = theme => ({
 @inject('account', 'notebook', 'note')
 @observer
 class BasicWorkspace extends Component {
-  /*
+
   constructor(props) {
     super(props);
     // this.handleMouseMove.bind(this);
+    const { shelf: shelfStore, account: accountStore } = props;
+    console.log(accountStore.account.accountId);
+    console.log(accountStore.user.userId);
   }
-  */
 
   state = {
     open: false,

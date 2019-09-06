@@ -20,6 +20,8 @@ const { app } = require('electron').remote;
 const userDataPath = app.getPath('userData');
 Logger.configure(userDataPath);
 
+Logger.info('Logger configured.');
+
 const stores = new Root();
 stores.createStores();
 bindTransports(stores);

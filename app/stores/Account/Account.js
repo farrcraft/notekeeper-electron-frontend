@@ -1,5 +1,9 @@
 import { action, observable } from 'mobx';
 import Store from '../Store';
+import {
+  Account as AccountDomain,
+  User as UserDomain
+} from '../../domain';
 
 export default class Account extends Store {
   /**
@@ -21,6 +25,16 @@ export default class Account extends Store {
    * A view to override any current view with
    */
   @observable viewOverride = null;
+
+  /**
+   * A user domain object
+   */
+  @observable user = null;
+
+  /**
+   * An account domain object
+   */
+  @observable account = null;
 
   get isSignedIn() {
     return this.signedIn;
@@ -58,7 +72,10 @@ export default class Account extends Store {
     });
   }
 
-  handleCreate(/* val */) {
+  handleCreate(state) {
+    this.account = new AccountDomain(state.accountId);
+    this.user = new UserDomain(state.userId);
+
     this.signedIn = true;
     this.exists = true;
     this.locked = false;
@@ -74,7 +91,10 @@ export default class Account extends Store {
     });
   }
 
-  handleSignin(/* val */) {
+  handleSignin(state) {
+    this.account = new AccountDomain(state.accountId);
+    this.user = new UserDomain(state.userId);
+
     this.signedIn = true;
     this.locked = false;
     this.viewOverride = null;
@@ -84,6 +104,8 @@ export default class Account extends Store {
   signout() {
     const promise = this.transportLayer.signout();
     return promise.then((/* val */) => {
+      this.account = null;
+      this.user = null;
       this.signedIn = false;
       this.locked = true;
       this.viewOverride = null;

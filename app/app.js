@@ -2,14 +2,15 @@ const scripts = [];
 
 // Dynamically insert the DLL script in development env in the
 // renderer process
-if (process.env.NODE_ENV === 'development') {
+if (window.Bridge.env.nodeEnv === 'development') {
   scripts.push('../dll/renderer.dev.dll.js');
 }
 
 // Dynamically insert the bundled app script in the renderer process
-const port = process.env.PORT || 1212;
+// We don't have access to
+const port = window.Bridge.env.port || 1212;
 scripts.push(
-  process.env.HOT
+  window.Bridge.env.hot
     ? `http://localhost:${port}/dist/renderer.dev.js`
     : './dist/renderer.prod.js'
 );

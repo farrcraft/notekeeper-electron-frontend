@@ -14,6 +14,7 @@ import { app, BrowserWindow, screen, session, shell } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 import childProcess from 'child_process';
+import path from 'path';
 import { URL } from 'url';
 import Logger from './shared/Logger';
 import MenuBuilder from './menu';
@@ -293,11 +294,10 @@ function restoreWindowState() {
 
 function createWindow(width, height, x, y) {
   const options = {
-    /*
     webPreferences: {
-      nodeIntegration: false
+      nodeIntegration: false, // this is false by default as of electron 5.0
+      preload: path.join(__dirname, 'preload.js')
     },
-    */
     show: false,
     width,
     height

@@ -1,4 +1,4 @@
-import { observable } from 'mobx';
+import { action, observable } from 'mobx';
 import Store from '../Store';
 
 export default class Shelf extends Store {
@@ -12,6 +12,13 @@ export default class Shelf extends Store {
    */
   @observable accountShelves = [];
 
+  @action getUserShelves() {
+    const promise = this.transportLayer.list('user');
+    return promise.then(val => {
+      const ok = this.handleCreate(val);
+      return ok;
+    });
+  }
   /*
   @action userShelves() {
     const promise = this.transportLayer.create(accountName, email, passphrase);
