@@ -1,4 +1,3 @@
-// @flow
 import { app, Menu, BrowserWindow } from 'electron';
 
 export default class MenuBuilder {

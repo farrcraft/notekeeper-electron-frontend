@@ -1,4 +1,3 @@
-// @flow
 import React, { Component } from 'react';
 import { Provider, observer } from 'mobx-react';
 import CssBaseline from '@material-ui/core/CssBaseline';
