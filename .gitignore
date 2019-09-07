@@ -13,9 +13,6 @@ lib-cov
 # Coverage directory used by tools like istanbul
 coverage
 
-# Grunt intermediate storage (http://gruntjs.com/creating-plugins#storing-task-files)
-.grunt
-
 # node-waf configuration
 .lock-wscript
 
@@ -31,10 +28,6 @@ app/node_modules
 # OSX
 .DS_Store
 
-# flow-typed
-flow-typed/npm/*
-!flow-typed/npm/module_vx.x.x.js
-
 # App packaged
 release
 app/main.prod.js
@@ -44,11 +37,7 @@ app/renderer.prod.js.map
 app/style.css
 app/style.css.map
 dist
-dll
-main.js
-main.js.map
+*.exe
 
 .idea
 npm-debug.log.*
-backend.exe
-boilerplate.diff

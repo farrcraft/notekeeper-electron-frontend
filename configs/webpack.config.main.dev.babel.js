@@ -10,12 +10,12 @@ import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import baseConfig from './webpack.config.base';
 import CheckNodeEnv from '../internals/scripts/CheckNodeEnv';
 
-CheckNodeEnv('production');
+CheckNodeEnv('development');
 
 export default merge.smart(baseConfig, {
   devtool: 'source-map',
 
-  mode: 'production',
+  mode: 'development',
 
   target: 'electron-main',
 
@@ -24,7 +24,7 @@ export default merge.smart(baseConfig, {
   output: {
     path: path.join(__dirname, '..', 'app/dist'),
     publicPath: './dist/',
-    filename: './app/main.prod.js'
+    filename: './app/main.dev.js'
   },
 
   optimization: {
@@ -52,11 +52,11 @@ export default merge.smart(baseConfig, {
      * Useful for allowing different behaviour between development builds and
      * release builds
      *
-     * NODE_ENV should be production so that modules do not perform certain
+     * NODE_ENV should be development so that modules do not perform certain
      * development checks
      */
     new webpack.EnvironmentPlugin({
-      NODE_ENV: 'production',
+      NODE_ENV: 'development',
       DEBUG_PROD: false,
       START_MINIMIZED: false
     })

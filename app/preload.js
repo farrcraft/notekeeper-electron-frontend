@@ -15,7 +15,6 @@ function init() {
     //setDockBadge: setDockBadge,
     env: {
       port: process.env.PORT,
-      hot: process.env.HOT,
       nodeEnv: process.env.NODE_ENV
     }
   };
