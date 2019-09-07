@@ -19,3 +19,8 @@
 * tweetnacl - The Unlicense - https://github.com/dchest/tweetnacl-js
 * react-modal - MIT - https://github.com/reactjs/react-modal
 * winston - MIT - https://github.com/winstonjs/winston
+
+
+# Optional Dev Dependencies
+
+* asar - MIT - https://github.com/electron/asar - Tool can be helpful for working with electron package asar files
