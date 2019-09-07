@@ -32,12 +32,7 @@
     "prestart": "yarn build",
     "start": "cross-env NODE_ENV=production electron ./app/main.prod.js",
     "start-main-dev": "cross-env HOT=1 NODE_ENV=development electron -r @babel/register ./app/main.dev.js",
-    "start-renderer-dev": "cross-env NODE_ENV=development webpack-dev-server --config configs/webpack.config.renderer.dev.babel.js",
-    "test": "cross-env NODE_ENV=test BABEL_DISABLE_CACHE=1 jest",
-    "test-all": "yarn lint && yarn flow && yarn build && yarn test && yarn build-e2e && yarn test-e2e",
-    "test-e2e": "node -r @babel/register ./internals/scripts/CheckBuiltsExist.js && cross-env NODE_ENV=test testcafe electron:./ ./test/e2e/HomePage.e2e.js",
-    "test-e2e-live": "node -r @babel/register ./internals/scripts/CheckBuiltsExist.js && cross-env NODE_ENV=test testcafe-live electron:./ ./test/e2e/HomePage.e2e.js",
-    "test-watch": "yarn test --watch"
+    "start-renderer-dev": "cross-env NODE_ENV=development webpack-dev-server --config configs/webpack.config.renderer.dev.babel.js"
   },
   "lint-staged": {
     "*.{js,jsx}": [
@@ -107,29 +102,11 @@
   "bin": {
     "electron": "./node_modules/.bin/electron"
   },
-  "jest": {
-    "testURL": "http://localhost/",
-    "moduleNameMapper": {
-      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/internals/mocks/fileMock.js",
-      "\\.(css|less|sass|scss)$": "identity-obj-proxy"
-    },
-    "moduleFileExtensions": [
-      "js",
-      "jsx",
-      "json"
-    ],
-    "transform": {
-      "^.+\\.jsx?$": "babel-jest"
-    },
-    "setupFiles": [
-      "./internals/scripts/CheckBuiltsExist.js"
-    ]
-  },
   "devDependencies": {
-    "@babel/core": "7.5.5",
+    "@babel/core": "7.6.0",
     "@babel/plugin-proposal-class-properties": "7.5.5",
-    "@babel/plugin-proposal-decorators": "7.4.4",
-    "@babel/plugin-proposal-do-expressions": "7.5.0",
+    "@babel/plugin-proposal-decorators": "7.6.0",
+    "@babel/plugin-proposal-do-expressions": "7.6.0",
     "@babel/plugin-proposal-export-default-from": "7.5.2",
     "@babel/plugin-proposal-export-namespace-from": "7.5.2",
     "@babel/plugin-proposal-function-bind": "7.2.0",
@@ -139,17 +116,17 @@
     "@babel/plugin-proposal-nullish-coalescing-operator": "7.4.4",
     "@babel/plugin-proposal-numeric-separator": "7.2.0",
     "@babel/plugin-proposal-object-rest-spread": "7.5.5",
-    "@babel/plugin-proposal-optional-chaining": "7.2.0",
+    "@babel/plugin-proposal-optional-chaining": "7.6.0",
     "@babel/plugin-proposal-pipeline-operator": "7.5.0",
     "@babel/plugin-proposal-throw-expressions": "7.2.0",
     "@babel/plugin-syntax-dynamic-import": "7.2.0",
     "@babel/plugin-syntax-import-meta": "7.2.0",
-    "@babel/plugin-transform-react-constant-elements": "7.5.0",
+    "@babel/plugin-transform-react-constant-elements": "7.6.0",
     "@babel/plugin-transform-react-inline-elements": "7.2.0",
-    "@babel/preset-env": "7.5.5",
+    "@babel/preset-env": "7.6.0",
     "@babel/preset-flow": "7.0.0",
     "@babel/preset-react": "7.0.0",
-    "@babel/register": "7.5.5",
+    "@babel/register": "7.6.0",
     "asar": "2.0.1",
     "babel-core": "7.0.0-bridge.0",
     "babel-eslint": "10.0.3",
@@ -161,37 +138,31 @@
     "classnames": "2.2.6",
     "concurrently": "4.1.2",
     "cross-env": "5.2.1",
-    "cross-spawn": "6.0.5",
+    "cross-spawn": "7.0.0",
     "css-loader": "3.2.0",
     "detect-port": "1.3.0",
     "electron": "6.0.7",
     "electron-builder": "21.2.0",
     "electron-devtools-installer": "2.2.4",
     "electron-rebuild": "1.8.6",
-    "enzyme": "3.10.0",
-    "enzyme-adapter-react-16": "1.14.0",
-    "enzyme-to-json": "3.4.0",
     "eslint": "6.3.0",
     "eslint-config-airbnb": "18.0.1",
-    "eslint-config-prettier": "6.1.0",
+    "eslint-config-prettier": "6.2.0",
     "eslint-formatter-pretty": "2.1.1",
     "eslint-import-resolver-webpack": "0.11.1",
     "eslint-plugin-compat": "3.3.0",
-    "eslint-plugin-flowtype": "4.2.0",
+    "eslint-plugin-flowtype": "4.3.0",
     "eslint-plugin-import": "2.18.2",
-    "eslint-plugin-jest": "22.16.0",
     "eslint-plugin-jsx-a11y": "6.2.3",
     "eslint-plugin-promise": "4.2.1",
     "eslint-plugin-react": "7.14.3",
-    "eslint-plugin-testcafe": "0.2.1",
     "fbjs-scripts": "1.2.0",
     "file-loader": "4.2.0",
-    "flow-bin": "0.106.3",
+    "flow-bin": "0.107.0",
     "flow-runtime": "0.17.0",
     "flow-typed": "2.6.1",
     "husky": "3.0.5",
     "identity-obj-proxy": "3.0.0",
-    "jest": "24.9.0",
     "jsdom": "15.1.1",
     "json-loader": "0.5.7",
     "lint-staged": "9.2.5",
@@ -213,14 +184,11 @@
     "stylelint": "10.1.0",
     "stylelint-config-prettier": "5.2.0",
     "stylelint-config-standard": "18.3.0",
-    "terser-webpack-plugin": "1.4.1",
-    "testcafe": "1.4.3",
-    "testcafe-browser-provider-electron": "0.0.12",
-    "testcafe-react-selectors": "3.2.0",
+    "terser-webpack-plugin": "2.0.1",
     "url-loader": "2.1.0",
     "webpack": "4.39.3",
     "webpack-bundle-analyzer": "3.4.1",
-    "webpack-cli": "3.3.7",
+    "webpack-cli": "3.3.8",
     "webpack-dev-server": "3.8.0",
     "webpack-merge": "4.2.2",
     "yarn": "1.17.3"
@@ -236,7 +204,7 @@
     "electron-debug": "3.0.1",
     "electron-log": "3.0.7",
     "electron-updater": "4.1.2",
-    "google-protobuf": "3.9.1",
+    "google-protobuf": "3.10.0-rc.1",
     "history": "4.9.0",
     "mobx": "5.13.0",
     "mobx-react": "6.1.3",
@@ -254,7 +222,7 @@
     "node": ">=12.x <14",
     "yarn": ">=1.x"
   },
-  "browserslist": "electron 1.6",
+  "browserslist": "electron 6.0",
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged"
