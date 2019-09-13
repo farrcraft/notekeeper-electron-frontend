@@ -1,10 +1,8 @@
-import { ipcRenderer } from 'electron';
-
 export default class Ipc {
   dispatcher
 
   constructor() {
-    this.dispatcher = ipcRenderer;
+    this.dispatcher = window.Bridge.ipc; // import { ipcRenderer } from 'electron';
   }
 
   /**

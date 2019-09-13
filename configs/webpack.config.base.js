@@ -4,11 +4,8 @@
 
 import path from 'path';
 import webpack from 'webpack';
-import { dependencies } from '../package.json';
 
 export default {
-  externals: [...Object.keys(dependencies || {})],
-
   module: {
     rules: [
       {
@@ -17,7 +14,8 @@ export default {
         use: {
           loader: 'babel-loader',
           options: {
-            cacheDirectory: true
+            presets: ['@babel/preset-env'],
+            cacheDirectory: false
           }
         }
       }

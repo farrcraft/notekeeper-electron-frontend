@@ -295,7 +295,7 @@ function createWindow(width, height, x, y) {
   const options = {
     webPreferences: {
       nodeIntegration: false, // this is false by default as of electron 5.0
-      preload: path.join(__dirname, 'preload.js')
+      preload: path.join(__dirname, 'preload.dev.js') // [FIXME] - need to fix for production builds
     },
     show: false,
     width,
@@ -309,7 +309,7 @@ function createWindow(width, height, x, y) {
   }
   mainWindow = new BrowserWindow(options);
 
-  mainWindow.loadURL(`file://${__dirname}/app.html`);
+  mainWindow.loadURL(`file://${__dirname}/../app.html`);
 
   // @TODO: Use 'ready-to-show' event
   //        https://github.com/electron/electron/blob/master/docs/api/browser-window.md#using-ready-to-show-event

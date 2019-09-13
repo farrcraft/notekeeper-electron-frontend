@@ -8,12 +8,12 @@
     "url": ""
   },
   "version": "0.1.0",
-  "type": "module",
   "scripts": {
     "build": "concurrently \"yarn build-main\" \"yarn build-renderer\"",
-    "build-dev": "concurrently \"yarn build-main-dev\" \"yarn build-renderer-dev\"",
-    "build-renderer-dev": "cross-env NODE_ENV=development webpack --config ./configs/webpack.config.renderer.dev.babel.js --colors",
-    "build-main-dev": "cross-env NODE_ENV=development webpack --config ./configs/webpack.config.main.dev.babel.js --colors",
+    "build-dev": "concurrently \"yarn build-main-dev\" \"yarn build-preload-dev\" \"yarn build-renderer-dev\"",
+    "build-renderer-dev": "cross-env NODE_ENV=development node -r @babel/register ./node_modules/webpack/bin/webpack --config ./configs/webpack.config.renderer.dev.babel.js --colors",
+    "build-main-dev": "cross-env NODE_ENV=development node -r @babel/register ./node_modules/webpack/bin/webpack --config ./configs/webpack.config.main.dev.babel.js --colors",
+    "build-preload-dev": "cross-env NODE_ENV=development node -r @babel/register ./node_modules/webpack/bin/webpack --config ./configs/webpack.config.preload.dev.babel.js --colors",
     "build-main": "cross-env NODE_ENV=production webpack --config ./configs/webpack.config.main.prod.babel.js --colors",
     "build-renderer": "cross-env NODE_ENV=production webpack --config ./configs/webpack.config.renderer.prod.babel.js --colors",
     "lint": "cross-env NODE_ENV=development eslint --cache --format=pretty .",
@@ -25,8 +25,8 @@
     "package-win": "yarn build && electron-builder build --win --x64",
     "postinstall": "electron-builder install-app-deps package.json",
     "prestart": "yarn build",
-    "start": "cross-env NODE_ENV=production electron ./app/main.prod.js",
-    "start-dev": "cross-env NODE_ENV=development electron ./app/main.dev.js"
+    "start": "cross-env NODE_ENV=production electron ./app/dist/main.prod.js",
+    "start-dev": "cross-env NODE_ENV=development electron ./app/dist/main.dev.js"
   },
   "lint-staged": {
     "*.{js,jsx}": [
@@ -34,7 +34,7 @@
       "git add"
     ]
   },
-  "main": "./app/main.prod.js",
+  "main": "./app/dist/main.prod.js",
   "build": {
     "productName": "NoteKeeper.io",
     "appId": "org.NoteKeeper",
@@ -42,8 +42,6 @@
     "files": [
       "app/dist/",
       "app/app.html",
-      "app/main.prod.js",
-      "app/main.prod.js.map",
       "package.json"
     ],
     "dmg": {
@@ -114,7 +112,6 @@
     "concurrently": "4.1.2",
     "cross-env": "5.2.1",
     "cross-spawn": "7.0.0",
-    "css-loader": "3.2.0",
     "electron": "6.0.7",
     "electron-builder": "21.2.0",
     "electron-devtools-installer": "2.2.4",

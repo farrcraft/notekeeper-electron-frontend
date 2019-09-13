@@ -1,10 +1,7 @@
 /* eslint global-require: off, import/no-dynamic-require: off */
 
 /**
- * Build config for development electron renderer process that uses
- * Hot-Module-Replacement
- *
- * https://webpack.js.org/concepts/hot-module-replacement/
+ * Build config for development electron renderer process
  */
 
 import path from 'path';
@@ -21,59 +18,19 @@ export default merge.smart(baseConfig, {
 
   mode: 'development',
 
-  target: 'electron-renderer',
+  target: 'web',
 
   entry: path.join(__dirname, '..', 'app/index'),
 
   output: {
     path: path.join(__dirname, '..', 'app/dist'),
     publicPath: './dist/',
-    filename: 'renderer.dev.js'
+    filename: 'renderer.dev.js',
+    libraryTarget: 'var'
   },
 
   module: {
     rules: [
-      {
-        test: /\.jsx?$/,
-        exclude: /node_modules/,
-        use: {
-          loader: 'babel-loader',
-          options: {
-            cacheDirectory: true
-          }
-        }
-      },
-      {
-        test: /\.global\.css$/,
-        use: [
-          {
-            loader: 'style-loader'
-          },
-          {
-            loader: 'css-loader',
-            options: {
-              sourceMap: true
-            }
-          }
-        ]
-      },
-      {
-        test: /^((?!\.global).)*\.css$/,
-        use: [
-          {
-            loader: 'style-loader'
-          },
-          {
-            loader: 'css-loader',
-            options: {
-              modules: true,
-              sourceMap: true,
-              importLoaders: 1,
-              localIdentName: '[name]__[local]__[hash:base64:5]'
-            }
-          }
-        ]
-      },
       // WOFF Font
       {
         test: /\.woff(\?v=\d+\.\d+\.\d+)?$/,
@@ -130,11 +87,6 @@ export default merge.smart(baseConfig, {
       }
     ]
   },
-  resolve: {
-    alias: {
-      'react-dom': '@hot-loader/react-dom'
-    }
-  },
   plugins: [
 
     new webpack.NoEmitOnErrorsPlugin(),
@@ -159,9 +111,9 @@ export default merge.smart(baseConfig, {
       debug: true
     })
   ],
-
   node: {
     __dirname: false,
-    __filename: false
+    __filename: false,
+    fs: 'empty'
   },
 });

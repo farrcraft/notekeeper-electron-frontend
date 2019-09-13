@@ -15,11 +15,6 @@ window.eval = global.eval = function() {
   throw new Error(`Sorry, this app does not support window.eval().`);
 };
 
-const { app } = require('electron').remote;
-
-const userDataPath = app.getPath('userData');
-Logger.configure(userDataPath);
-
 Logger.info('Logger configured.');
 
 const stores = new Root();

@@ -19,12 +19,12 @@ export default merge.smart(baseConfig, {
 
   target: 'electron-main',
 
-  entry: './app/main',
+  entry: './app/preload',
 
   output: {
     path: path.join(__dirname, '..', 'app/dist'),
     publicPath: './dist/',
-    filename: 'main.dev.js'
+    filename: 'preload.dev.js'
   },
 
   optimization: {
