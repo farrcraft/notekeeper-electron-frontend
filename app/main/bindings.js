@@ -7,7 +7,7 @@ import {
   TagRPC,
   TrashRPC,
   UIStateRPC
-} from '../transports/rpc';
+} from './rpc';
 
 // Attach the transports to the rpc instance
 const bindTransports = rpc => {

@@ -3,7 +3,7 @@ import Store from '../Store';
 import {
   Account as AccountDomain,
   User as UserDomain
-} from '../../domain';
+} from '../../../domain';
 
 export default class Account extends Store {
   /**

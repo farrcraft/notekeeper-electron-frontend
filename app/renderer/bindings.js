@@ -4,7 +4,7 @@ import {
   NoteIPC,
   ShelfIPC,
   CollectionIPC
-} from '../transports/ipc';
+} from './ipc';
 
 // Attach the transports to their stores
 const bindTransports = stores => {

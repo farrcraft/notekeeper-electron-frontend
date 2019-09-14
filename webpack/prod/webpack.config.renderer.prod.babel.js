@@ -13,7 +13,7 @@ export default merge.smart(baseConfig, {
   devtool: 'source-map',
   mode: 'production',
   target: 'web',
-  entry: path.join(__dirname, '..', '..', 'app/index'),
+  entry: path.join(__dirname, '..', '..', 'app/renderer/index'),
 
   output: {
     path: path.join(__dirname, '..', '..', 'app/dist/prod'),

@@ -3,9 +3,9 @@ import { render } from 'react-dom';
 import Modal from 'react-modal';
 
 import Root from './stores/Root';
-import bindTransports from './transport_bindings/ipc';
+import bindTransports from './bindings';
 import App from './components/App';
-import Logger from './shared/Logger';
+import Logger from '../shared/Logger';
 
 // Security - Override & Disable eval
 // ESLint will warn about any use of eval(), even this one

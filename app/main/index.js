@@ -5,9 +5,6 @@
  * electron renderer process from here and communicate with the other processes
  * through IPC.
  *
- * When running `yarn build` or `yarn build-main`, this file is compiled to
- * `./app/main.prod.js` using webpack. This gives us some performance wins.
- *
  */
 import { app, BrowserWindow, screen, session, shell } from 'electron';
 import { autoUpdater } from 'electron-updater';
@@ -15,13 +12,16 @@ import log from 'electron-log';
 import childProcess from 'child_process';
 import path from 'path';
 import { URL } from 'url';
-import Logger from './shared/Logger';
+
+import Logger from '../shared/Logger';
 import MenuBuilder from './menu';
-import Rpc from './transports/rpc/Rpc';
-import bindTransports from './transport_bindings/rpc';
-import AccountStore from './stores/Account';
-import UIStateStore from './stores/UIState';
-import { KexRPC, DbRPC } from './transports/rpc';
+import Rpc from './rpc/Rpc';
+import { KexRPC, DbRPC } from './rpc';
+import bindTransports from './bindings';
+
+// These are special cases where we need to mirror state from the UI here in the main process
+import AccountStore from '../renderer/stores/Account';
+import UIStateStore from '../renderer/stores/UIState';
 
 export default class AppUpdater {
   constructor() {

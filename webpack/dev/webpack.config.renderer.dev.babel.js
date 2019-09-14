@@ -15,7 +15,7 @@ export default merge.smart(baseConfig, {
   devtool: 'inline-source-map',
   mode: 'development',
   target: 'web',
-  entry: path.join(__dirname, '..', '..', 'app/index'),
+  entry: path.join(__dirname, '..', '..', 'app/renderer/index'),
 
   output: {
     path: path.join(__dirname, '..', '..', 'app/dist/dev'),

@@ -1,12 +1,12 @@
 # Build
 
-Current Electron version: 3.0.8
+Current Electron version: 6.0.9
 
 Which uses:
 
-- Node 10.2.0
+- Node 12.4.0
 - v8
-- Chromium 66.0.3359.181
+- Chromium 76.0.3809.146
 - ABI
 
 ## Windows

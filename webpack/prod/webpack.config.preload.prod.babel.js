@@ -13,10 +13,10 @@ export default merge.smart(baseConfig, {
   devtool: 'source-map',
   mode: 'production',
   target: 'electron-main',
-  entry: './app/preload',
+  entry: './app/preload/index',
   output: {
     path: path.join(__dirname, '..', '..', 'app/dist/prod'),
-    publicPath: './dist/prod',
+    publicPath: './dist/prod/',
     filename: 'preload.prod.js'
   },
 

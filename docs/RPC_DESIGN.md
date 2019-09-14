@@ -24,7 +24,7 @@ There are 3 separate module types in the RPC system:
 The actual RPC communication only happens from the main/node process.
 These calls are handled by the `transports/rpc/Rpc/Rpc.js` module.
 
-The renderer process (where our React frontend lives) does not directly invoke the RPC calls.
+The renderer process (where the React frontend lives) does not directly invoke the RPC calls.
 Instead, it makes call to the IPC transports. The IPC transports dispatch messages which are
 listened for by the RPC transports. The RPC transports make the actual RPC call to the backend
 and then send a response message back to the IPC transport that dispatched the original message.

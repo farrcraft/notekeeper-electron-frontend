@@ -1,7 +1,7 @@
 // in preload scripts, we have access to node.js and electron APIs
 // the remote web app will not have access, so this is safe
 import { app, ipcRenderer, remote } from 'electron';
-import Logger from './shared/Logger';
+import Logger from '../shared/Logger';
 
 init();
 

@@ -12,8 +12,6 @@
 * moment - MIT - https://github.com/moment/moment
 * react - BSD New - https://github.com/facebook/react/blob/master/LICENSE
 * react-dom - BSD New - https://github.com/facebook/react
-* react-hot-loader - MIT - https://github.com/gaearon/react-hot-loader
-* react-split-pane - MIT - https://github.com/tomkp/react-split-pane
 * request - Apache License 2.0 - https://github.com/request/request
 * source-map-support - MIT - https://github.com/evanw/node-source-map-support
 * tweetnacl - The Unlicense - https://github.com/dchest/tweetnacl-js
