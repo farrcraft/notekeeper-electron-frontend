@@ -1,27 +1,31 @@
-/* eslint global-require: off, import/no-dynamic-require: off */
-
 /**
- * Build config for development electron renderer process
+ * Build config for electron renderer process
  */
 
 import path from 'path';
-import fs from 'fs';
 import webpack from 'webpack';
+import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import merge from 'webpack-merge';
-import { spawn, execSync } from 'child_process';
-import baseConfig from './webpack.config.base';
+import TerserPlugin from 'terser-webpack-plugin';
+import baseConfig from '../webpack.config.base';
 
 export default merge.smart(baseConfig, {
-  devtool: 'inline-source-map',
-  mode: 'development',
+  devtool: 'source-map',
+  mode: 'production',
   target: 'web',
-  entry: path.join(__dirname, '..', 'app/index'),
+  entry: path.join(__dirname, '..', '..', 'app/index'),
 
   output: {
-    path: path.join(__dirname, '..', 'app/dist'),
-    publicPath: './dist/',
-    filename: 'renderer.dev.js',
+    path: path.join(__dirname, '..', '..', 'app/dist/prod'),
+    publicPath: './dist/prod/',
+    filename: 'renderer.prod.js',
     libraryTarget: 'var'
+  },
+
+  node: {
+    __dirname: false,
+    __filename: false,
+    fs: 'empty'
   },
 
   module: {
@@ -82,10 +86,20 @@ export default merge.smart(baseConfig, {
       }
     ]
   },
+
+  optimization: {
+    minimizer: process.env.E2E_BUILD
+      ? []
+      : [
+          new TerserPlugin({
+            parallel: true,
+            sourceMap: true,
+            cache: true
+          })
+        ]
+  },
+
   plugins: [
-
-    new webpack.NoEmitOnErrorsPlugin(),
-
     /**
      * Create global constants which can be configured at compile time.
      *
@@ -94,21 +108,15 @@ export default merge.smart(baseConfig, {
      *
      * NODE_ENV should be production so that modules do not perform certain
      * development checks
-     *
-     * By default, use 'development' as NODE_ENV. This can be overriden with
-     * 'staging', for example, by changing the ENV variables in the npm scripts
      */
     new webpack.EnvironmentPlugin({
-      NODE_ENV: 'development'
+      NODE_ENV: 'production'
     }),
 
-    new webpack.LoaderOptionsPlugin({
-      debug: true
+    new BundleAnalyzerPlugin({
+      analyzerMode:
+        process.env.OPEN_ANALYZER === 'true' ? 'server' : 'disabled',
+      openAnalyzer: process.env.OPEN_ANALYZER === 'true'
     })
-  ],
-  node: {
-    __dirname: false,
-    __filename: false,
-    fs: 'empty'
-  },
+  ]
 });

@@ -7,7 +7,7 @@ import webpack from 'webpack';
 import merge from 'webpack-merge';
 import TerserPlugin from 'terser-webpack-plugin';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
-import baseConfig from './webpack.config.base';
+import baseConfig from '../webpack.config.base';
 
 export default merge.smart(baseConfig, {
   devtool: 'source-map',
@@ -16,12 +16,12 @@ export default merge.smart(baseConfig, {
 
   target: 'electron-main',
 
-  entry: './app/preload',
+  entry: './app/main',
 
   output: {
-    path: path.join(__dirname, '..', 'app/dist'),
-    publicPath: './dist/',
-    filename: 'preload.dev.js'
+    path: path.join(__dirname, '..', '..', 'app/dist/dev'),
+    publicPath: './dist/dev/',
+    filename: 'main.dev.js'
   },
 
   optimization: {

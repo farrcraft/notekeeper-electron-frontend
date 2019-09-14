@@ -7,17 +7,21 @@ import webpack from 'webpack';
 import merge from 'webpack-merge';
 import TerserPlugin from 'terser-webpack-plugin';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
-import baseConfig from './webpack.config.base';
+import baseConfig from '../webpack.config.base';
 
 export default merge.smart(baseConfig, {
   devtool: 'source-map',
+
   mode: 'production',
+
   target: 'electron-main',
-  entry: './app/preload',
+
+  entry: './app/main',
+
   output: {
-    path: path.join(__dirname, '..', 'app/dist'),
-    publicPath: './dist/',
-    filename: 'preload.prod.js'
+    path: path.join(__dirname, '..', '..', 'app/dist/prod'),
+    publicPath: './dist/prod/',
+    filename: 'main.prod.js'
   },
 
   optimization: {
