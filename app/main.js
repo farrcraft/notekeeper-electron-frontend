@@ -292,10 +292,15 @@ function restoreWindowState() {
 }
 
 function createWindow(width, height, x, y) {
+  let preloadScript = 'preload.prod.js';
+  if (process.env.NODE_ENV === 'development') {
+    preloadScript = 'preload.dev.js';
+  }
+
   const options = {
     webPreferences: {
       nodeIntegration: false, // this is false by default as of electron 5.0
-      preload: path.join(__dirname, 'preload.dev.js') // [FIXME] - need to fix for production builds
+      preload: path.join(__dirname, preloadScript)
     },
     show: false,
     width,

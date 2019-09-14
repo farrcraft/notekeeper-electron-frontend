@@ -10,16 +10,11 @@ import webpack from 'webpack';
 import merge from 'webpack-merge';
 import { spawn, execSync } from 'child_process';
 import baseConfig from './webpack.config.base';
-import CheckNodeEnv from '../internals/scripts/CheckNodeEnv';
 
-CheckNodeEnv('development');
 export default merge.smart(baseConfig, {
   devtool: 'inline-source-map',
-
   mode: 'development',
-
   target: 'web',
-
   entry: path.join(__dirname, '..', 'app/index'),
 
   output: {
