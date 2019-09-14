@@ -1,6 +1,6 @@
 // in preload scripts, we have access to node.js and electron APIs
 // the remote web app will not have access, so this is safe
-import { app, ipcRenderer, remote } from 'electron';
+import { ipcRenderer, remote } from 'electron';
 import Logger from '../shared/Logger';
 
 init();
@@ -14,7 +14,7 @@ function init() {
   // user's computer. E.g. don't directly expose core Electron (even IPC) or node.js modules.
   const userDataPath = remote.app.getPath('userData');
   window.Bridge = {
-    //setDockBadge: setDockBadge,
+    // setDockBadge: setDockBadge,
     env: {
       port: process.env.PORT,
       nodeEnv: process.env.NODE_ENV

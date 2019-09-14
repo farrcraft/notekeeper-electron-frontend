@@ -5,10 +5,8 @@
  */
 
 import path from 'path';
-import fs from 'fs';
 import webpack from 'webpack';
 import merge from 'webpack-merge';
-import { spawn, execSync } from 'child_process';
 import baseConfig from '../webpack.config.base';
 
 export default merge.smart(baseConfig, {
@@ -58,11 +56,6 @@ export default merge.smart(baseConfig, {
             mimetype: 'application/octet-stream'
           }
         }
-      },
-      // EOT Font
-      {
-        test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
-        use: 'file-loader'
       },
       // SVG Font
       {

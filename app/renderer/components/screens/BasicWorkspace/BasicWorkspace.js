@@ -209,8 +209,7 @@ class BasicWorkspace extends Component {
     const maxWidth = 600;
     // if our drawer is anchored on the right side
     if (drawerAlign === 'right') {
-      const offsetRight =
-        document.body.offsetWidth - (e.clientX - document.body.offsetLeft);
+      const offsetRight = document.body.offsetWidth - (e.clientX - document.body.offsetLeft);
       if (offsetRight > minWidth && offsetRight < maxWidth) {
         this.setState({ newWidth: { width: offsetRight } });
       }
@@ -248,8 +247,8 @@ class BasicWorkspace extends Component {
           style={
             open
               ? {
-                  width: `calc(100% - ${drawerWidth}px)`
-                }
+                width: `calc(100% - ${drawerWidth}px)`
+              }
               : {}
           }
         >

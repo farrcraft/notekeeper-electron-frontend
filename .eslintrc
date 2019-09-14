@@ -4,7 +4,7 @@
     "sourceType": "module",
     "allowImportExportEverywhere": true
   },
-  "extends": ["airbnb", "prettier", "prettier/react"],
+  "extends": ["airbnb", "plugin:jsx-a11y/recommended"],
   "env": {
     "browser": true,
     "node": true
@@ -44,11 +44,11 @@
     ],
     "react/prefer-stateless-function": "off"
   },
-  "plugins": ["import", "promise", "compat", "react"],
+  "plugins": ["import", "promise", "compat", "react", "jsx-a11y"],
   "settings": {
     "import/resolver": {
       "webpack": {
-        "config": "configs/webpack.config.eslint.js"
+        "config": "webpack/webpack.config.eslint.js"
       }
     }
   }

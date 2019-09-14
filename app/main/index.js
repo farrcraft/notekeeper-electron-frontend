@@ -6,7 +6,9 @@
  * through IPC.
  *
  */
-import { app, BrowserWindow, screen, session, shell } from 'electron';
+import {
+  app, BrowserWindow, screen, session, shell
+} from 'electron';
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 import childProcess from 'child_process';
@@ -139,8 +141,8 @@ app.on('web-contents-created', (event, contents) => {
   contents.on('new-window', (windowEvent, navigationUrl) => {
     // Allow new devtools to be updated when in dev
     if (
-      process.env.NODE_ENV === 'development' &&
-      navigationUrl.startsWith('chrome-devtools://')
+      process.env.NODE_ENV === 'development'
+      && navigationUrl.startsWith('chrome-devtools://')
     ) {
       return;
     }
@@ -272,10 +274,10 @@ function restoreWindowState() {
   const displayBounds = screen.getDisplayMatching(restoreBounds);
 
   if (
-    displayBounds.x === uiStateStore.displayXPosition &&
-    displayBounds.y === uiStateStore.displayYPosition &&
-    displayBounds.width === uiStateStore.displayWidth &&
-    displayBounds.height === uiStateStore.displayHeight
+    displayBounds.x === uiStateStore.displayXPosition
+    && displayBounds.y === uiStateStore.displayYPosition
+    && displayBounds.width === uiStateStore.displayWidth
+    && displayBounds.height === uiStateStore.displayHeight
   ) {
     mainWindow.setBounds(restoreBounds);
   }

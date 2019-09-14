@@ -1,5 +1,17 @@
 # TODO
 
+[] get rid of native menu?
+[] update renderer app issues (console errors/warnings)
+[] go through each & document where/why/how/when it's used (in docs/DEPENDENCIES.md)
+    [] package.json dependency
+    [] package.json devDependency
+    [] package.json scripts
+    [] webpack configs
+[] how/when/why/what to use dependencies vs devDependencies
+[] need to add a .browserslistrc file (see @babel/preset-env) - https://github.com/browserslist/browserslist
+[] get rid of flow & replace it with typescript
+[] make sure all of the docs are updated & current
+
 [ ] figure out where logic needs to live for create notebook functionality
 [ ] notebook store - create notebook
 [ ] notebook rpc transport - create notebook
