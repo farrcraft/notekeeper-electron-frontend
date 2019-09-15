@@ -27,7 +27,8 @@ module.exports = api => {
           modules: 'commonjs'
         }
       ],
-      [require('@babel/preset-react'), { development }]
+      [require('@babel/preset-react'), { development }],
+      [require('@babel/preset-typescript')]
     ],
     plugins: [
       // Stage 0

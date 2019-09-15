@@ -1,0 +1,3 @@
+# Browsers that we support (based on Electron 6.0)
+node 12.4
+chrome 76
