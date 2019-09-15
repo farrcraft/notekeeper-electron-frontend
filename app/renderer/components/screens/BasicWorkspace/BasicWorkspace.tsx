@@ -233,7 +233,7 @@ class BasicWorkspace extends Component {
     });
   };
 
-  render() {
+  render(): JSX.Element {
     const { classes } = this.props;
     const { open, newWidth } = this.state;
 

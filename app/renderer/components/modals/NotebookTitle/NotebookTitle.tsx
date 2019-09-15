@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Modal from 'react-modal';
 
 class NotebookTitle extends Component {
-  render() {
+  render(): JSX.Element {
     return (
       <Modal isOpen={false}>
         <h2>Notebook Title</h2>

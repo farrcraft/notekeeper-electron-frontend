@@ -2,10 +2,12 @@ import winston from 'winston';
 import path from 'path';
 
 class Logger {
-  logger = null;
+  logger: winston.Logger = null;
 
+  /*
   constructor() {
   }
+  */
 
   configure(userDataPath): winston.Logger {
     const logPath = path.normalize(
@@ -24,16 +26,28 @@ class Logger {
     return this.logger;
   }
 
-  debug(msg): void {
-    window.Bridge.logger.debug(msg);
+  debug(msg: string): void {
+    if (window.Bridge) {
+      window.Bridge.logger.debug(msg);
+    } else {
+      this.logger.debug(msg);
+    }
   }
 
-  info(msg): void {
-    window.Bridge.logger.info(msg);
+  info(msg: string): void {
+    if (window.Bridge) {
+      window.Bridge.logger.info(msg);
+    } else {
+      this.logger.info(msg);
+    }
   }
 
-  error(msg):void {
-    window.Bridge.logger.error(msg);
+  error(msg: string): void {
+    if (window.Bridge) {
+      window.Bridge.logger.error(msg);
+    } else {
+      this.logger.error(msg);
+    }
   }
 }
 

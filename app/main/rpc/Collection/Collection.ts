@@ -35,7 +35,7 @@ export default class Collection extends Handler {
   }
 
   getAccountCollections(shelfId): Promise {
-    const promise = new Promise((resolve, reject) => {
+    const promise = new Promise((resolve, reject): void => {
       const message = new messagesCollection.GetCollectionsRequest();
       message.setShelfid(shelfId);
       message.setScope('account');
@@ -62,7 +62,7 @@ export default class Collection extends Handler {
   }
 
   getUserCollections(shelfId): Promise {
-    const promise = new Promise((resolve, reject) => {
+    const promise = new Promise((resolve, reject): void => {
       const message = new messagesCollection.GetCollectionsRequest();
       message.setShelfid(shelfId);
       message.setScope('user');

@@ -7,38 +7,27 @@
  *
  */
 import {
-  app, BrowserWindow, screen, session, shell
+  app, session, shell
 } from 'electron';
-import { autoUpdater } from 'electron-updater';
-import log from 'electron-log';
-import childProcess from 'child_process';
-import path from 'path';
 import { URL } from 'url';
 
+import AppUpdater from './updater';
+import Backend from './backend';
 import Logger from '../shared/Logger';
-import MenuBuilder from './menu';
 import Rpc from './rpc/Rpc';
 import { KexRPC, DbRPC } from './rpc';
 import bindTransports from './bindings';
+import Window from './window';
 
 // These are special cases where we need to mirror state from the UI here in the main process
 import AccountStore from '../renderer/stores/Account';
 import UIStateStore from '../renderer/stores/UIState';
 
-export default class AppUpdater {
-  constructor() {
-    log.transports.file.level = 'info';
-    autoUpdater.logger = log;
-    autoUpdater.checkForUpdatesAndNotify();
-  }
-}
-
 // Declared here so our main window doesn't get GC'd
-let mainWindow = null;
-let windowStateTimeout = null;
-let backendServer = null;
+let mainWindow: Window = null;
+let backendServer: Backend = null;
 
-const userDataPath = app.getPath('userData');
+const userDataPath: string = app.getPath('userData');
 Logger.configure(userDataPath);
 
 if (process.env.NODE_ENV === 'production') {
@@ -55,7 +44,7 @@ process.on('error', err => {
 });
 
 // We only want a single instance to be able to run at once
-const gotTheLock = app.requestSingleInstanceLock();
+const gotTheLock: boolean = app.requestSingleInstanceLock();
 if (!gotTheLock) {
   app.quit();
 }
@@ -72,25 +61,28 @@ const uiStateStore = new UIStateStore(null);
 const uiStateTransport = rpcMain.getTransport('uiState');
 uiStateStore.setTransport(uiStateTransport);
 
+mainWindow = new Window(uiStateStore);
+backendServer = new Backend();
+
 app.on('second-instance', (/* event, commandLine, workingDirectory */): void => {
   if (mainWindow) {
-    if (mainWindow.isMinimized()) {
-      mainWindow.restore();
+    if (mainWindow.window.isMinimized()) {
+      mainWindow.window.restore();
     }
-    mainWindow.focus();
+    mainWindow.window.focus();
   }
 });
 
 app.on('activate', (): void => {
   if (mainWindow === null) {
     // [FIXME] - expects some parameters here
-    createWindow();
+    mainWindow.create();
   }
 });
 
 app.on('will-quit', (): void => {
   // all windows have been closed & app is about to quit
-  destroyBackendServer();
+  backendServer.destroy();
 });
 
 app.on('window-all-closed', async (): void => {
@@ -197,158 +189,8 @@ const installExtensions = async (): void => {
   }
 };
 
-const createBackendServer = async (): Promise => {
-  const promise = new Promise((resolve, reject) => {
-    backendServer = childProcess.spawn('./app/resources/backend');
-    backendServer.stdout.on('data', data => {
-      const out = data.toString();
-      if (out === 'NOTEKEEPER_SERVICE_READY\n') {
-        rpcMain.waitForReady(10, () => {
-          resolve(out);
-        });
-      } else {
-        Logger.debug(out);
-        reject(out);
-      }
-    });
-    backendServer.stderr.on('data', data => {
-      Logger.debug(data.toString());
-    });
-    backendServer.on('exit', code => {
-      if (code !== 0 && code !== null) {
-        Logger.debug(`Child exited with code ${code}`);
-      }
-    });
-  });
-  return promise;
-};
-
-function destroyBackendServer(): void {
-  backendServer.kill();
-}
-
-// delayedWindowStateSave schedules the window state to be saved in the future
-function delayedWindowStateSave(): void {
-  if (windowStateTimeout) {
-    clearTimeout(windowStateTimeout);
-  }
-  windowStateTimeout = setTimeout(updateWindowState, 5000);
-}
-
-// updateWindowState saves the current window state (position/size) to the db
-function updateWindowState(): void {
-  if (!mainWindow) {
-    return;
-  }
-  windowStateTimeout = null;
-
-  // where and how big the window is
-  const bounds = mainWindow.getBounds();
-  uiStateStore.windowWidth = bounds.width;
-  uiStateStore.windowHeight = bounds.height;
-  uiStateStore.windowXPosition = bounds.x;
-  uiStateStore.windowYPosition = bounds.y;
-
-  // how big the display is
-  const displayBounds = screen.getDisplayMatching(bounds);
-  uiStateStore.displayWidth = displayBounds.width;
-  uiStateStore.displayHeight = displayBounds.height;
-  uiStateStore.displayXPosition = displayBounds.x;
-  uiStateStore.displayYPosition = displayBounds.y;
-
-  uiStateStore.windowMaximized = mainWindow.isMaximized();
-  uiStateStore.windowMinimized = mainWindow.isMinimized();
-  uiStateStore.windowFullscreen = mainWindow.isFullScreen();
-
-  uiStateStore.save();
-}
-
-// restoreWindowState sets the current window position/size to the last saved values
-function restoreWindowState() {
-  const restoreBounds = {};
-  restoreBounds.width = uiStateStore.windowWidth;
-  restoreBounds.height = uiStateStore.windowHeight;
-  restoreBounds.x = uiStateStore.windowXPosition;
-  restoreBounds.y = uiStateStore.windowYPosition;
-
-  const displayBounds = screen.getDisplayMatching(restoreBounds);
-
-  if (
-    displayBounds.x === uiStateStore.displayXPosition
-    && displayBounds.y === uiStateStore.displayYPosition
-    && displayBounds.width === uiStateStore.displayWidth
-    && displayBounds.height === uiStateStore.displayHeight
-  ) {
-    mainWindow.setBounds(restoreBounds);
-  }
-
-  if (uiStateStore.windowMaximized) {
-    mainWindow.maximize();
-  }
-  if (uiStateStore.windowMinimized) {
-    mainWindow.minimize();
-  }
-  if (uiStateStore.windowFullscreen) {
-    mainWindow.setFullScreen(true);
-  }
-}
-
-function createWindow(width: number, height: number, x: number, y: number): void {
-  let preloadScript = 'preload.prod.js';
-  if (process.env.NODE_ENV === 'development') {
-    preloadScript = 'preload.dev.js';
-  }
-
-  const options = {
-    webPreferences: {
-      nodeIntegration: false, // this is false by default as of electron 5.0
-      preload: path.join(__dirname, preloadScript)
-    },
-    show: false,
-    width,
-    height
-  };
-  if (x >= 0) {
-    options.x = x;
-  }
-  if (y >= 0) {
-    options.y = y;
-  }
-  mainWindow = new BrowserWindow(options);
-
-  mainWindow.loadURL(`file://${__dirname}/../../app.html`);
-
-  // @TODO: Use 'ready-to-show' event
-  //        https://github.com/electron/electron/blob/master/docs/api/browser-window.md#using-ready-to-show-event
-  mainWindow.webContents.on('did-finish-load', () => {
-    if (!mainWindow) {
-      throw new Error('"mainWindow" is not defined');
-    }
-    if (process.env.START_MINIMIZED) {
-      mainWindow.minimize();
-    } else {
-      mainWindow.show();
-      mainWindow.focus();
-    }
-  });
-
-  mainWindow.on('resize', delayedWindowStateSave);
-  mainWindow.on('move', delayedWindowStateSave);
-
-  mainWindow.on('closed', () => {
-    // Terminate backend process
-    // backend.kill('SIGINT');
-    mainWindow = null;
-  });
-
-  const menuBuilder = new MenuBuilder(mainWindow);
-  menuBuilder.buildMenu();
-
-  restoreWindowState();
-}
-
 app.on('ready', async (): void => {
-  await createBackendServer();
+  await backendServer.create(rpcMain);
 
   await installExtensions();
 
@@ -364,8 +206,8 @@ app.on('ready', async (): void => {
   await dbMain.openMasterDb();
 
   await uiStateStore.load();
-  let width = uiStateStore.windowWidth;
-  let height = uiStateStore.windowHeight;
+  let width: number = uiStateStore.windowWidth;
+  let height: number = uiStateStore.windowHeight;
   if (width <= 0) {
     width = 800;
   }
@@ -373,7 +215,7 @@ app.on('ready', async (): void => {
     height = 600;
   }
 
-  createWindow(
+  mainWindow.create(
     width,
     height,
     uiStateStore.windowXPosition,

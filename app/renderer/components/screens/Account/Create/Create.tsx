@@ -9,7 +9,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import AccountCircleIcon from '@material-ui/icons/AccountCircleOutlined';
 import Avatar from '@material-ui/core/Avatar';
 
-const styles = theme => ({
+const styles = (theme): Object => ({
   section: {
     width: 'auto',
     display: 'block', // Fix IE 11 issue.
@@ -110,7 +110,7 @@ class Create extends Component {
     account.create(this.form.accountName, this.form.email, this.form.password);
   }
 
-  render() {
+  render(): JSX.Element {
     const { account, classes } = this.props;
 
     let signinButton = null;

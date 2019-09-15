@@ -14,7 +14,7 @@ export default class Collection extends Ipc {
   */
 
   accountCollections(): Promise {
-    const promise = new Promise((resolve /* , reject */) => {
+    const promise = new Promise((resolve /* , reject */): void => {
       this.dispatcher.on('Account::collections', (event, arg) => {
         resolve(arg);
       });
@@ -24,8 +24,8 @@ export default class Collection extends Ipc {
   }
 
   userCollections(): Promise {
-    const promise = new Promise((resolve /* , reject */) => {
-      this.dispatcher.on('User::collections', (event, arg) => {
+    const promise = new Promise((resolve /* , reject */): void => {
+      this.dispatcher.on('User::collections', (event, arg): void => {
         resolve(arg);
       });
       this.dispatchMessage('User::collections');

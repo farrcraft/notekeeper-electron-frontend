@@ -10,7 +10,7 @@ import Typography from '@material-ui/core/Typography';
 import Avatar from '@material-ui/core/Avatar';
 import withStyles from '@material-ui/core/styles/withStyles';
 
-const styles = theme => ({
+const styles = (theme): Object => ({
   section: {
     width: 'auto',
     display: 'block', // Fix IE 11 issue.
@@ -104,13 +104,13 @@ class Signin extends Component {
     account.signin(this.form.accountName, this.form.email, this.form.password);
   }
 
-  handleCreateAccount = () => {
+  handleCreateAccount = (): void => {
     // switch to the create account screen
     const { account } = this.props;
     account.overrideView('CreateAccount');
   };
 
-  render() {
+  render(): JSX.Element {
     const { classes } = this.props;
     return (
       <section className={classes.section}>

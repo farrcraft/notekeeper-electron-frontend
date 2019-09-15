@@ -26,7 +26,7 @@ class App extends Component {
     stores.account.viewOverride = null;
   }
 
-  render() {
+  render(): JSX.Element {
     const { stores } = this.props;
     let View = null;
     if (stores.account.exists === true) {

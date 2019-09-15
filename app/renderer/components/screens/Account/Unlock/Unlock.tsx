@@ -9,7 +9,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import LockIcon from '@material-ui/icons/LockOutlined';
 import Avatar from '@material-ui/core/Avatar';
 
-const styles = theme => ({
+const styles = (theme): Object => ({
   section: {
     width: 'auto',
     display: 'block', // Fix IE 11 issue.
@@ -95,7 +95,7 @@ class Unlock extends Component {
     account.signout();
   };
 
-  render() {
+  render(): JSX.Element {
     const { classes } = this.props;
     return (
       <section className={classes.section}>

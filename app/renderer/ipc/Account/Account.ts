@@ -11,7 +11,7 @@ export default class Account extends Ipc {
   getState(): Promise {
     // [FIXME] - use real token
     const token = 'secure token';
-    const promise = new Promise((resolve /* , reject */) => {
+    const promise = new Promise((resolve /* , reject */): void => {
       this.dispatcher.on('Account::getState', (event, arg) => {
         resolve(arg);
       });
@@ -26,8 +26,8 @@ export default class Account extends Ipc {
    * @param {*} email
    * @param {*} passphrase
    */
-  create(accountName, email, passphrase): Promise {
-    const promise = new Promise((resolve /* , reject */) => {
+  create(accountName: string, email: string, passphrase: string): Promise {
+    const promise = new Promise((resolve /* , reject */): void => {
       this.dispatcher.on('Account::create', (event, arg) => {
         resolve(arg);
       });
@@ -41,8 +41,8 @@ export default class Account extends Ipc {
     return promise;
   }
 
-  signin(accountName, email, passphrase): Promise {
-    const promise = new Promise((resolve /* , reject */) => {
+  signin(accountName: string, email: string, passphrase: string): Promise {
+    const promise = new Promise((resolve /* , reject */): void => {
       this.dispatcher.on('Account::signin', (event, arg) => {
         resolve(arg);
       });
@@ -57,7 +57,7 @@ export default class Account extends Ipc {
   }
 
   signout(): Promise {
-    const promise = new Promise((resolve /* , reject */) => {
+    const promise = new Promise((resolve /* , reject */): void => {
       this.dispatcher.on('Account::signout', (event, arg) => {
         resolve(arg);
       });
@@ -68,7 +68,7 @@ export default class Account extends Ipc {
   }
 
   lock(): Promise {
-    const promise = new Promise((resolve /* , reject */) => {
+    const promise = new Promise((resolve /* , reject */): void => {
       this.dispatcher.on('Account::lock', (event, arg) => {
         resolve(arg);
       });
@@ -78,8 +78,8 @@ export default class Account extends Ipc {
     return promise;
   }
 
-  unlock(passphrase): Promise {
-    const promise = new Promise((resolve /* , reject */) => {
+  unlock(passphrase: string): Promise {
+    const promise = new Promise((resolve /* , reject */): void => {
       this.dispatcher.on('Account::unlock', (event, arg) => {
         resolve(arg);
       });

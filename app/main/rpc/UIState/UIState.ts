@@ -22,7 +22,7 @@ export default class UIState extends Handler {
     messageHeader.setMethod('UIState::load');
     message.setHeader(messageHeader);
     const payload = message.serializeBinary();
-    const promise = new Promise((resolve, reject) => {
+    const promise = new Promise((resolve, reject): void => {
       this.rpc.request('UIState::load', payload, (err, response, body) => {
         if (err !== null) {
           dialog.showErrorBox(
@@ -59,7 +59,7 @@ export default class UIState extends Handler {
     message.setDisplayxposition(store.displayXPosition);
     message.setDisplayyposition(store.displayYPosition);
     const payload = message.serializeBinary();
-    const promise = new Promise((resolve, reject) => {
+    const promise = new Promise((resolve, reject): void => {
       this.rpc.request('UIState::save', payload, (err, response, body) => {
         if (err !== null) {
           dialog.showErrorBox(

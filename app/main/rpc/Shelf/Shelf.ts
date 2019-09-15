@@ -35,7 +35,7 @@ export default class Shelf extends Handler {
   }
 
   getAccountShelves(accountId): Promise {
-    const promise = new Promise((resolve, reject) => {
+    const promise = new Promise((resolve, reject): void => {
       const message = new messagesShelf.GetShelvesRequest();
       message.setId(accountId);
       message.setScope('account');
@@ -58,7 +58,7 @@ export default class Shelf extends Handler {
   }
 
   getUserShelves(userId): Promise {
-    const promise = new Promise((resolve, reject) => {
+    const promise = new Promise((resolve, reject): void => {
       const message = new messagesShelf.GetShelvesRequest();
       message.setId(userId);
       message.setScope('user');

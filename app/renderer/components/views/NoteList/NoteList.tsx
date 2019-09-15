@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Typography from '@material-ui/core/Typography';
 
 class NoteList extends Component {
-  render() {
+  render(): JSX.Element {
     return (
       <div>
         <Typography variant="h1" color="inherit" noWrap>

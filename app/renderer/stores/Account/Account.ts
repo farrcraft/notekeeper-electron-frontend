@@ -9,17 +9,17 @@ export default class Account extends Store {
   /**
    * Is the account signed in?
    */
-  @observable signedIn = false;
+  @observable signedIn: boolean = false;
 
   /**
    * Is the account locked?
    */
-  @observable locked = true;
+  @observable locked: boolean = true;
 
   /**
    * Does an account exist?
    */
-  @observable exists = false;
+  @observable exists: boolean = false;
 
   /**
    * A view to override any current view with
@@ -46,7 +46,7 @@ export default class Account extends Store {
 
   @action getState() {
     const promise = this.transportLayer.getState();
-    return promise.then(val => {
+    return promise.then((val): boolean => {
       const ok = this.handleGetState(val);
       return ok;
     });
@@ -64,9 +64,9 @@ export default class Account extends Store {
     return true;
   }
 
-  @action create(accountName, email, passphrase) {
+  @action create(accountName: string, email: string, passphrase: string) {
     const promise = this.transportLayer.create(accountName, email, passphrase);
-    return promise.then(val => {
+    return promise.then((val): boolean => {
       const ok = this.handleCreate(val);
       return ok;
     });
@@ -83,9 +83,9 @@ export default class Account extends Store {
     return true;
   }
 
-  @action signin(accountName, email, passphrase /* , rememberMe */) {
+  @action signin(accountName: string, email: string, passphrase: string /* , rememberMe */) {
     const promise = this.transportLayer.signin(accountName, email, passphrase);
-    return promise.then(val => {
+    return promise.then((val): boolean => {
       const ok = this.handleSignin(val);
       return ok;
     });
@@ -103,7 +103,7 @@ export default class Account extends Store {
 
   signout() {
     const promise = this.transportLayer.signout();
-    return promise.then((/* val */) => {
+    return promise.then((/* val */): boolean => {
       this.account = null;
       this.user = null;
       this.signedIn = false;
@@ -115,16 +115,16 @@ export default class Account extends Store {
 
   lock() {
     const promise = this.transportLayer.lock();
-    return promise.then((/* val */) => {
+    return promise.then((/* val */): boolean => {
       this.locked = true;
       this.viewOverride = null;
       return this.locked;
     });
   }
 
-  unlock(passphrase) {
+  unlock(passphrase: string) {
     const promise = this.transportLayer.unlock(passphrase);
-    return promise.then((/* val */) => {
+    return promise.then((/* val */): boolean => {
       this.locked = false;
       return this.locked;
     });

@@ -1,34 +1,34 @@
 import Store from '../Store';
 
 export default class UIState extends Store {
-  windowHeight = -1;
+  windowHeight: number = -1;
 
-  windowWidth = -1;
+  windowWidth: number = -1;
 
-  windowXPosition = 0;
+  windowXPosition: number = 0;
 
-  windowYPosition = 0;
+  windowYPosition: number = 0;
 
-  windowMaximized = false;
+  windowMaximized: boolean = false;
 
-  windowMinimized = false;
+  windowMinimized: boolean = false;
 
-  windowFullscreen = false;
+  windowFullscreen: boolean = false;
 
-  displayHeight = -1;
+  displayHeight: number = -1;
 
-  displayWidth = -1;
+  displayWidth: number = -1;
 
-  displayXPosition = 0;
+  displayXPosition: number = 0;
 
-  displayYPosition = 0;
+  displayYPosition: number = 0;
 
   load(): Promise {
     const transport = this.transportLayer;
-    const promise = new Promise((resolve /* , reject */) => {
+    const promise = new Promise((resolve /* , reject */): void => {
       transport
         .load()
-        .then(payload => {
+        .then((payload): boolean => {
           this.windowWidth = payload.getWindowwidth();
           this.windowHeight = payload.getWindowheight();
           this.windowXPosition = payload.getWindowxposition();

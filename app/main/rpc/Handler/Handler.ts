@@ -22,17 +22,17 @@ export default class Handler {
   /**
    * Whether the status of the last RPC response that was checked was OK or not
    */
-  isOK = true;
+  isOK: boolean = true;
 
   constructor() {
     this.listener = ipcMain;
   }
 
-  setStore(store) {
+  setStore(store): void {
     this.store = store;
   }
 
-  setRpc(rpc) {
+  setRpc(rpc): void {
     this.rpc = rpc;
   }
 
