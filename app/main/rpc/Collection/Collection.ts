@@ -8,7 +8,7 @@ export default class Collection extends Handler {
   }
 
   // registerIpc registers IPC hooks mirroring the RPC calls
-  registerIpc() {
+  registerIpc(): void {
     this.listener.on('Account::collections', event => {
       const promise = this.getAccountCollections();
       promise
@@ -34,7 +34,7 @@ export default class Collection extends Handler {
     });
   }
 
-  getAccountCollections(shelfId) {
+  getAccountCollections(shelfId): Promise {
     const promise = new Promise((resolve, reject) => {
       const message = new messagesCollection.GetCollectionsRequest();
       message.setShelfid(shelfId);
@@ -61,7 +61,7 @@ export default class Collection extends Handler {
     return promise;
   }
 
-  getUserCollections(shelfId) {
+  getUserCollections(shelfId): Promise {
     const promise = new Promise((resolve, reject) => {
       const message = new messagesCollection.GetCollectionsRequest();
       message.setShelfid(shelfId);

@@ -19,7 +19,7 @@ const theme = createMuiTheme({
 export default
 @observer
 class App extends Component {
-  componentWillMount() {
+  componentWillMount(): void {
     // might need to put this in a screen base class instead
     // not sure account store is the right place for screen overrides either
     const { stores } = this.props;

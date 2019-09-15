@@ -8,7 +8,7 @@ export default class Account extends Ipc {
   /**
    * Get the current account state
    */
-  getState() {
+  getState(): Promise {
     // [FIXME] - use real token
     const token = 'secure token';
     const promise = new Promise((resolve /* , reject */) => {
@@ -26,7 +26,7 @@ export default class Account extends Ipc {
    * @param {*} email
    * @param {*} passphrase
    */
-  create(accountName, email, passphrase) {
+  create(accountName, email, passphrase): Promise {
     const promise = new Promise((resolve /* , reject */) => {
       this.dispatcher.on('Account::create', (event, arg) => {
         resolve(arg);
@@ -41,7 +41,7 @@ export default class Account extends Ipc {
     return promise;
   }
 
-  signin(accountName, email, passphrase) {
+  signin(accountName, email, passphrase): Promise {
     const promise = new Promise((resolve /* , reject */) => {
       this.dispatcher.on('Account::signin', (event, arg) => {
         resolve(arg);
@@ -56,7 +56,7 @@ export default class Account extends Ipc {
     return promise;
   }
 
-  signout() {
+  signout(): Promise {
     const promise = new Promise((resolve /* , reject */) => {
       this.dispatcher.on('Account::signout', (event, arg) => {
         resolve(arg);
@@ -67,7 +67,7 @@ export default class Account extends Ipc {
     return promise;
   }
 
-  lock() {
+  lock(): Promise {
     const promise = new Promise((resolve /* , reject */) => {
       this.dispatcher.on('Account::lock', (event, arg) => {
         resolve(arg);
@@ -78,7 +78,7 @@ export default class Account extends Ipc {
     return promise;
   }
 
-  unlock(passphrase) {
+  unlock(passphrase): Promise {
     const promise = new Promise((resolve /* , reject */) => {
       this.dispatcher.on('Account::unlock', (event, arg) => {
         resolve(arg);

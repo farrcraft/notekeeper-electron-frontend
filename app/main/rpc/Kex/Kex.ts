@@ -5,8 +5,8 @@ import messagesKex from '../../../proto/kex_pb';
 
 export default class Kex extends Handler {
   // keyExchange makes an RPC call to the backend, sharing the message signing keys
-  keyExchange() {
-    const promise = new Promise(resolve => {
+  keyExchange(): Promise {
+    const promise = new Promise((resolve): void => {
       const message = new messagesKex.KeyExchangeRequest();
       message.setPublickey(this.rpc.signPublicKey);
       const payload = message.serializeBinary();

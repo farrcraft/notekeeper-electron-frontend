@@ -36,7 +36,7 @@ export default class Handler {
     this.rpc = rpc;
   }
 
-  checkResponseStatus(message, reject) {
+  checkResponseStatus(message, reject): boolean {
     const header = message.getHeader();
     const status = header.getStatus();
     if (status !== 'OK') {

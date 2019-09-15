@@ -3,9 +3,7 @@
 import { ipcRenderer, remote } from 'electron';
 import Logger from '../shared/Logger';
 
-init();
-
-function init() {
+function init(): void {
   // Expose a bridging API by setting a global on `window`.
   // We'll add methods to it here first, and when the remote web app loads,
   // it'll add some additional methods as well.
@@ -43,3 +41,5 @@ function setDockBadge(count) {
   }
 }
 */
+
+init();

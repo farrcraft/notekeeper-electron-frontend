@@ -8,7 +8,7 @@ export default class Shelf extends Handler {
   }
 
   // registerIpc registers IPC hooks mirroring the RPC calls
-  registerIpc() {
+  registerIpc(): void {
     this.listener.on('Account::shelves', event => {
       const promise = this.getAccountShelves();
       promise
@@ -34,7 +34,7 @@ export default class Shelf extends Handler {
     });
   }
 
-  getAccountShelves(accountId) {
+  getAccountShelves(accountId): Promise {
     const promise = new Promise((resolve, reject) => {
       const message = new messagesShelf.GetShelvesRequest();
       message.setId(accountId);
@@ -57,7 +57,7 @@ export default class Shelf extends Handler {
     return promise;
   }
 
-  getUserShelves(userId) {
+  getUserShelves(userId): Promise {
     const promise = new Promise((resolve, reject) => {
       const message = new messagesShelf.GetShelvesRequest();
       message.setId(userId);

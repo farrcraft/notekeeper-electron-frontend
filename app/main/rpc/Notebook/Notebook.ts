@@ -1,6 +1,12 @@
 import Handler from '../Handler';
 // import messages from '../../../proto/rpc_pb';
 
+/**
+ * createNotebook makes an RPC call to create a new notebook
+ *
+ */
+function createNotebook(): void {}
+
 export default class Notebook extends Handler {
   /**
    * Creates an instance of Notebook.
@@ -18,7 +24,7 @@ export default class Notebook extends Handler {
    *
    * @memberOf Notebook
    */
-  registerIpc() {
+  registerIpc(): void {
     this.listener.on('Notebook::create', (event /* , arg */) => {
       const promise = createNotebook();
       promise
@@ -41,9 +47,3 @@ export default class Notebook extends Handler {
     this.listener.on('Notebook::delete', (/* event, arg */) => {});
   }
 }
-
-/**
- * createNotebook makes an RPC call to create a new notebook
- *
- */
-function createNotebook() {}

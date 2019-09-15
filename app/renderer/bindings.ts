@@ -7,7 +7,7 @@ import {
 } from './ipc';
 
 // Attach the transports to their stores
-const bindTransports = stores => {
+const bindTransports = (stores): void => {
   const accountTransport = new AccountIPC();
   stores.account.setTransport(accountTransport);
 

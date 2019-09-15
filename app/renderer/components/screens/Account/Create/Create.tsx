@@ -63,11 +63,11 @@ class Create extends Component {
     email: false
   };
 
-  handleChange = key => event => {
+  handleChange = (key): void => (event): void => {
     this.form[key] = event.target.value;
   };
 
-  handleSubmit = e => {
+  handleSubmit = (e): void => {
     e.preventDefault();
     if (this.checkFieldErrors(['email', 'password', 'accountName'])) {
       return;
@@ -75,7 +75,7 @@ class Create extends Component {
     this.handleCreateAccount();
   };
 
-  handleSignin = () => {
+  handleSignin = (): void => {
     // switch to the create account screen
     const { account } = this.props;
     account.overrideView('SigninAccount');
@@ -89,7 +89,7 @@ class Create extends Component {
    *
    * @memberof Signin
    */
-  checkFieldErrors(keys) {
+  checkFieldErrors(keys): boolean {
     let status = false;
     keys.forEach(key => {
       if (this.form[key] === '') {
@@ -104,7 +104,7 @@ class Create extends Component {
     return status;
   }
 
-  handleCreateAccount() {
+  handleCreateAccount(): void {
     // this is our account store
     const { account } = this.props;
     account.create(this.form.accountName, this.form.email, this.form.password);

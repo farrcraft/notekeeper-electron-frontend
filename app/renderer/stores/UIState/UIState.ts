@@ -23,7 +23,7 @@ export default class UIState extends Store {
 
   displayYPosition = 0;
 
-  load() {
+  load(): Promise {
     const transport = this.transportLayer;
     const promise = new Promise((resolve /* , reject */) => {
       transport
@@ -50,7 +50,7 @@ export default class UIState extends Store {
     return promise;
   }
 
-  save() {
+  save(): Promise {
     const promise = this.transportLayer.save(this);
     return promise;
   }

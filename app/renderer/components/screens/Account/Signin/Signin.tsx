@@ -64,11 +64,11 @@ class Signin extends Component {
     email: false
   };
 
-  handleChange = key => event => {
+  handleChange = (key): void => (event): void => {
     this.form[key] = event.target.value;
   };
 
-  handleSubmit = e => {
+  handleSubmit = (e): void => {
     e.preventDefault();
     if (this.checkFieldErrors(['email', 'password', 'accountName'])) {
       return;
@@ -84,7 +84,7 @@ class Signin extends Component {
    *
    * @memberof Signin
    */
-  checkFieldErrors(keys) {
+  checkFieldErrors(keys): boolean {
     let status = false;
     keys.forEach(key => {
       if (this.form[key] === '') {
@@ -99,7 +99,7 @@ class Signin extends Component {
     return status;
   }
 
-  handleSigninAccount() {
+  handleSigninAccount(): void {
     const { account } = this.props;
     account.signin(this.form.accountName, this.form.email, this.form.password);
   }

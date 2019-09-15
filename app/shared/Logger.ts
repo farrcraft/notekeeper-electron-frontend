@@ -7,7 +7,7 @@ class Logger {
   constructor() {
   }
 
-  configure(userDataPath) {
+  configure(userDataPath): winston.Logger {
     const logPath = path.normalize(
       path.join(userDataPath, 'notekeeper-client.log')
     );
@@ -24,15 +24,15 @@ class Logger {
     return this.logger;
   }
 
-  debug(msg) {
+  debug(msg): void {
     window.Bridge.logger.debug(msg);
   }
 
-  info(msg) {
+  info(msg): void {
     window.Bridge.logger.info(msg);
   }
 
-  error(msg) {
+  error(msg):void {
     window.Bridge.logger.error(msg);
   }
 }

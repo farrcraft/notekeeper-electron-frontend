@@ -36,11 +36,11 @@ export default class Account extends Store {
    */
   @observable account = null;
 
-  get isSignedIn() {
+  get isSignedIn(): boolean {
     return this.signedIn;
   }
 
-  get isLocked() {
+  get isLocked(): boolean {
     return this.locked;
   }
 
@@ -52,14 +52,14 @@ export default class Account extends Store {
     });
   }
 
-  handleGetState(val) {
+  handleGetState(val): boolean {
     this.signedIn = val.signedIn;
     this.locked = val.locked;
     this.exists = val.exists;
     return true;
   }
 
-  @action overrideView(view) {
+  @action overrideView(view): boolean {
     this.viewOverride = view;
     return true;
   }
@@ -72,7 +72,7 @@ export default class Account extends Store {
     });
   }
 
-  handleCreate(state) {
+  handleCreate(state): boolean {
     this.account = new AccountDomain(state.accountId);
     this.user = new UserDomain(state.userId);
 
@@ -91,7 +91,7 @@ export default class Account extends Store {
     });
   }
 
-  handleSignin(state) {
+  handleSignin(state): boolean {
     this.account = new AccountDomain(state.accountId);
     this.user = new UserDomain(state.userId);
 

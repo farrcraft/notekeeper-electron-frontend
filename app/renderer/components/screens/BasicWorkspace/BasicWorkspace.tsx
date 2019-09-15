@@ -175,30 +175,30 @@ class BasicWorkspace extends Component {
     newWidth: {}
   };
 
-  componentDidMount() {
+  componentDidMount(): void {
     document.addEventListener('mousemove', e => this.handleMouseMove(e));
     document.addEventListener('mouseup', e => this.handleMouseUp(e));
   }
 
-  handleDrawerOpen = () => {
+  handleDrawerOpen = (): void => {
     this.setState({ open: true });
   };
 
-  handleDrawerClose = () => {
+  handleDrawerClose = (): void => {
     this.setState({ open: false });
   };
 
-  handleLockAccount = () => {
+  handleLockAccount = (): void => {
     const { account } = this.props;
     account.lock();
   };
 
-  handleNewNote = () => {
+  handleNewNote = (): void => {
     const { note } = this.props;
     note.create();
   };
 
-  handleMouseMove = e => {
+  handleMouseMove = (e): void => {
     const { isResizing } = this.state;
 
     if (!isResizing) {
@@ -220,13 +220,13 @@ class BasicWorkspace extends Component {
     drawerWidth = e.clientX;
   };
 
-  handleMouseUp = (/* e */) => {
+  handleMouseUp = (/* e */): void => {
     this.setState({
       isResizing: false
     });
   };
 
-  handleDrawerDraggerMouseDown = (/* e */) => {
+  handleDrawerDraggerMouseDown = (/* e */): void => {
     this.setState({
       isResizing: true
       // lastDownX: e.clientX,

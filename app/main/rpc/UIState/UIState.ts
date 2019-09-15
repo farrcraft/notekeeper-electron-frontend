@@ -6,7 +6,7 @@ import messagesUIState from '../../../proto/ui_state_pb';
 export default class UIState extends Handler {
   lastStatus;
 
-  checkResponseHeader(responseMessage) {
+  checkResponseHeader(responseMessage): boolean {
     const header = responseMessage.getHeader();
     this.lastStatus = header.getStatus();
     if (this.lastStatus !== 'OK') {
@@ -16,7 +16,7 @@ export default class UIState extends Handler {
     return true;
   }
 
-  load() {
+  load(): Promise {
     const message = new messagesRpc.EmptyRequest();
     const messageHeader = new messagesRpc.RequestHeader();
     messageHeader.setMethod('UIState::load');
@@ -45,7 +45,7 @@ export default class UIState extends Handler {
     return promise;
   }
 
-  save(store) {
+  save(store): Promise {
     const message = new messagesUIState.SaveUIStateRequest();
     message.setWindowwidth(store.windowWidth);
     message.setWindowheight(store.windowHeight);

@@ -7,7 +7,7 @@ export default class MenuBuilder {
     this.mainWindow = mainWindow;
   }
 
-  buildMenu() {
+  buildMenu(): void {
     if (process.env.NODE_ENV === 'development') {
       this.setupDevelopmentEnvironment();
     }
@@ -24,7 +24,7 @@ export default class MenuBuilder {
     this.mainWindow.setMenu(null);
   }
 
-  setupDevelopmentEnvironment() {
+  setupDevelopmentEnvironment(): void {
     this.mainWindow.openDevTools();
     this.mainWindow.webContents.on('context-menu', (e, props) => {
       const { x, y } = props;
@@ -32,7 +32,7 @@ export default class MenuBuilder {
       Menu.buildFromTemplate([
         {
           label: 'Inspect element',
-          click: () => {
+          click: (): void => {
             this.mainWindow.inspectElement(x, y);
           }
         }
@@ -40,7 +40,7 @@ export default class MenuBuilder {
     });
   }
 
-  buildDarwinTemplate() {
+  buildDarwinTemplate(): Array {
     const subMenuAbout = {
       label: 'NoteKeeper.io',
       submenu: [
@@ -66,7 +66,7 @@ export default class MenuBuilder {
         {
           label: 'Quit',
           accelerator: 'Command+Q',
-          click: () => {
+          click: (): void => {
             app.quit();
           }
         }
@@ -94,21 +94,21 @@ export default class MenuBuilder {
         {
           label: 'Reload',
           accelerator: 'Command+R',
-          click: () => {
+          click: (): void => {
             this.mainWindow.webContents.reload();
           }
         },
         {
           label: 'Toggle Full Screen',
           accelerator: 'Ctrl+Command+F',
-          click: () => {
+          click: (): void => {
             this.mainWindow.setFullScreen(!this.mainWindow.isFullScreen());
           }
         },
         {
           label: 'Toggle Developer Tools',
           accelerator: 'Alt+Command+I',
-          click: () => {
+          click: (): void => {
             this.mainWindow.toggleDevTools();
           }
         }
@@ -120,7 +120,7 @@ export default class MenuBuilder {
         {
           label: 'Toggle Full Screen',
           accelerator: 'Ctrl+Command+F',
-          click: () => {
+          click: (): void => {
             this.mainWindow.setFullScreen(!this.mainWindow.isFullScreen());
           }
         }
@@ -145,14 +145,14 @@ export default class MenuBuilder {
     return [subMenuAbout, subMenuEdit, subMenuView, subMenuWindow];
   }
 
-  buildDefaultTemplate() {
+  buildDefaultTemplate(): Array {
     const subMenuFile = {
       label: '&File',
       submenu: [
         {
           label: '&Close',
           accelerator: 'Ctrl+W',
-          click: () => {
+          click: (): void => {
             this.mainWindow.close();
           }
         }
@@ -166,14 +166,14 @@ export default class MenuBuilder {
             {
               label: '&Reload',
               accelerator: 'Ctrl+R',
-              click: () => {
+              click: (): void => {
                 this.mainWindow.webContents.reload();
               }
             },
             {
               label: 'Toggle &Full Screen',
               accelerator: 'F11',
-              click: () => {
+              click: (): void => {
                 this.mainWindow.setFullScreen(
                   !this.mainWindow.isFullScreen()
                 );
@@ -182,7 +182,7 @@ export default class MenuBuilder {
             {
               label: 'Toggle &Developer Tools',
               accelerator: 'Alt+Ctrl+I',
-              click: () => {
+              click: (): void => {
                 this.mainWindow.toggleDevTools();
               }
             }
@@ -191,7 +191,7 @@ export default class MenuBuilder {
             {
               label: 'Toggle &Full Screen',
               accelerator: 'F11',
-              click: () => {
+              click: (): void => {
                 this.mainWindow.setFullScreen(
                   !this.mainWindow.isFullScreen()
                 );

@@ -9,7 +9,7 @@ export default class Account extends Handler {
   }
 
   // registerIpc registers IPC hooks mirroring the RPC calls
-  registerIpc() {
+  registerIpc(): void {
     this.listener.on('Account::create', (event, arg) => {
       const promise = this.createAccount(
         arg.accountName,
@@ -95,7 +95,7 @@ export default class Account extends Handler {
   }
 
   // createAccount makes an RPC request to create a new account
-  createAccount(name, email, passphrase) {
+  createAccount(name, email, passphrase): Promise {
     const promise = new Promise((resolve, reject) => {
       const message = new messagesAccount.CreateAccountRequest();
       message.setEmail(email);
@@ -124,7 +124,7 @@ export default class Account extends Handler {
   }
 
   // getAccountState makes an RPC request to get the current account state
-  getAccountState() {
+  getAccountState(): Promise {
     const promise = new Promise((resolve, reject) => {
       const message = new messagesRpc.EmptyRequest();
       const messageHeader = new messagesRpc.RequestHeader();
@@ -155,7 +155,7 @@ export default class Account extends Handler {
   }
 
   // signinAccount makes an RPC request to sign in to an account
-  signinAccount(name, email, passphrase) {
+  signinAccount(name, email, passphrase): Promise {
     const promise = new Promise((resolve, reject) => {
       const message = new messagesAccount.SigninAccountRequest();
       message.setName(name);
@@ -186,7 +186,7 @@ export default class Account extends Handler {
   }
 
   // signoutAccount makes an RPC request to sign out from a signed in account
-  signoutAccount() {
+  signoutAccount(): Promise {
     const promise = new Promise((resolve, reject) => {
       const message = new messagesRpc.EmptyRequest();
       const messageHeader = new messagesRpc.RequestHeader();
@@ -211,7 +211,7 @@ export default class Account extends Handler {
   }
 
   // unlockAccount makes an RPC request to unlock a locked account
-  unlockAccount(passphrase) {
+  unlockAccount(passphrase): Promise {
     const promise = new Promise((resolve, reject) => {
       const message = new messagesAccount.UnlockAccountRequest();
       message.setPassphrase(passphrase);
@@ -234,7 +234,7 @@ export default class Account extends Handler {
   }
 
   // lockAccount makes an RPC request to lock an unlocked account
-  lockAccount() {
+  lockAccount(): Promise {
     const promise = new Promise((resolve, reject) => {
       const message = new messagesRpc.EmptyRequest();
       const messageHeader = new messagesRpc.RequestHeader();

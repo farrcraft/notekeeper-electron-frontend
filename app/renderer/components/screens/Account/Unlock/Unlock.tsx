@@ -57,11 +57,11 @@ class Unlock extends Component {
     password: false
   };
 
-  handleChange = key => event => {
+  handleChange = (key): void => (event): void => {
     this.form[key] = event.target.value;
   };
 
-  handleSubmit = e => {
+  handleSubmit = (e): void => {
     e.preventDefault();
     if (this.checkFieldErrors(['password'])) {
       return;
@@ -69,7 +69,7 @@ class Unlock extends Component {
     this.handleUnlockAccount();
   };
 
-  checkFieldErrors(keys) {
+  checkFieldErrors(keys): boolean {
     let status = false;
     keys.forEach(key => {
       if (this.form[key] === '') {
@@ -84,13 +84,13 @@ class Unlock extends Component {
     return status;
   }
 
-  handleUnlockAccount() {
+  handleUnlockAccount(): void {
     // this is our account store
     const { account } = this.props;
     account.unlock(this.form.password);
   }
 
-  handleSignoutAccount = () => {
+  handleSignoutAccount = (): void => {
     const { account } = this.props;
     account.signout();
   };

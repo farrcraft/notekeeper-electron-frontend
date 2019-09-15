@@ -12,7 +12,7 @@ export default class Shelf extends Store {
    */
   @observable accountShelves = [];
 
-  @action getUserShelves() {
+  @action getUserShelves(): Promise {
     const promise = this.transportLayer.list('user');
     return promise.then(val => {
       const ok = this.handleCreate(val);

@@ -8,7 +8,7 @@ export default class Ipc {
   /**
    * Dispatch IPC message
    */
-  dispatchMessage(channel, msg) {
+  dispatchMessage(channel, msg): void {
     this.dispatcher.send(channel, msg);
   }
 }

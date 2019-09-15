@@ -28,7 +28,7 @@ export default class Rpc {
     this.createKeys();
   }
 
-  registerTransport(name, transport) {
+  registerTransport(name, transport): void {
     transport.setRpc(this);
     this.transports[name] = transport;
   }
@@ -38,7 +38,7 @@ export default class Rpc {
   }
 
   // createKeys creates message signing keys
-  createKeys() {
+  createKeys(): void {
     let keyPair = nacl.sign.keyPair();
     this.signPublicKey = keyPair.publicKey;
     this.signPrivateKey = keyPair.secretKey;
@@ -46,7 +46,7 @@ export default class Rpc {
   }
 
   // loadCertificate loads the server's TLS certificate from disk
-  loadCertificate() {
+  loadCertificate(): void {
     const certPath = path.join(app.getPath('userData'), 'certificate');
     try {
       this.certificate = fs.readFileSync(certPath);
@@ -73,7 +73,7 @@ export default class Rpc {
     return rebased;
   }
 
-  verifySignature(signature, payload) {
+  verifySignature(signature, payload): boolean {
     const decodedSignature = base64js.toByteArray(signature);
     const decodedPayload = base64js.toByteArray(payload);
     const ok = nacl.sign.detached.verify(
@@ -84,7 +84,7 @@ export default class Rpc {
     return ok;
   }
 
-  waitForReady(ticks, ready) {
+  waitForReady(ticks, ready): void {
     this.backendReady(ok => {
       if (!ok) {
         setTimeout(() => {
@@ -100,7 +100,7 @@ export default class Rpc {
     });
   }
 
-  backendReady(callback) {
+  backendReady(callback): void {
     const endpoint = `https://${RPC_PORT}/rpc`;
     const options = {
       uri: endpoint,
@@ -127,7 +127,7 @@ export default class Rpc {
   }
 
   // request makes an RPC request
-  request(method, payload, callback) {
+  request(method, payload, callback): void {
     const endpoint = `https://${RPC_PORT}/rpc`;
     this.sendCounter += 1;
 
@@ -167,12 +167,12 @@ export default class Rpc {
     });
   }
 
-  handleRequestError(err) {
+  handleRequestError(err): void {
     this.handleError('Service Error', err.message);
   }
 
   // verifyResponse verifies that a response is valid
-  verifyResponse(err, response, body) {
+  verifyResponse(err, response, body): boolean {
     this.recvCounter += 1;
     if (!('notekeeper-message-sequence' in response.headers)) {
       this.handleError('Transport Error', 'Missing sequence header');
@@ -204,7 +204,7 @@ export default class Rpc {
     return true;
   }
 
-  handleError(title, msg) {
+  handleError(title, msg): void {
     this.lastError.title = title;
     this.lastError.message = msg;
     if (msg === undefined || msg === null) {

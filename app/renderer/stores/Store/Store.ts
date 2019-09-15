@@ -16,11 +16,11 @@ export default class Store {
     this.rootStore = rootStore;
   }
 
-  setTransport(transportLayer) {
+  setTransport(transportLayer): void {
     this.transportLayer = transportLayer;
   }
 
-  setRootStore(rootStore) {
+  setRootStore(rootStore): void {
     this.rootStore = rootStore;
   }
 }

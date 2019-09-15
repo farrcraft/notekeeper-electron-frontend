@@ -4,13 +4,13 @@ import messagesRpc from '../../../proto/rpc_pb';
 import messagesDb from '../../../proto/db_pb';
 
 export default class Db extends Handler {
-  openMasterDb() {
+  openMasterDb(): Promise {
     // Renderer process has to get `app` module via `remote`,
     // whereas the main process can get it directly
     // app.getPath('userData') will return a string of the user's app data directory path.
     const userDataPath = app.getPath('userData');
     // caller is awaiting so we handle rejections immediately here
-    const promise = new Promise(resolve => {
+    const promise = new Promise((resolve): void => {
       const message = new messagesDb.OpenMasterDbRequest();
       message.setPath(userDataPath);
       const payload = message.serializeBinary();

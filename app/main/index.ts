@@ -72,7 +72,7 @@ const uiStateStore = new UIStateStore(null);
 const uiStateTransport = rpcMain.getTransport('uiState');
 uiStateStore.setTransport(uiStateTransport);
 
-app.on('second-instance', (/* event, commandLine, workingDirectory */) => {
+app.on('second-instance', (/* event, commandLine, workingDirectory */): void => {
   if (mainWindow) {
     if (mainWindow.isMinimized()) {
       mainWindow.restore();
@@ -81,19 +81,19 @@ app.on('second-instance', (/* event, commandLine, workingDirectory */) => {
   }
 });
 
-app.on('activate', () => {
+app.on('activate', (): void => {
   if (mainWindow === null) {
     // [FIXME] - expects some parameters here
     createWindow();
   }
 });
 
-app.on('will-quit', () => {
+app.on('will-quit', (): void => {
   // all windows have been closed & app is about to quit
   destroyBackendServer();
 });
 
-app.on('window-all-closed', async () => {
+app.on('window-all-closed', async (): void => {
   try {
     await uiStateStore.save();
 
@@ -127,7 +127,7 @@ app.on('window-all-closed', async () => {
 // See: https://electronjs.org/docs/tutorial/security
 
 // Security - Disable navigation
-app.on('web-contents-created', (event, contents) => {
+app.on('web-contents-created', (event, contents): void => {
   contents.on('will-navigate', (navEvent, navigationUrl) => {
     const parsedUrl = new URL(navigationUrl);
     if (parsedUrl.origin !== 'https://notekeeper.io') {
@@ -137,7 +137,7 @@ app.on('web-contents-created', (event, contents) => {
 });
 
 // Security - Prevent opening new windows
-app.on('web-contents-created', (event, contents) => {
+app.on('web-contents-created', (event, contents): void => {
   contents.on('new-window', (windowEvent, navigationUrl) => {
     // Allow new devtools to be updated when in dev
     if (
@@ -154,7 +154,7 @@ app.on('web-contents-created', (event, contents) => {
 });
 
 // Security - Verify webview options
-app.on('web-contents-created', (event, contents) => {
+app.on('web-contents-created', (event, contents): void => {
   contents.on('will-attach-webview', (viewEvent, webPreferences, params) => {
     // Strip away preload scripts if unused or verify their location is legitimate
     const webPrefs = webPreferences;
@@ -172,7 +172,7 @@ app.on('web-contents-created', (event, contents) => {
 });
 
 // Security - Set CSP HTTP Header
-function setContentSecurityPolicy() {
+function setContentSecurityPolicy(): void {
   session.defaultSession.webRequest.onHeadersReceived((details, callback) => {
     callback({
       responseHeaders: {
@@ -183,7 +183,7 @@ function setContentSecurityPolicy() {
   });
 }
 
-const installExtensions = async () => {
+const installExtensions = async (): void => {
   if (process.env.NODE_ENV === 'development') {
     const {
       default: installExtension,
@@ -197,7 +197,7 @@ const installExtensions = async () => {
   }
 };
 
-const createBackendServer = async () => {
+const createBackendServer = async (): Promise => {
   const promise = new Promise((resolve, reject) => {
     backendServer = childProcess.spawn('./app/resources/backend');
     backendServer.stdout.on('data', data => {
@@ -223,12 +223,12 @@ const createBackendServer = async () => {
   return promise;
 };
 
-function destroyBackendServer() {
+function destroyBackendServer(): void {
   backendServer.kill();
 }
 
 // delayedWindowStateSave schedules the window state to be saved in the future
-function delayedWindowStateSave() {
+function delayedWindowStateSave(): void {
   if (windowStateTimeout) {
     clearTimeout(windowStateTimeout);
   }
@@ -236,7 +236,7 @@ function delayedWindowStateSave() {
 }
 
 // updateWindowState saves the current window state (position/size) to the db
-function updateWindowState() {
+function updateWindowState(): void {
   if (!mainWindow) {
     return;
   }
@@ -293,7 +293,7 @@ function restoreWindowState() {
   }
 }
 
-function createWindow(width, height, x, y) {
+function createWindow(width: number, height: number, x: number, y: number): void {
   let preloadScript = 'preload.prod.js';
   if (process.env.NODE_ENV === 'development') {
     preloadScript = 'preload.dev.js';
@@ -347,7 +347,7 @@ function createWindow(width, height, x, y) {
   restoreWindowState();
 }
 
-app.on('ready', async () => {
+app.on('ready', async (): void => {
   await createBackendServer();
 
   await installExtensions();

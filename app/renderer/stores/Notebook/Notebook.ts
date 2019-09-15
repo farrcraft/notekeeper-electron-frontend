@@ -10,7 +10,7 @@ export default class Notebook extends Store {
     });
   }
 
-  @action create(title) {
+  @action create(title): Promise {
     const promise = this.transportLayer.create(title);
     return promise.then(val => {
       const ok = this.handleCreate(val);
@@ -20,7 +20,7 @@ export default class Notebook extends Store {
 
   // WIP - can't use this rule quite yet
   /* eslint-disable class-methods-use-this */
-  handleCreate(/* val */) {
+  handleCreate(/* val */): boolean {
     /*
     this.signedIn = true;
     this.exists = true;
@@ -29,6 +29,6 @@ export default class Notebook extends Store {
     return true;
   }
 
-  @action list() {}
+  @action list(): void {}
   /* eslint-enable class-methods-use-this */
 }

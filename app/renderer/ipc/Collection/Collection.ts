@@ -13,7 +13,7 @@ export default class Collection extends Ipc {
   }
   */
 
-  accountCollections() {
+  accountCollections(): Promise {
     const promise = new Promise((resolve /* , reject */) => {
       this.dispatcher.on('Account::collections', (event, arg) => {
         resolve(arg);
@@ -23,7 +23,7 @@ export default class Collection extends Ipc {
     return promise;
   }
 
-  userCollections() {
+  userCollections(): Promise {
     const promise = new Promise((resolve /* , reject */) => {
       this.dispatcher.on('User::collections', (event, arg) => {
         resolve(arg);

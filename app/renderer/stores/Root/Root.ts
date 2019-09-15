@@ -63,7 +63,7 @@ export default class Root {
    */
   workspace = null;
 
-  createStores() {
+  createStores(): void {
     this.account = new Account(this);
     this.collection = new Collection(this);
     this.note = new Note(this);

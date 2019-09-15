@@ -10,7 +10,7 @@ import {
 } from './rpc';
 
 // Attach the transports to the rpc instance
-const bindTransports = rpc => {
+const bindTransports = (rpc): void => {
   const accountTransport = new AccountRPC();
   rpc.registerTransport('account', accountTransport);
 
