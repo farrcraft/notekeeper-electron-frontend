@@ -1,8 +1,10 @@
 import Handler from '../Handler';
 import messagesRpc from '../../../proto/rpc_pb';
 import messagesAccount from '../../../proto/account_pb';
+import Transport from '../../interfaces/Transport';
+import AccountStore from '../../../renderer/stores/Account';
 
-export default class Account extends Handler {
+export default class Account extends Handler implements Transport {
   constructor() {
     super();
     this.registerIpc();
@@ -10,6 +12,7 @@ export default class Account extends Handler {
 
   // registerIpc registers IPC hooks mirroring the RPC calls
   registerIpc(): void {
+    const accountStore: AccountStore = this.store;
     this.listener.on('Account::create', (event, arg) => {
       const promise = this.createAccount(
         arg.accountName,

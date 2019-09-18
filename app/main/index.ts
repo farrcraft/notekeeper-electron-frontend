@@ -9,6 +9,8 @@
 import {
   app, session, shell
 } from 'electron';
+import installExtension, { REACT_DEVELOPER_TOOLS, MOBX_DEVTOOLS } from 'electron-devtools-installer';
+import sourceMapSupport from 'source-map-support';
 import { URL } from 'url';
 
 import AppUpdater from './updater';
@@ -31,12 +33,7 @@ const userDataPath: string = app.getPath('userData');
 Logger.configure(userDataPath);
 
 if (process.env.NODE_ENV === 'production') {
-  const sourceMapSupport = require('source-map-support');
   sourceMapSupport.install();
-}
-
-if (process.env.NODE_ENV === 'development') {
-  require('electron-debug')();
 }
 
 process.on('error', err => {
@@ -177,12 +174,6 @@ function setContentSecurityPolicy(): void {
 
 const installExtensions = async (): void => {
   if (process.env.NODE_ENV === 'development') {
-    const {
-      default: installExtension,
-      REACT_DEVELOPER_TOOLS,
-      MOBX_DEVTOOLS
-    } = require('electron-devtools-installer');
-
     return installExtension([REACT_DEVELOPER_TOOLS.id, MOBX_DEVTOOLS.id])
       .then(name => console.log(`Added Extension:  ${name}`))
       .catch(err => console.log('An error occurred: ', err));

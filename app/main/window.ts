@@ -1,8 +1,8 @@
 import {
   BrowserWindow, screen
 } from 'electron';
-import MenuBuilder from './menu';
 import path from 'path';
+import MenuBuilder from './menu';
 
 /**
  * The renderer process window
@@ -132,7 +132,6 @@ export default class Window {
     this.uiStateStore.windowMaximized = this.window.isMaximized();
     this.uiStateStore.windowMinimized = this.window.isMinimized();
     this.uiStateStore.windowFullscreen = this.window.isFullScreen();
-
     this.uiStateStore.save();
   }
 

@@ -60,7 +60,6 @@ yarn | https://yarnpkg.com/lang/en/ | NPM replacement
 # Runtime Dependencies
 
 * base64-js - MIT - https://github.com/beatgammit/base64-js
-* electron-debug - MIT - https://github.com/sindresorhus/electron-debug
 * font-awesome - SIL OFL 1.1 & MIT - https://github.com/FortAwesome/Font-Awesome
 * google-protobuf - BSD New - https://github.com/google/protobuf
 * mobx - MIT - https://github.com/mobxjs/mobx

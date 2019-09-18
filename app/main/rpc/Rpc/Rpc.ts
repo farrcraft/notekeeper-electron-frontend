@@ -5,20 +5,26 @@ import request from 'request';
 import nacl from 'tweetnacl';
 import base64js from 'base64-js';
 
+import Transport from '../../interfaces/Transport';
+
 const RPC_PORT = 'localhost:53017';
+
+interface TransportArray {
+  [index: string]: Transport;
+}
 
 export default class Rpc {
   certificate = null;
 
-  transports = {};
+  transports: TransportArray = {};
 
-  recvCounter = 0;
+  recvCounter: number = 0;
 
-  sendCounter = 0;
+  sendCounter: number = 0;
 
-  signPublicKey = null;
+  signPublicKey: Uint8Array = null;
 
-  signPrivateKey = null;
+  signPrivateKey: Uint8Array = null;
 
   verifyPublicKey = null;
 
@@ -28,12 +34,12 @@ export default class Rpc {
     this.createKeys();
   }
 
-  registerTransport(name, transport): void {
+  registerTransport(name: string, transport: Transport): void {
     transport.setRpc(this);
     this.transports[name] = transport;
   }
 
-  getTransport(transport) {
+  getTransport(transport: string): Transport {
     return this.transports[transport];
   }
 
@@ -67,7 +73,7 @@ export default class Rpc {
     }
   }
 
-  createSignature(payload) {
+  createSignature(payload): string {
     const signature = nacl.sign.detached(payload, this.signPrivateKey);
     const rebased = base64js.fromByteArray(signature);
     return rebased;
@@ -84,7 +90,7 @@ export default class Rpc {
     return ok;
   }
 
-  waitForReady(ticks, ready): void {
+  waitForReady(ticks: number, ready): void {
     this.backendReady(ok => {
       if (!ok) {
         setTimeout(() => {
@@ -127,7 +133,7 @@ export default class Rpc {
   }
 
   // request makes an RPC request
-  request(method, payload, callback): void {
+  request(method: string, payload, callback): void {
     const endpoint = `https://${RPC_PORT}/rpc`;
     this.sendCounter += 1;
 

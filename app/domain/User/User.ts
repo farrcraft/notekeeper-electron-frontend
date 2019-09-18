@@ -1,7 +1,7 @@
 export default class User {
-    userId = null;
+    userId: string = '';
 
-    constructor(id) {
+    constructor(id: string) {
       this.userId = id;
     }
 }

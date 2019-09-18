@@ -1,14 +1,16 @@
+import { IpcRenderer } from 'electron';
+
 export default class Ipc {
-  dispatcher
+  dispatcher: IpcRenderer
 
   constructor() {
-    this.dispatcher = window.Bridge.ipc; // import { ipcRenderer } from 'electron';
+    this.dispatcher = window.Bridge.ipc;
   }
 
   /**
    * Dispatch IPC message
    */
-  dispatchMessage(channel, msg): void {
+  dispatchMessage(channel: string, msg): void {
     this.dispatcher.send(channel, msg);
   }
 }

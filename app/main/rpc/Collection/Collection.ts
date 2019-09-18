@@ -1,7 +1,8 @@
 import Handler from '../Handler';
 import messagesCollection from '../../../proto/collection_pb';
+import Transport from '../../interfaces/Transport';
 
-export default class Collection extends Handler {
+export default class Collection extends Handler implements Transport {
   constructor() {
     super();
     this.registerIpc();

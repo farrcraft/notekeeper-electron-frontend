@@ -51,7 +51,7 @@
     "react/prefer-stateless-function": "off",
     "@typescript-eslint/no-inferrable-types": "off"
   },
-  "plugins": ["import", "promise", "react", "jsx-a11y", "@typescript-eslint"],
+  "plugins": ["import", "promise", "react", "jsx-a11y", "@typescript-eslint", "react-hooks"],
   "settings": {
     "import/resolver": {
       "webpack": {

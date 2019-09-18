@@ -1,12 +1,15 @@
 import Handler from '../Handler';
+import Transport from '../../interfaces/Transport';
 // import messages from '../../../proto/rpc_pb';
 
 /**
  * createNote makes an RPC call to create a new note
  */
-function createNote(): void {}
+function createNote(): void {
+  console.log('MISSING IMPLEMENTATION!');
+}
 
-export default class Note extends Handler {
+export default class Note extends Handler implements Transport {
   /**
    * Creates an instance of Note.
    *

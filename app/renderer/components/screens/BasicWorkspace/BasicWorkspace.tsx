@@ -159,7 +159,6 @@ const styles = theme => ({
 @inject('account', 'notebook', 'note')
 @observer
 class BasicWorkspace extends Component {
-
   constructor(props) {
     super(props);
     // this.handleMouseMove.bind(this);

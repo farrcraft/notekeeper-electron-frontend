@@ -9,7 +9,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import LockIcon from '@material-ui/icons/LockOutlined';
 import Avatar from '@material-ui/core/Avatar';
 
-const styles = (theme): Object => ({
+const styles = (theme): any => ({
   section: {
     width: 'auto',
     display: 'block', // Fix IE 11 issue.

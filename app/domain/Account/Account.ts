@@ -1,7 +1,7 @@
 export default class Account {
-    accountId = null;
+    accountId: string = '';
 
-    constructor(id) {
+    constructor(id: string) {
       this.accountId = id;
     }
 }

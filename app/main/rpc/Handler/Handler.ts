@@ -1,4 +1,6 @@
-import { ipcMain } from 'electron';
+import { ipcMain, IpcMain } from 'electron';
+import IStore from '../../../renderer/interfaces/Store';
+import Rpc from '../Rpc';
 
 /**
  * The base handler that individual rpc handlers should extend from.
@@ -7,17 +9,17 @@ export default class Handler {
   /**
    * The IPC listener
    */
-  listener = null;
+  listener: IpcMain = null;
 
   /**
    * The backing store for the rpc handler
    */
-  store = null;
+  store: IStore = null;
 
   /**
    * The main rpc interface
    */
-  rpc = null;
+  rpc: Rpc = null;
 
   /**
    * Whether the status of the last RPC response that was checked was OK or not
@@ -28,11 +30,11 @@ export default class Handler {
     this.listener = ipcMain;
   }
 
-  setStore(store): void {
+  setStore(store: IStore): void {
     this.store = store;
   }
 
-  setRpc(rpc): void {
+  setRpc(rpc: Rpc): void {
     this.rpc = rpc;
   }
 

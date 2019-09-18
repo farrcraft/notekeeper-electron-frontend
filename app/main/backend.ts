@@ -1,6 +1,7 @@
 import childProcess from 'child_process';
 
 import Logger from '../shared/Logger';
+import Rpc from './rpc/Rpc';
 
 /**
  * Backend server
@@ -9,10 +10,10 @@ export default class Backend {
   /**
    * The backend server process
    */
-  process: childProcess.ChildProcess = null;
+  process: childProcess.ChildProcess | null = null;
 
-  async create(rpcMain): Promise {
-    const promise = new Promise((resolve, reject) => {
+  async create(rpcMain: Rpc): Promise<any> {
+    const promise = new Promise((resolve, reject): void => {
       this.process = childProcess.spawn('./app/resources/backend');
       this.process.stdout.on('data', data => {
         const out = data.toString();
@@ -41,6 +42,8 @@ export default class Backend {
    * Terminate the backend server process
    */
   destroy(): void {
-    this.process.kill();
+    if (this.process) {
+      this.process.kill();
+    }
   }
 }

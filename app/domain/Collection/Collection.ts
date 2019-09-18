@@ -7,32 +7,32 @@ export default class Collection {
   /**
    * Internal UUID
    */
-  id = null;
+  id: string = '';
 
   /**
    * Name of the collection
    */
-  @observable name = '';
+  @observable name: string = '';
 
   /**
    * Is the collection locked?
    */
-  @observable isLocked = false;
+  @observable isLocked: boolean = false;
 
   /**
    * Internal UUID of the shelf this collection is stored in
    */
-  @observable shelfId = null;
+  @observable shelfId: string = '';
 
   /**
    * Timestamp of when the collection was created
    */
-  created = null;
+  created: number = -1;
 
   /**
    * Timestamp of when the collection was last updated
    */
-  updated = null;
+  updated: number = -1;
 
   /**
    * List of notebooks stored in the collection

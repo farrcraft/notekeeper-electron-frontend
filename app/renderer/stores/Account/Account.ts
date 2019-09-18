@@ -4,8 +4,9 @@ import {
   Account as AccountDomain,
   User as UserDomain
 } from '../../../domain';
+import IStore from '../../interfaces/Store';
 
-export default class Account extends Store {
+export default class Account extends Store implements IStore {
   /**
    * Is the account signed in?
    */
@@ -29,12 +30,12 @@ export default class Account extends Store {
   /**
    * A user domain object
    */
-  @observable user = null;
+  @observable user: UserDomain;
 
   /**
    * An account domain object
    */
-  @observable account = null;
+  @observable account: AccountDomain;
 
   get isSignedIn(): boolean {
     return this.signedIn;
@@ -44,7 +45,7 @@ export default class Account extends Store {
     return this.locked;
   }
 
-  @action getState() {
+  @action getState(): Promise {
     const promise = this.transportLayer.getState();
     return promise.then((val): boolean => {
       const ok = this.handleGetState(val);
@@ -64,7 +65,7 @@ export default class Account extends Store {
     return true;
   }
 
-  @action create(accountName: string, email: string, passphrase: string) {
+  @action create(accountName: string, email: string, passphrase: string): Promise {
     const promise = this.transportLayer.create(accountName, email, passphrase);
     return promise.then((val): boolean => {
       const ok = this.handleCreate(val);
@@ -83,7 +84,9 @@ export default class Account extends Store {
     return true;
   }
 
-  @action signin(accountName: string, email: string, passphrase: string /* , rememberMe */) {
+  @action signin(
+    accountName: string, email: string, passphrase: string /* , rememberMe */
+  ): Promise {
     const promise = this.transportLayer.signin(accountName, email, passphrase);
     return promise.then((val): boolean => {
       const ok = this.handleSignin(val);
@@ -101,7 +104,7 @@ export default class Account extends Store {
     return true;
   }
 
-  signout() {
+  signout(): Promise {
     const promise = this.transportLayer.signout();
     return promise.then((/* val */): boolean => {
       this.account = null;
@@ -113,7 +116,7 @@ export default class Account extends Store {
     });
   }
 
-  lock() {
+  lock(): Promise {
     const promise = this.transportLayer.lock();
     return promise.then((/* val */): boolean => {
       this.locked = true;
@@ -122,7 +125,7 @@ export default class Account extends Store {
     });
   }
 
-  unlock(passphrase: string) {
+  unlock(passphrase: string): Promise {
     const promise = this.transportLayer.unlock(passphrase);
     return promise.then((/* val */): boolean => {
       this.locked = false;

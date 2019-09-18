@@ -2,8 +2,9 @@ import { dialog } from 'electron';
 import Handler from '../Handler';
 import messagesRpc from '../../../proto/rpc_pb';
 import messagesUIState from '../../../proto/ui_state_pb';
+import Transport from '../../interfaces/Transport';
 
-export default class UIState extends Handler {
+export default class UIState extends Handler implements Transport {
   lastStatus;
 
   checkResponseHeader(responseMessage): boolean {
@@ -14,6 +15,9 @@ export default class UIState extends Handler {
       return false;
     }
     return true;
+  }
+
+  registerIpc(): void {
   }
 
   load(): Promise {

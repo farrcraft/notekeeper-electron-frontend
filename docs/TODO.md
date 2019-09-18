@@ -2,7 +2,7 @@
 
 [] get rid of native menu?
 [] update renderer app issues (console errors/warnings)
-[] switch to typescript
+[] fix remaining linter issues
 [] make sure all of the docs are updated & current
 
 [ ] figure out where logic needs to live for create notebook functionality
