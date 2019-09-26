@@ -1,3 +1,6 @@
+# Temporary scratch space
+app.old
+
 # Logs
 logs
 *.log

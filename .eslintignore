@@ -1,6 +1,7 @@
 flow-typed/
 app/dist/
 app/main.js
+app.old
 # Logs
 logs
 *.log
