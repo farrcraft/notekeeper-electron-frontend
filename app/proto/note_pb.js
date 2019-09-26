@@ -1,6 +1,8 @@
 /**
  * @fileoverview
  * @enhanceable
+ * @suppress {messageConventions} JS Compiler reports an error if a variable or
+ *     field starts with 'MSG_' and isn't a translatable message.
  * @public
  */
 // GENERATED CODE -- DO NOT EDIT!
@@ -62,6 +64,7 @@ proto.notekeeper.Note.prototype.toObject = function(opt_includeInstance) {
  *     http://goto/soy-param-migration
  * @param {!proto.notekeeper.Note} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.notekeeper.Note.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -187,6 +190,7 @@ proto.notekeeper.Note.prototype.serializeBinary = function() {
  * format), writing to the given BinaryWriter.
  * @param {!proto.notekeeper.Note} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.notekeeper.Note.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -289,7 +293,7 @@ proto.notekeeper.Note.prototype.getId = function() {
 
 /** @param {string} value */
 proto.notekeeper.Note.prototype.setId = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -304,7 +308,7 @@ proto.notekeeper.Note.prototype.getNotebookid = function() {
 
 /** @param {string} value */
 proto.notekeeper.Note.prototype.setNotebookid = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
@@ -319,7 +323,7 @@ proto.notekeeper.Note.prototype.getOwnerid = function() {
 
 /** @param {string} value */
 proto.notekeeper.Note.prototype.setOwnerid = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3StringField(this, 3, value);
 };
 
 
@@ -334,7 +338,7 @@ proto.notekeeper.Note.prototype.getStoreid = function() {
 
 /** @param {string} value */
 proto.notekeeper.Note.prototype.setStoreid = function(value) {
-  jspb.Message.setField(this, 4, value);
+  jspb.Message.setProto3StringField(this, 4, value);
 };
 
 
@@ -349,7 +353,7 @@ proto.notekeeper.Note.prototype.getScope = function() {
 
 /** @param {string} value */
 proto.notekeeper.Note.prototype.setScope = function(value) {
-  jspb.Message.setField(this, 5, value);
+  jspb.Message.setProto3StringField(this, 5, value);
 };
 
 
@@ -364,7 +368,7 @@ proto.notekeeper.Note.prototype.getStore = function() {
 
 /** @param {string} value */
 proto.notekeeper.Note.prototype.setStore = function(value) {
-  jspb.Message.setField(this, 6, value);
+  jspb.Message.setProto3StringField(this, 6, value);
 };
 
 
@@ -409,7 +413,7 @@ proto.notekeeper.Note.prototype.getType = function() {
 
 /** @param {string} value */
 proto.notekeeper.Note.prototype.setType = function(value) {
-  jspb.Message.setField(this, 8, value);
+  jspb.Message.setProto3StringField(this, 8, value);
 };
 
 
@@ -424,7 +428,7 @@ proto.notekeeper.Note.prototype.getRevisions = function() {
 
 /** @param {number} value */
 proto.notekeeper.Note.prototype.setRevisions = function(value) {
-  jspb.Message.setField(this, 9, value);
+  jspb.Message.setProto3IntField(this, 9, value);
 };
 
 
@@ -441,7 +445,7 @@ proto.notekeeper.Note.prototype.getLocked = function() {
 
 /** @param {boolean} value */
 proto.notekeeper.Note.prototype.setLocked = function(value) {
-  jspb.Message.setField(this, 10, value);
+  jspb.Message.setProto3BooleanField(this, 10, value);
 };
 
 
@@ -456,7 +460,7 @@ proto.notekeeper.Note.prototype.getCreated = function() {
 
 /** @param {string} value */
 proto.notekeeper.Note.prototype.setCreated = function(value) {
-  jspb.Message.setField(this, 11, value);
+  jspb.Message.setProto3StringField(this, 11, value);
 };
 
 
@@ -471,7 +475,7 @@ proto.notekeeper.Note.prototype.getUpdated = function() {
 
 /** @param {string} value */
 proto.notekeeper.Note.prototype.setUpdated = function(value) {
-  jspb.Message.setField(this, 12, value);
+  jspb.Message.setProto3StringField(this, 12, value);
 };
 
 
@@ -518,6 +522,7 @@ proto.notekeeper.CreateNoteRequest.prototype.toObject = function(opt_includeInst
  *     http://goto/soy-param-migration
  * @param {!proto.notekeeper.CreateNoteRequest} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.notekeeper.CreateNoteRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -619,6 +624,7 @@ proto.notekeeper.CreateNoteRequest.prototype.serializeBinary = function() {
  * format), writing to the given BinaryWriter.
  * @param {!proto.notekeeper.CreateNoteRequest} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.notekeeper.CreateNoteRequest.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -717,7 +723,7 @@ proto.notekeeper.CreateNoteRequest.prototype.getNotebookid = function() {
 
 /** @param {string} value */
 proto.notekeeper.CreateNoteRequest.prototype.setNotebookid = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
@@ -732,7 +738,7 @@ proto.notekeeper.CreateNoteRequest.prototype.getStoreid = function() {
 
 /** @param {string} value */
 proto.notekeeper.CreateNoteRequest.prototype.setStoreid = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3StringField(this, 3, value);
 };
 
 
@@ -747,7 +753,7 @@ proto.notekeeper.CreateNoteRequest.prototype.getOwnerid = function() {
 
 /** @param {string} value */
 proto.notekeeper.CreateNoteRequest.prototype.setOwnerid = function(value) {
-  jspb.Message.setField(this, 4, value);
+  jspb.Message.setProto3StringField(this, 4, value);
 };
 
 
@@ -762,7 +768,7 @@ proto.notekeeper.CreateNoteRequest.prototype.getScope = function() {
 
 /** @param {string} value */
 proto.notekeeper.CreateNoteRequest.prototype.setScope = function(value) {
-  jspb.Message.setField(this, 5, value);
+  jspb.Message.setProto3StringField(this, 5, value);
 };
 
 
@@ -777,7 +783,7 @@ proto.notekeeper.CreateNoteRequest.prototype.getStore = function() {
 
 /** @param {string} value */
 proto.notekeeper.CreateNoteRequest.prototype.setStore = function(value) {
-  jspb.Message.setField(this, 6, value);
+  jspb.Message.setProto3StringField(this, 6, value);
 };
 
 
@@ -854,6 +860,7 @@ proto.notekeeper.SaveNoteRequest.prototype.toObject = function(opt_includeInstan
  *     http://goto/soy-param-migration
  * @param {!proto.notekeeper.SaveNoteRequest} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.notekeeper.SaveNoteRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -960,6 +967,7 @@ proto.notekeeper.SaveNoteRequest.prototype.serializeBinary = function() {
  * format), writing to the given BinaryWriter.
  * @param {!proto.notekeeper.SaveNoteRequest} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.notekeeper.SaveNoteRequest.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -1065,7 +1073,7 @@ proto.notekeeper.SaveNoteRequest.prototype.getId = function() {
 
 /** @param {string} value */
 proto.notekeeper.SaveNoteRequest.prototype.setId = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
@@ -1080,7 +1088,7 @@ proto.notekeeper.SaveNoteRequest.prototype.getNotebookid = function() {
 
 /** @param {string} value */
 proto.notekeeper.SaveNoteRequest.prototype.setNotebookid = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3StringField(this, 3, value);
 };
 
 
@@ -1095,7 +1103,7 @@ proto.notekeeper.SaveNoteRequest.prototype.getStoreid = function() {
 
 /** @param {string} value */
 proto.notekeeper.SaveNoteRequest.prototype.setStoreid = function(value) {
-  jspb.Message.setField(this, 4, value);
+  jspb.Message.setProto3StringField(this, 4, value);
 };
 
 
@@ -1110,7 +1118,7 @@ proto.notekeeper.SaveNoteRequest.prototype.getOwnerid = function() {
 
 /** @param {string} value */
 proto.notekeeper.SaveNoteRequest.prototype.setOwnerid = function(value) {
-  jspb.Message.setField(this, 5, value);
+  jspb.Message.setProto3StringField(this, 5, value);
 };
 
 
@@ -1125,7 +1133,7 @@ proto.notekeeper.SaveNoteRequest.prototype.getScope = function() {
 
 /** @param {string} value */
 proto.notekeeper.SaveNoteRequest.prototype.setScope = function(value) {
-  jspb.Message.setField(this, 6, value);
+  jspb.Message.setProto3StringField(this, 6, value);
 };
 
 
@@ -1140,7 +1148,7 @@ proto.notekeeper.SaveNoteRequest.prototype.getStore = function() {
 
 /** @param {string} value */
 proto.notekeeper.SaveNoteRequest.prototype.setStore = function(value) {
-  jspb.Message.setField(this, 7, value);
+  jspb.Message.setProto3StringField(this, 7, value);
 };
 
 
@@ -1217,6 +1225,7 @@ proto.notekeeper.DeleteNoteRequest.prototype.toObject = function(opt_includeInst
  *     http://goto/soy-param-migration
  * @param {!proto.notekeeper.DeleteNoteRequest} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.notekeeper.DeleteNoteRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -1317,6 +1326,7 @@ proto.notekeeper.DeleteNoteRequest.prototype.serializeBinary = function() {
  * format), writing to the given BinaryWriter.
  * @param {!proto.notekeeper.DeleteNoteRequest} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.notekeeper.DeleteNoteRequest.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -1414,7 +1424,7 @@ proto.notekeeper.DeleteNoteRequest.prototype.getId = function() {
 
 /** @param {string} value */
 proto.notekeeper.DeleteNoteRequest.prototype.setId = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
@@ -1429,7 +1439,7 @@ proto.notekeeper.DeleteNoteRequest.prototype.getNotebookid = function() {
 
 /** @param {string} value */
 proto.notekeeper.DeleteNoteRequest.prototype.setNotebookid = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3StringField(this, 3, value);
 };
 
 
@@ -1444,7 +1454,7 @@ proto.notekeeper.DeleteNoteRequest.prototype.getStoreid = function() {
 
 /** @param {string} value */
 proto.notekeeper.DeleteNoteRequest.prototype.setStoreid = function(value) {
-  jspb.Message.setField(this, 4, value);
+  jspb.Message.setProto3StringField(this, 4, value);
 };
 
 
@@ -1459,7 +1469,7 @@ proto.notekeeper.DeleteNoteRequest.prototype.getOwnerid = function() {
 
 /** @param {string} value */
 proto.notekeeper.DeleteNoteRequest.prototype.setOwnerid = function(value) {
-  jspb.Message.setField(this, 5, value);
+  jspb.Message.setProto3StringField(this, 5, value);
 };
 
 
@@ -1474,7 +1484,7 @@ proto.notekeeper.DeleteNoteRequest.prototype.getScope = function() {
 
 /** @param {string} value */
 proto.notekeeper.DeleteNoteRequest.prototype.setScope = function(value) {
-  jspb.Message.setField(this, 6, value);
+  jspb.Message.setProto3StringField(this, 6, value);
 };
 
 
@@ -1489,7 +1499,7 @@ proto.notekeeper.DeleteNoteRequest.prototype.getStore = function() {
 
 /** @param {string} value */
 proto.notekeeper.DeleteNoteRequest.prototype.setStore = function(value) {
-  jspb.Message.setField(this, 7, value);
+  jspb.Message.setProto3StringField(this, 7, value);
 };
 
 
@@ -1536,6 +1546,7 @@ proto.notekeeper.LoadNoteRequest.prototype.toObject = function(opt_includeInstan
  *     http://goto/soy-param-migration
  * @param {!proto.notekeeper.LoadNoteRequest} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.notekeeper.LoadNoteRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -1631,6 +1642,7 @@ proto.notekeeper.LoadNoteRequest.prototype.serializeBinary = function() {
  * format), writing to the given BinaryWriter.
  * @param {!proto.notekeeper.LoadNoteRequest} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.notekeeper.LoadNoteRequest.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -1721,7 +1733,7 @@ proto.notekeeper.LoadNoteRequest.prototype.getId = function() {
 
 /** @param {string} value */
 proto.notekeeper.LoadNoteRequest.prototype.setId = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
@@ -1736,7 +1748,7 @@ proto.notekeeper.LoadNoteRequest.prototype.getStoreid = function() {
 
 /** @param {string} value */
 proto.notekeeper.LoadNoteRequest.prototype.setStoreid = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3StringField(this, 3, value);
 };
 
 
@@ -1751,7 +1763,7 @@ proto.notekeeper.LoadNoteRequest.prototype.getOwnerid = function() {
 
 /** @param {string} value */
 proto.notekeeper.LoadNoteRequest.prototype.setOwnerid = function(value) {
-  jspb.Message.setField(this, 4, value);
+  jspb.Message.setProto3StringField(this, 4, value);
 };
 
 
@@ -1766,7 +1778,7 @@ proto.notekeeper.LoadNoteRequest.prototype.getScope = function() {
 
 /** @param {string} value */
 proto.notekeeper.LoadNoteRequest.prototype.setScope = function(value) {
-  jspb.Message.setField(this, 5, value);
+  jspb.Message.setProto3StringField(this, 5, value);
 };
 
 
@@ -1781,7 +1793,7 @@ proto.notekeeper.LoadNoteRequest.prototype.getStore = function() {
 
 /** @param {string} value */
 proto.notekeeper.LoadNoteRequest.prototype.setStore = function(value) {
-  jspb.Message.setField(this, 6, value);
+  jspb.Message.setProto3StringField(this, 6, value);
 };
 
 
@@ -1828,6 +1840,7 @@ proto.notekeeper.LoadNoteResponse.prototype.toObject = function(opt_includeInsta
  *     http://goto/soy-param-migration
  * @param {!proto.notekeeper.LoadNoteResponse} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.notekeeper.LoadNoteResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -1904,6 +1917,7 @@ proto.notekeeper.LoadNoteResponse.prototype.serializeBinary = function() {
  * format), writing to the given BinaryWriter.
  * @param {!proto.notekeeper.LoadNoteResponse} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.notekeeper.LoadNoteResponse.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -2029,6 +2043,7 @@ proto.notekeeper.GetNotesRequest.prototype.toObject = function(opt_includeInstan
  *     http://goto/soy-param-migration
  * @param {!proto.notekeeper.GetNotesRequest} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.notekeeper.GetNotesRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -2124,6 +2139,7 @@ proto.notekeeper.GetNotesRequest.prototype.serializeBinary = function() {
  * format), writing to the given BinaryWriter.
  * @param {!proto.notekeeper.GetNotesRequest} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.notekeeper.GetNotesRequest.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -2214,7 +2230,7 @@ proto.notekeeper.GetNotesRequest.prototype.getNotebookid = function() {
 
 /** @param {string} value */
 proto.notekeeper.GetNotesRequest.prototype.setNotebookid = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
@@ -2229,7 +2245,7 @@ proto.notekeeper.GetNotesRequest.prototype.getStoreid = function() {
 
 /** @param {string} value */
 proto.notekeeper.GetNotesRequest.prototype.setStoreid = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3StringField(this, 3, value);
 };
 
 
@@ -2244,7 +2260,7 @@ proto.notekeeper.GetNotesRequest.prototype.getOwnerid = function() {
 
 /** @param {string} value */
 proto.notekeeper.GetNotesRequest.prototype.setOwnerid = function(value) {
-  jspb.Message.setField(this, 4, value);
+  jspb.Message.setProto3StringField(this, 4, value);
 };
 
 
@@ -2259,7 +2275,7 @@ proto.notekeeper.GetNotesRequest.prototype.getScope = function() {
 
 /** @param {string} value */
 proto.notekeeper.GetNotesRequest.prototype.setScope = function(value) {
-  jspb.Message.setField(this, 5, value);
+  jspb.Message.setProto3StringField(this, 5, value);
 };
 
 
@@ -2274,7 +2290,7 @@ proto.notekeeper.GetNotesRequest.prototype.getStore = function() {
 
 /** @param {string} value */
 proto.notekeeper.GetNotesRequest.prototype.setStore = function(value) {
-  jspb.Message.setField(this, 6, value);
+  jspb.Message.setProto3StringField(this, 6, value);
 };
 
 
@@ -2328,6 +2344,7 @@ proto.notekeeper.GetNotesResponse.prototype.toObject = function(opt_includeInsta
  *     http://goto/soy-param-migration
  * @param {!proto.notekeeper.GetNotesResponse} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.notekeeper.GetNotesResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -2405,6 +2422,7 @@ proto.notekeeper.GetNotesResponse.prototype.serializeBinary = function() {
  * format), writing to the given BinaryWriter.
  * @param {!proto.notekeeper.GetNotesResponse} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.notekeeper.GetNotesResponse.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -2459,17 +2477,15 @@ proto.notekeeper.GetNotesResponse.prototype.hasHeader = function() {
 
 /**
  * repeated Note notes = 2;
- * If you change this array by adding, removing or replacing elements, or if you
- * replace the array itself, then you must call the setter to update it.
- * @return {!Array.<!proto.notekeeper.Note>}
+ * @return {!Array<!proto.notekeeper.Note>}
  */
 proto.notekeeper.GetNotesResponse.prototype.getNotesList = function() {
-  return /** @type{!Array.<!proto.notekeeper.Note>} */ (
+  return /** @type{!Array<!proto.notekeeper.Note>} */ (
     jspb.Message.getRepeatedWrapperField(this, proto.notekeeper.Note, 2));
 };
 
 
-/** @param {!Array.<!proto.notekeeper.Note>} value */
+/** @param {!Array<!proto.notekeeper.Note>} value */
 proto.notekeeper.GetNotesResponse.prototype.setNotesList = function(value) {
   jspb.Message.setRepeatedWrapperField(this, 2, value);
 };

@@ -1,6 +1,8 @@
 /**
  * @fileoverview
  * @enhanceable
+ * @suppress {messageConventions} JS Compiler reports an error if a variable or
+ *     field starts with 'MSG_' and isn't a translatable message.
  * @public
  */
 // GENERATED CODE -- DO NOT EDIT!
@@ -54,6 +56,7 @@ proto.notekeeper.RequestHeader.prototype.toObject = function(opt_includeInstance
  *     http://goto/soy-param-migration
  * @param {!proto.notekeeper.RequestHeader} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.notekeeper.RequestHeader.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -133,6 +136,7 @@ proto.notekeeper.RequestHeader.prototype.serializeBinary = function() {
  * format), writing to the given BinaryWriter.
  * @param {!proto.notekeeper.RequestHeader} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.notekeeper.RequestHeader.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -171,7 +175,7 @@ proto.notekeeper.RequestHeader.prototype.getMethod = function() {
 
 /** @param {string} value */
 proto.notekeeper.RequestHeader.prototype.setMethod = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -210,7 +214,7 @@ proto.notekeeper.RequestHeader.prototype.getSignature_asU8 = function() {
 
 /** @param {!(string|Uint8Array)} value */
 proto.notekeeper.RequestHeader.prototype.setSignature = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3BytesField(this, 2, value);
 };
 
 
@@ -225,7 +229,7 @@ proto.notekeeper.RequestHeader.prototype.getSequence = function() {
 
 /** @param {number} value */
 proto.notekeeper.RequestHeader.prototype.setSequence = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3IntField(this, 3, value);
 };
 
 
@@ -272,6 +276,7 @@ proto.notekeeper.ResponseHeader.prototype.toObject = function(opt_includeInstanc
  *     http://goto/soy-param-migration
  * @param {!proto.notekeeper.ResponseHeader} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.notekeeper.ResponseHeader.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -351,6 +356,7 @@ proto.notekeeper.ResponseHeader.prototype.serializeBinary = function() {
  * format), writing to the given BinaryWriter.
  * @param {!proto.notekeeper.ResponseHeader} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.notekeeper.ResponseHeader.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -389,7 +395,7 @@ proto.notekeeper.ResponseHeader.prototype.getStatus = function() {
 
 /** @param {string} value */
 proto.notekeeper.ResponseHeader.prototype.setStatus = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -404,7 +410,7 @@ proto.notekeeper.ResponseHeader.prototype.getCode = function() {
 
 /** @param {number} value */
 proto.notekeeper.ResponseHeader.prototype.setCode = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3IntField(this, 2, value);
 };
 
 
@@ -419,7 +425,7 @@ proto.notekeeper.ResponseHeader.prototype.getScope = function() {
 
 /** @param {number} value */
 proto.notekeeper.ResponseHeader.prototype.setScope = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3IntField(this, 3, value);
 };
 
 

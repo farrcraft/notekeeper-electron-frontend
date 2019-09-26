@@ -1,6 +1,8 @@
 /**
  * @fileoverview
  * @enhanceable
+ * @suppress {messageConventions} JS Compiler reports an error if a variable or
+ *     field starts with 'MSG_' and isn't a translatable message.
  * @public
  */
 // GENERATED CODE -- DO NOT EDIT!
@@ -54,6 +56,7 @@ proto.notekeeper.OpenMasterDbRequest.prototype.toObject = function(opt_includeIn
  *     http://goto/soy-param-migration
  * @param {!proto.notekeeper.OpenMasterDbRequest} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.notekeeper.OpenMasterDbRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -129,6 +132,7 @@ proto.notekeeper.OpenMasterDbRequest.prototype.serializeBinary = function() {
  * format), writing to the given BinaryWriter.
  * @param {!proto.notekeeper.OpenMasterDbRequest} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.notekeeper.OpenMasterDbRequest.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -191,7 +195,7 @@ proto.notekeeper.OpenMasterDbRequest.prototype.getPath = function() {
 
 /** @param {string} value */
 proto.notekeeper.OpenMasterDbRequest.prototype.setPath = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3StringField(this, 2, value);
 };
 
 

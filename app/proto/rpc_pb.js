@@ -1,6 +1,8 @@
 /**
  * @fileoverview
  * @enhanceable
+ * @suppress {messageConventions} JS Compiler reports an error if a variable or
+ *     field starts with 'MSG_' and isn't a translatable message.
  * @public
  */
 // GENERATED CODE -- DO NOT EDIT!
@@ -57,6 +59,7 @@ proto.notekeeper.EmptyRequest.prototype.toObject = function(opt_includeInstance)
  *     http://goto/soy-param-migration
  * @param {!proto.notekeeper.EmptyRequest} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.notekeeper.EmptyRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -127,6 +130,7 @@ proto.notekeeper.EmptyRequest.prototype.serializeBinary = function() {
  * format), writing to the given BinaryWriter.
  * @param {!proto.notekeeper.EmptyRequest} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.notekeeper.EmptyRequest.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -214,6 +218,7 @@ proto.notekeeper.EmptyResponse.prototype.toObject = function(opt_includeInstance
  *     http://goto/soy-param-migration
  * @param {!proto.notekeeper.EmptyResponse} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.notekeeper.EmptyResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -284,6 +289,7 @@ proto.notekeeper.EmptyResponse.prototype.serializeBinary = function() {
  * format), writing to the given BinaryWriter.
  * @param {!proto.notekeeper.EmptyResponse} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.notekeeper.EmptyResponse.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -371,6 +377,7 @@ proto.notekeeper.IdRequest.prototype.toObject = function(opt_includeInstance) {
  *     http://goto/soy-param-migration
  * @param {!proto.notekeeper.IdRequest} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.notekeeper.IdRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -446,6 +453,7 @@ proto.notekeeper.IdRequest.prototype.serializeBinary = function() {
  * format), writing to the given BinaryWriter.
  * @param {!proto.notekeeper.IdRequest} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.notekeeper.IdRequest.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -508,7 +516,7 @@ proto.notekeeper.IdRequest.prototype.getId = function() {
 
 /** @param {string} value */
 proto.notekeeper.IdRequest.prototype.setId = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
@@ -555,6 +563,7 @@ proto.notekeeper.IdResponse.prototype.toObject = function(opt_includeInstance) {
  *     http://goto/soy-param-migration
  * @param {!proto.notekeeper.IdResponse} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.notekeeper.IdResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -630,6 +639,7 @@ proto.notekeeper.IdResponse.prototype.serializeBinary = function() {
  * format), writing to the given BinaryWriter.
  * @param {!proto.notekeeper.IdResponse} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.notekeeper.IdResponse.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -692,7 +702,7 @@ proto.notekeeper.IdResponse.prototype.getId = function() {
 
 /** @param {string} value */
 proto.notekeeper.IdResponse.prototype.setId = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3StringField(this, 2, value);
 };
 
 

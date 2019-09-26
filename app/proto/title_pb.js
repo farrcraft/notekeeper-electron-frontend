@@ -1,6 +1,8 @@
 /**
  * @fileoverview
  * @enhanceable
+ * @suppress {messageConventions} JS Compiler reports an error if a variable or
+ *     field starts with 'MSG_' and isn't a translatable message.
  * @public
  */
 // GENERATED CODE -- DO NOT EDIT!
@@ -54,6 +56,7 @@ proto.notekeeper.Title.prototype.toObject = function(opt_includeInstance) {
  *     http://goto/soy-param-migration
  * @param {!proto.notekeeper.Title} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.notekeeper.Title.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -153,6 +156,7 @@ proto.notekeeper.Title.prototype.serializeBinary = function() {
  * format), writing to the given BinaryWriter.
  * @param {!proto.notekeeper.Title} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.notekeeper.Title.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -219,7 +223,7 @@ proto.notekeeper.Title.prototype.getText = function() {
 
 /** @param {string} value */
 proto.notekeeper.Title.prototype.setText = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -236,7 +240,7 @@ proto.notekeeper.Title.prototype.getBold = function() {
 
 /** @param {boolean} value */
 proto.notekeeper.Title.prototype.setBold = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3BooleanField(this, 2, value);
 };
 
 
@@ -253,7 +257,7 @@ proto.notekeeper.Title.prototype.getItalics = function() {
 
 /** @param {boolean} value */
 proto.notekeeper.Title.prototype.setItalics = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3BooleanField(this, 3, value);
 };
 
 
@@ -270,7 +274,7 @@ proto.notekeeper.Title.prototype.getUnderscore = function() {
 
 /** @param {boolean} value */
 proto.notekeeper.Title.prototype.setUnderscore = function(value) {
-  jspb.Message.setField(this, 4, value);
+  jspb.Message.setProto3BooleanField(this, 4, value);
 };
 
 
@@ -287,7 +291,7 @@ proto.notekeeper.Title.prototype.getStrike = function() {
 
 /** @param {boolean} value */
 proto.notekeeper.Title.prototype.setStrike = function(value) {
-  jspb.Message.setField(this, 5, value);
+  jspb.Message.setProto3BooleanField(this, 5, value);
 };
 
 
@@ -302,7 +306,7 @@ proto.notekeeper.Title.prototype.getColor = function() {
 
 /** @param {string} value */
 proto.notekeeper.Title.prototype.setColor = function(value) {
-  jspb.Message.setField(this, 6, value);
+  jspb.Message.setProto3StringField(this, 6, value);
 };
 
 
@@ -317,7 +321,7 @@ proto.notekeeper.Title.prototype.getBackground = function() {
 
 /** @param {string} value */
 proto.notekeeper.Title.prototype.setBackground = function(value) {
-  jspb.Message.setField(this, 7, value);
+  jspb.Message.setProto3StringField(this, 7, value);
 };
 
 

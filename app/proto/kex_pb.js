@@ -1,6 +1,8 @@
 /**
  * @fileoverview
  * @enhanceable
+ * @suppress {messageConventions} JS Compiler reports an error if a variable or
+ *     field starts with 'MSG_' and isn't a translatable message.
  * @public
  */
 // GENERATED CODE -- DO NOT EDIT!
@@ -55,6 +57,7 @@ proto.notekeeper.KeyExchangeRequest.prototype.toObject = function(opt_includeIns
  *     http://goto/soy-param-migration
  * @param {!proto.notekeeper.KeyExchangeRequest} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.notekeeper.KeyExchangeRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -130,6 +133,7 @@ proto.notekeeper.KeyExchangeRequest.prototype.serializeBinary = function() {
  * format), writing to the given BinaryWriter.
  * @param {!proto.notekeeper.KeyExchangeRequest} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.notekeeper.KeyExchangeRequest.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -216,7 +220,7 @@ proto.notekeeper.KeyExchangeRequest.prototype.getPublickey_asU8 = function() {
 
 /** @param {!(string|Uint8Array)} value */
 proto.notekeeper.KeyExchangeRequest.prototype.setPublickey = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3BytesField(this, 2, value);
 };
 
 
@@ -263,11 +267,13 @@ proto.notekeeper.KeyExchangeResponse.prototype.toObject = function(opt_includeIn
  *     http://goto/soy-param-migration
  * @param {!proto.notekeeper.KeyExchangeResponse} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.notekeeper.KeyExchangeResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
     header: (f = msg.getHeader()) && common_pb.ResponseHeader.toObject(includeInstance, f),
-    publickey: msg.getPublickey_asB64()
+    publickey: msg.getPublickey_asB64(),
+    token: jspb.Message.getFieldWithDefault(msg, 3, "")
   };
 
   if (includeInstance) {
@@ -313,6 +319,10 @@ proto.notekeeper.KeyExchangeResponse.deserializeBinaryFromReader = function(msg,
       var value = /** @type {!Uint8Array} */ (reader.readBytes());
       msg.setPublickey(value);
       break;
+    case 3:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setToken(value);
+      break;
     default:
       reader.skipField();
       break;
@@ -338,6 +348,7 @@ proto.notekeeper.KeyExchangeResponse.prototype.serializeBinary = function() {
  * format), writing to the given BinaryWriter.
  * @param {!proto.notekeeper.KeyExchangeResponse} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.notekeeper.KeyExchangeResponse.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -353,6 +364,13 @@ proto.notekeeper.KeyExchangeResponse.serializeBinaryToWriter = function(message,
   if (f.length > 0) {
     writer.writeBytes(
       2,
+      f
+    );
+  }
+  f = message.getToken();
+  if (f.length > 0) {
+    writer.writeString(
+      3,
       f
     );
   }
@@ -424,7 +442,22 @@ proto.notekeeper.KeyExchangeResponse.prototype.getPublickey_asU8 = function() {
 
 /** @param {!(string|Uint8Array)} value */
 proto.notekeeper.KeyExchangeResponse.prototype.setPublickey = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3BytesField(this, 2, value);
+};
+
+
+/**
+ * optional string token = 3;
+ * @return {string}
+ */
+proto.notekeeper.KeyExchangeResponse.prototype.getToken = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
+};
+
+
+/** @param {string} value */
+proto.notekeeper.KeyExchangeResponse.prototype.setToken = function(value) {
+  jspb.Message.setProto3StringField(this, 3, value);
 };
 
 

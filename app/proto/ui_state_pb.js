@@ -1,6 +1,8 @@
 /**
  * @fileoverview
  * @enhanceable
+ * @suppress {messageConventions} JS Compiler reports an error if a variable or
+ *     field starts with 'MSG_' and isn't a translatable message.
  * @public
  */
 // GENERATED CODE -- DO NOT EDIT!
@@ -55,6 +57,7 @@ proto.notekeeper.LoadUIStateResponse.prototype.toObject = function(opt_includeIn
  *     http://goto/soy-param-migration
  * @param {!proto.notekeeper.LoadUIStateResponse} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.notekeeper.LoadUIStateResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -180,6 +183,7 @@ proto.notekeeper.LoadUIStateResponse.prototype.serializeBinary = function() {
  * format), writing to the given BinaryWriter.
  * @param {!proto.notekeeper.LoadUIStateResponse} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.notekeeper.LoadUIStateResponse.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -312,7 +316,7 @@ proto.notekeeper.LoadUIStateResponse.prototype.getWindowwidth = function() {
 
 /** @param {number} value */
 proto.notekeeper.LoadUIStateResponse.prototype.setWindowwidth = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3IntField(this, 2, value);
 };
 
 
@@ -327,7 +331,7 @@ proto.notekeeper.LoadUIStateResponse.prototype.getWindowheight = function() {
 
 /** @param {number} value */
 proto.notekeeper.LoadUIStateResponse.prototype.setWindowheight = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3IntField(this, 3, value);
 };
 
 
@@ -342,7 +346,7 @@ proto.notekeeper.LoadUIStateResponse.prototype.getWindowxposition = function() {
 
 /** @param {number} value */
 proto.notekeeper.LoadUIStateResponse.prototype.setWindowxposition = function(value) {
-  jspb.Message.setField(this, 4, value);
+  jspb.Message.setProto3IntField(this, 4, value);
 };
 
 
@@ -357,7 +361,7 @@ proto.notekeeper.LoadUIStateResponse.prototype.getWindowyposition = function() {
 
 /** @param {number} value */
 proto.notekeeper.LoadUIStateResponse.prototype.setWindowyposition = function(value) {
-  jspb.Message.setField(this, 5, value);
+  jspb.Message.setProto3IntField(this, 5, value);
 };
 
 
@@ -374,7 +378,7 @@ proto.notekeeper.LoadUIStateResponse.prototype.getWindowmaximized = function() {
 
 /** @param {boolean} value */
 proto.notekeeper.LoadUIStateResponse.prototype.setWindowmaximized = function(value) {
-  jspb.Message.setField(this, 6, value);
+  jspb.Message.setProto3BooleanField(this, 6, value);
 };
 
 
@@ -391,7 +395,7 @@ proto.notekeeper.LoadUIStateResponse.prototype.getWindowminimized = function() {
 
 /** @param {boolean} value */
 proto.notekeeper.LoadUIStateResponse.prototype.setWindowminimized = function(value) {
-  jspb.Message.setField(this, 7, value);
+  jspb.Message.setProto3BooleanField(this, 7, value);
 };
 
 
@@ -408,7 +412,7 @@ proto.notekeeper.LoadUIStateResponse.prototype.getWindowfullscreen = function() 
 
 /** @param {boolean} value */
 proto.notekeeper.LoadUIStateResponse.prototype.setWindowfullscreen = function(value) {
-  jspb.Message.setField(this, 8, value);
+  jspb.Message.setProto3BooleanField(this, 8, value);
 };
 
 
@@ -423,7 +427,7 @@ proto.notekeeper.LoadUIStateResponse.prototype.getDisplaywidth = function() {
 
 /** @param {number} value */
 proto.notekeeper.LoadUIStateResponse.prototype.setDisplaywidth = function(value) {
-  jspb.Message.setField(this, 9, value);
+  jspb.Message.setProto3IntField(this, 9, value);
 };
 
 
@@ -438,7 +442,7 @@ proto.notekeeper.LoadUIStateResponse.prototype.getDisplayheight = function() {
 
 /** @param {number} value */
 proto.notekeeper.LoadUIStateResponse.prototype.setDisplayheight = function(value) {
-  jspb.Message.setField(this, 10, value);
+  jspb.Message.setProto3IntField(this, 10, value);
 };
 
 
@@ -453,7 +457,7 @@ proto.notekeeper.LoadUIStateResponse.prototype.getDisplayxposition = function() 
 
 /** @param {number} value */
 proto.notekeeper.LoadUIStateResponse.prototype.setDisplayxposition = function(value) {
-  jspb.Message.setField(this, 11, value);
+  jspb.Message.setProto3IntField(this, 11, value);
 };
 
 
@@ -468,7 +472,7 @@ proto.notekeeper.LoadUIStateResponse.prototype.getDisplayyposition = function() 
 
 /** @param {number} value */
 proto.notekeeper.LoadUIStateResponse.prototype.setDisplayyposition = function(value) {
-  jspb.Message.setField(this, 12, value);
+  jspb.Message.setProto3IntField(this, 12, value);
 };
 
 
@@ -515,6 +519,7 @@ proto.notekeeper.SaveUIStateRequest.prototype.toObject = function(opt_includeIns
  *     http://goto/soy-param-migration
  * @param {!proto.notekeeper.SaveUIStateRequest} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.notekeeper.SaveUIStateRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -640,6 +645,7 @@ proto.notekeeper.SaveUIStateRequest.prototype.serializeBinary = function() {
  * format), writing to the given BinaryWriter.
  * @param {!proto.notekeeper.SaveUIStateRequest} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.notekeeper.SaveUIStateRequest.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -772,7 +778,7 @@ proto.notekeeper.SaveUIStateRequest.prototype.getWindowwidth = function() {
 
 /** @param {number} value */
 proto.notekeeper.SaveUIStateRequest.prototype.setWindowwidth = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3IntField(this, 2, value);
 };
 
 
@@ -787,7 +793,7 @@ proto.notekeeper.SaveUIStateRequest.prototype.getWindowheight = function() {
 
 /** @param {number} value */
 proto.notekeeper.SaveUIStateRequest.prototype.setWindowheight = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3IntField(this, 3, value);
 };
 
 
@@ -802,7 +808,7 @@ proto.notekeeper.SaveUIStateRequest.prototype.getWindowxposition = function() {
 
 /** @param {number} value */
 proto.notekeeper.SaveUIStateRequest.prototype.setWindowxposition = function(value) {
-  jspb.Message.setField(this, 4, value);
+  jspb.Message.setProto3IntField(this, 4, value);
 };
 
 
@@ -817,7 +823,7 @@ proto.notekeeper.SaveUIStateRequest.prototype.getWindowyposition = function() {
 
 /** @param {number} value */
 proto.notekeeper.SaveUIStateRequest.prototype.setWindowyposition = function(value) {
-  jspb.Message.setField(this, 5, value);
+  jspb.Message.setProto3IntField(this, 5, value);
 };
 
 
@@ -834,7 +840,7 @@ proto.notekeeper.SaveUIStateRequest.prototype.getWindowmaximized = function() {
 
 /** @param {boolean} value */
 proto.notekeeper.SaveUIStateRequest.prototype.setWindowmaximized = function(value) {
-  jspb.Message.setField(this, 6, value);
+  jspb.Message.setProto3BooleanField(this, 6, value);
 };
 
 
@@ -851,7 +857,7 @@ proto.notekeeper.SaveUIStateRequest.prototype.getWindowminimized = function() {
 
 /** @param {boolean} value */
 proto.notekeeper.SaveUIStateRequest.prototype.setWindowminimized = function(value) {
-  jspb.Message.setField(this, 7, value);
+  jspb.Message.setProto3BooleanField(this, 7, value);
 };
 
 
@@ -868,7 +874,7 @@ proto.notekeeper.SaveUIStateRequest.prototype.getWindowfullscreen = function() {
 
 /** @param {boolean} value */
 proto.notekeeper.SaveUIStateRequest.prototype.setWindowfullscreen = function(value) {
-  jspb.Message.setField(this, 8, value);
+  jspb.Message.setProto3BooleanField(this, 8, value);
 };
 
 
@@ -883,7 +889,7 @@ proto.notekeeper.SaveUIStateRequest.prototype.getDisplaywidth = function() {
 
 /** @param {number} value */
 proto.notekeeper.SaveUIStateRequest.prototype.setDisplaywidth = function(value) {
-  jspb.Message.setField(this, 9, value);
+  jspb.Message.setProto3IntField(this, 9, value);
 };
 
 
@@ -898,7 +904,7 @@ proto.notekeeper.SaveUIStateRequest.prototype.getDisplayheight = function() {
 
 /** @param {number} value */
 proto.notekeeper.SaveUIStateRequest.prototype.setDisplayheight = function(value) {
-  jspb.Message.setField(this, 10, value);
+  jspb.Message.setProto3IntField(this, 10, value);
 };
 
 
@@ -913,7 +919,7 @@ proto.notekeeper.SaveUIStateRequest.prototype.getDisplayxposition = function() {
 
 /** @param {number} value */
 proto.notekeeper.SaveUIStateRequest.prototype.setDisplayxposition = function(value) {
-  jspb.Message.setField(this, 11, value);
+  jspb.Message.setProto3IntField(this, 11, value);
 };
 
 
@@ -928,7 +934,7 @@ proto.notekeeper.SaveUIStateRequest.prototype.getDisplayyposition = function() {
 
 /** @param {number} value */
 proto.notekeeper.SaveUIStateRequest.prototype.setDisplayyposition = function(value) {
-  jspb.Message.setField(this, 12, value);
+  jspb.Message.setProto3IntField(this, 12, value);
 };
 
 

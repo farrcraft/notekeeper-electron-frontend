@@ -1,6 +1,8 @@
 /**
  * @fileoverview
  * @enhanceable
+ * @suppress {messageConventions} JS Compiler reports an error if a variable or
+ *     field starts with 'MSG_' and isn't a translatable message.
  * @public
  */
 // GENERATED CODE -- DO NOT EDIT!
@@ -59,6 +61,7 @@ proto.notekeeper.Tag.prototype.toObject = function(opt_includeInstance) {
  *     http://goto/soy-param-migration
  * @param {!proto.notekeeper.Tag} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.notekeeper.Tag.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -149,6 +152,7 @@ proto.notekeeper.Tag.prototype.serializeBinary = function() {
  * format), writing to the given BinaryWriter.
  * @param {!proto.notekeeper.Tag} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.notekeeper.Tag.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -202,7 +206,7 @@ proto.notekeeper.Tag.prototype.getId = function() {
 
 /** @param {string} value */
 proto.notekeeper.Tag.prototype.setId = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -247,7 +251,7 @@ proto.notekeeper.Tag.prototype.getScope = function() {
 
 /** @param {string} value */
 proto.notekeeper.Tag.prototype.setScope = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3StringField(this, 3, value);
 };
 
 
@@ -262,7 +266,7 @@ proto.notekeeper.Tag.prototype.getCreated = function() {
 
 /** @param {string} value */
 proto.notekeeper.Tag.prototype.setCreated = function(value) {
-  jspb.Message.setField(this, 4, value);
+  jspb.Message.setProto3StringField(this, 4, value);
 };
 
 
@@ -277,7 +281,7 @@ proto.notekeeper.Tag.prototype.getUpdated = function() {
 
 /** @param {string} value */
 proto.notekeeper.Tag.prototype.setUpdated = function(value) {
-  jspb.Message.setField(this, 5, value);
+  jspb.Message.setProto3StringField(this, 5, value);
 };
 
 
@@ -324,6 +328,7 @@ proto.notekeeper.GetTagsRequest.prototype.toObject = function(opt_includeInstanc
  *     http://goto/soy-param-migration
  * @param {!proto.notekeeper.GetTagsRequest} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.notekeeper.GetTagsRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -404,6 +409,7 @@ proto.notekeeper.GetTagsRequest.prototype.serializeBinary = function() {
  * format), writing to the given BinaryWriter.
  * @param {!proto.notekeeper.GetTagsRequest} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.notekeeper.GetTagsRequest.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -473,7 +479,7 @@ proto.notekeeper.GetTagsRequest.prototype.getId = function() {
 
 /** @param {string} value */
 proto.notekeeper.GetTagsRequest.prototype.setId = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
@@ -488,7 +494,7 @@ proto.notekeeper.GetTagsRequest.prototype.getScope = function() {
 
 /** @param {string} value */
 proto.notekeeper.GetTagsRequest.prototype.setScope = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3StringField(this, 3, value);
 };
 
 
@@ -542,6 +548,7 @@ proto.notekeeper.GetTagsResponse.prototype.toObject = function(opt_includeInstan
  *     http://goto/soy-param-migration
  * @param {!proto.notekeeper.GetTagsResponse} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.notekeeper.GetTagsResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -619,6 +626,7 @@ proto.notekeeper.GetTagsResponse.prototype.serializeBinary = function() {
  * format), writing to the given BinaryWriter.
  * @param {!proto.notekeeper.GetTagsResponse} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.notekeeper.GetTagsResponse.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -673,17 +681,15 @@ proto.notekeeper.GetTagsResponse.prototype.hasHeader = function() {
 
 /**
  * repeated Tag tags = 2;
- * If you change this array by adding, removing or replacing elements, or if you
- * replace the array itself, then you must call the setter to update it.
- * @return {!Array.<!proto.notekeeper.Tag>}
+ * @return {!Array<!proto.notekeeper.Tag>}
  */
 proto.notekeeper.GetTagsResponse.prototype.getTagsList = function() {
-  return /** @type{!Array.<!proto.notekeeper.Tag>} */ (
+  return /** @type{!Array<!proto.notekeeper.Tag>} */ (
     jspb.Message.getRepeatedWrapperField(this, proto.notekeeper.Tag, 2));
 };
 
 
-/** @param {!Array.<!proto.notekeeper.Tag>} value */
+/** @param {!Array<!proto.notekeeper.Tag>} value */
 proto.notekeeper.GetTagsResponse.prototype.setTagsList = function(value) {
   jspb.Message.setRepeatedWrapperField(this, 2, value);
 };
@@ -747,6 +753,7 @@ proto.notekeeper.CreateTagRequest.prototype.toObject = function(opt_includeInsta
  *     http://goto/soy-param-migration
  * @param {!proto.notekeeper.CreateTagRequest} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.notekeeper.CreateTagRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -833,6 +840,7 @@ proto.notekeeper.CreateTagRequest.prototype.serializeBinary = function() {
  * format), writing to the given BinaryWriter.
  * @param {!proto.notekeeper.CreateTagRequest} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.notekeeper.CreateTagRequest.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -940,7 +948,7 @@ proto.notekeeper.CreateTagRequest.prototype.getId = function() {
 
 /** @param {string} value */
 proto.notekeeper.CreateTagRequest.prototype.setId = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3StringField(this, 3, value);
 };
 
 
@@ -955,7 +963,7 @@ proto.notekeeper.CreateTagRequest.prototype.getScope = function() {
 
 /** @param {string} value */
 proto.notekeeper.CreateTagRequest.prototype.setScope = function(value) {
-  jspb.Message.setField(this, 4, value);
+  jspb.Message.setProto3StringField(this, 4, value);
 };
 
 
@@ -1002,6 +1010,7 @@ proto.notekeeper.SaveTagRequest.prototype.toObject = function(opt_includeInstanc
  *     http://goto/soy-param-migration
  * @param {!proto.notekeeper.SaveTagRequest} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.notekeeper.SaveTagRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -1093,6 +1102,7 @@ proto.notekeeper.SaveTagRequest.prototype.serializeBinary = function() {
  * format), writing to the given BinaryWriter.
  * @param {!proto.notekeeper.SaveTagRequest} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.notekeeper.SaveTagRequest.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -1177,7 +1187,7 @@ proto.notekeeper.SaveTagRequest.prototype.getId = function() {
 
 /** @param {string} value */
 proto.notekeeper.SaveTagRequest.prototype.setId = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
@@ -1192,7 +1202,7 @@ proto.notekeeper.SaveTagRequest.prototype.getOwnerid = function() {
 
 /** @param {string} value */
 proto.notekeeper.SaveTagRequest.prototype.setOwnerid = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3StringField(this, 3, value);
 };
 
 
@@ -1207,7 +1217,7 @@ proto.notekeeper.SaveTagRequest.prototype.getScope = function() {
 
 /** @param {string} value */
 proto.notekeeper.SaveTagRequest.prototype.setScope = function(value) {
-  jspb.Message.setField(this, 4, value);
+  jspb.Message.setProto3StringField(this, 4, value);
 };
 
 
@@ -1284,6 +1294,7 @@ proto.notekeeper.DeleteTagRequest.prototype.toObject = function(opt_includeInsta
  *     http://goto/soy-param-migration
  * @param {!proto.notekeeper.DeleteTagRequest} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.notekeeper.DeleteTagRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -1369,6 +1380,7 @@ proto.notekeeper.DeleteTagRequest.prototype.serializeBinary = function() {
  * format), writing to the given BinaryWriter.
  * @param {!proto.notekeeper.DeleteTagRequest} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.notekeeper.DeleteTagRequest.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -1445,7 +1457,7 @@ proto.notekeeper.DeleteTagRequest.prototype.getId = function() {
 
 /** @param {string} value */
 proto.notekeeper.DeleteTagRequest.prototype.setId = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
@@ -1460,7 +1472,7 @@ proto.notekeeper.DeleteTagRequest.prototype.getOwnerid = function() {
 
 /** @param {string} value */
 proto.notekeeper.DeleteTagRequest.prototype.setOwnerid = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3StringField(this, 3, value);
 };
 
 
@@ -1475,7 +1487,7 @@ proto.notekeeper.DeleteTagRequest.prototype.getScope = function() {
 
 /** @param {string} value */
 proto.notekeeper.DeleteTagRequest.prototype.setScope = function(value) {
-  jspb.Message.setField(this, 4, value);
+  jspb.Message.setProto3StringField(this, 4, value);
 };
 
 

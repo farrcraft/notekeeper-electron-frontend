@@ -1,6 +1,8 @@
 /**
  * @fileoverview
  * @enhanceable
+ * @suppress {messageConventions} JS Compiler reports an error if a variable or
+ *     field starts with 'MSG_' and isn't a translatable message.
  * @public
  */
 // GENERATED CODE -- DO NOT EDIT!
@@ -59,6 +61,7 @@ proto.notekeeper.AccountStateResponse.prototype.toObject = function(opt_includeI
  *     http://goto/soy-param-migration
  * @param {!proto.notekeeper.AccountStateResponse} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.notekeeper.AccountStateResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -144,6 +147,7 @@ proto.notekeeper.AccountStateResponse.prototype.serializeBinary = function() {
  * format), writing to the given BinaryWriter.
  * @param {!proto.notekeeper.AccountStateResponse} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.notekeeper.AccountStateResponse.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -222,7 +226,7 @@ proto.notekeeper.AccountStateResponse.prototype.getSignedin = function() {
 
 /** @param {boolean} value */
 proto.notekeeper.AccountStateResponse.prototype.setSignedin = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3BooleanField(this, 2, value);
 };
 
 
@@ -239,7 +243,7 @@ proto.notekeeper.AccountStateResponse.prototype.getLocked = function() {
 
 /** @param {boolean} value */
 proto.notekeeper.AccountStateResponse.prototype.setLocked = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3BooleanField(this, 3, value);
 };
 
 
@@ -256,7 +260,7 @@ proto.notekeeper.AccountStateResponse.prototype.getExists = function() {
 
 /** @param {boolean} value */
 proto.notekeeper.AccountStateResponse.prototype.setExists = function(value) {
-  jspb.Message.setField(this, 4, value);
+  jspb.Message.setProto3BooleanField(this, 4, value);
 };
 
 
@@ -303,6 +307,7 @@ proto.notekeeper.CreateAccountRequest.prototype.toObject = function(opt_includeI
  *     http://goto/soy-param-migration
  * @param {!proto.notekeeper.CreateAccountRequest} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.notekeeper.CreateAccountRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -388,6 +393,7 @@ proto.notekeeper.CreateAccountRequest.prototype.serializeBinary = function() {
  * format), writing to the given BinaryWriter.
  * @param {!proto.notekeeper.CreateAccountRequest} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.notekeeper.CreateAccountRequest.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -464,7 +470,7 @@ proto.notekeeper.CreateAccountRequest.prototype.getName = function() {
 
 /** @param {string} value */
 proto.notekeeper.CreateAccountRequest.prototype.setName = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
@@ -479,7 +485,7 @@ proto.notekeeper.CreateAccountRequest.prototype.getEmail = function() {
 
 /** @param {string} value */
 proto.notekeeper.CreateAccountRequest.prototype.setEmail = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3StringField(this, 3, value);
 };
 
 
@@ -494,7 +500,7 @@ proto.notekeeper.CreateAccountRequest.prototype.getPassphrase = function() {
 
 /** @param {string} value */
 proto.notekeeper.CreateAccountRequest.prototype.setPassphrase = function(value) {
-  jspb.Message.setField(this, 4, value);
+  jspb.Message.setProto3StringField(this, 4, value);
 };
 
 
@@ -541,6 +547,7 @@ proto.notekeeper.UserId.prototype.toObject = function(opt_includeInstance) {
  *     http://goto/soy-param-migration
  * @param {!proto.notekeeper.UserId} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.notekeeper.UserId.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -615,6 +622,7 @@ proto.notekeeper.UserId.prototype.serializeBinary = function() {
  * format), writing to the given BinaryWriter.
  * @param {!proto.notekeeper.UserId} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.notekeeper.UserId.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -646,7 +654,7 @@ proto.notekeeper.UserId.prototype.getAccountid = function() {
 
 /** @param {string} value */
 proto.notekeeper.UserId.prototype.setAccountid = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -661,7 +669,7 @@ proto.notekeeper.UserId.prototype.getUserid = function() {
 
 /** @param {string} value */
 proto.notekeeper.UserId.prototype.setUserid = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
@@ -708,6 +716,7 @@ proto.notekeeper.UserIdResponse.prototype.toObject = function(opt_includeInstanc
  *     http://goto/soy-param-migration
  * @param {!proto.notekeeper.UserIdResponse} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.notekeeper.UserIdResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -784,6 +793,7 @@ proto.notekeeper.UserIdResponse.prototype.serializeBinary = function() {
  * format), writing to the given BinaryWriter.
  * @param {!proto.notekeeper.UserIdResponse} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.notekeeper.UserIdResponse.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -909,6 +919,7 @@ proto.notekeeper.UnlockAccountRequest.prototype.toObject = function(opt_includeI
  *     http://goto/soy-param-migration
  * @param {!proto.notekeeper.UnlockAccountRequest} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.notekeeper.UnlockAccountRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -989,6 +1000,7 @@ proto.notekeeper.UnlockAccountRequest.prototype.serializeBinary = function() {
  * format), writing to the given BinaryWriter.
  * @param {!proto.notekeeper.UnlockAccountRequest} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.notekeeper.UnlockAccountRequest.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -1058,7 +1070,7 @@ proto.notekeeper.UnlockAccountRequest.prototype.getId = function() {
 
 /** @param {string} value */
 proto.notekeeper.UnlockAccountRequest.prototype.setId = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
@@ -1073,7 +1085,7 @@ proto.notekeeper.UnlockAccountRequest.prototype.getPassphrase = function() {
 
 /** @param {string} value */
 proto.notekeeper.UnlockAccountRequest.prototype.setPassphrase = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3StringField(this, 3, value);
 };
 
 
@@ -1120,6 +1132,7 @@ proto.notekeeper.SigninAccountRequest.prototype.toObject = function(opt_includeI
  *     http://goto/soy-param-migration
  * @param {!proto.notekeeper.SigninAccountRequest} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.notekeeper.SigninAccountRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -1205,6 +1218,7 @@ proto.notekeeper.SigninAccountRequest.prototype.serializeBinary = function() {
  * format), writing to the given BinaryWriter.
  * @param {!proto.notekeeper.SigninAccountRequest} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.notekeeper.SigninAccountRequest.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -1281,7 +1295,7 @@ proto.notekeeper.SigninAccountRequest.prototype.getName = function() {
 
 /** @param {string} value */
 proto.notekeeper.SigninAccountRequest.prototype.setName = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
@@ -1296,7 +1310,7 @@ proto.notekeeper.SigninAccountRequest.prototype.getEmail = function() {
 
 /** @param {string} value */
 proto.notekeeper.SigninAccountRequest.prototype.setEmail = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3StringField(this, 3, value);
 };
 
 
@@ -1311,7 +1325,7 @@ proto.notekeeper.SigninAccountRequest.prototype.getPassphrase = function() {
 
 /** @param {string} value */
 proto.notekeeper.SigninAccountRequest.prototype.setPassphrase = function(value) {
-  jspb.Message.setField(this, 4, value);
+  jspb.Message.setProto3StringField(this, 4, value);
 };
 
 
