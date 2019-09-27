@@ -11,6 +11,7 @@ var jspb = require('google-protobuf');
 var goog = jspb;
 var global = Function('return this')();
 
+var common_pb = require('./common_pb.js');
 var title_pb = require('./title_pb.js');
 goog.exportSymbol('proto.notekeeper.CreateTagRequest', null, global);
 goog.exportSymbol('proto.notekeeper.DeleteTagRequest', null, global);
