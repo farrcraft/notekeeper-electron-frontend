@@ -1,7 +1,10 @@
-// in preload scripts, we have access to node.js and electron APIs
-// the remote web app will not have access, so this is safe
-import { ipcRenderer, remote } from 'electron';
-import Logger from '../shared/Logger';
+import Bridge from './Bridge';
+import { Bridge as BridgeInterface } from '../interfaces/preload/Bridge';
+
+// We need to expand the global window type to be able to add our bridge object later
+declare global {
+  interface Window { Bridge: BridgeInterface }
+}
 
 function init(): void {
   // Expose a bridging API by setting a global on `window`.
@@ -10,36 +13,7 @@ function init(): void {
   //
   // !!!!CAREFUL!!!! do not expose any functionality or APIs that could compromise the
   // user's computer. E.g. don't directly expose core Electron (even IPC) or node.js modules.
-  const userDataPath = remote.app.getPath('userData');
-  window.Bridge = {
-    // setDockBadge: setDockBadge,
-    env: {
-      port: process.env.PORT,
-      nodeEnv: process.env.NODE_ENV
-    },
-    ipc: ipcRenderer,
-    userData: {
-      path: userDataPath
-    },
-    logger: Logger.configure(userDataPath)
-  };
-
-  /*
-  // we get this message from the main process
-  ipc.on('markAllComplete', () => {
-    // the todo app defines this function
-    window.Bridge.markAllComplete();
-  });
-  */
+  window.Bridge = new Bridge();
 }
-/*
-// the todo app calls this when the todo count changes
-function setDockBadge(count) {
-  if(process.platform === 'darwin') {
-    //Coerce count into a string. Passing an empty string makes the badge disappear.
-    remote.app.dock.setBadge('' + (count || ''));
-  }
-}
-*/
 
 init();

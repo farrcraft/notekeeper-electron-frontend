@@ -1,9 +1,0 @@
-export { default as AccountIPC } from './Account';
-export { default as CollectionIPC } from './Collection';
-export { default as NoteIPC } from './Note';
-export { default as NotebookIPC } from './Notebook';
-export { default as ShelfIPC } from './Shelf';
-export { default as TagIPC } from './Tag';
-export { default as TrashIPC } from './Trash';
-export { default as UserIPC } from './User';
-export { default as WorkspaceIPC } from './Workspace';
