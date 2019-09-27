@@ -1,9 +1,9 @@
 # Default action
 build:
-	npm run build
+	yarn build-dev
 
 lint:
-	npm run lint
+	yarn lint
 
 # Run this after any npm install to make sure all dependencies work with electron's node verion
 rebuild:
@@ -23,3 +23,6 @@ proto-copy:
 # Regenerate nodejs protobuf definitions
 proto:
 	cd app/proto; ../../../protoc -I . *.proto --js_out=import_style=commonjs,binary:.
+
+proto-gen:
+	./scripts/proto-gen.sh
