@@ -1,5 +1,5 @@
 import { Endpoint as EndpointInterface } from '../../interfaces/api';
-import { Rpc as RpcInterface } from '../../interfaces/rpc/Rpc';
+import { Rpc as RpcInterface } from '../../interfaces/rpc';
 
 /**
  *
@@ -13,7 +13,12 @@ class Endpoint implements EndpointInterface {
   /**
    *
    */
-  rpc: RpcInterface;
+  rpc: RpcInterface|null;
+
+  constructor() {
+    this.name = '';
+    this.rpc = null;
+  }
 
   /**
    *

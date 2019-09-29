@@ -2,7 +2,7 @@ import request from 'request-promise-native';
 import nacl from 'tweetnacl';
 import base64js from 'base64-js';
 
-import { Rpc as RpcInterface } from '../../interfaces/rpc/Rpc';
+import { Rpc as RpcInterface } from '../../interfaces/rpc';
 import InternalError from '../../core/InternalError';
 
 const RPC_PORT = 'localhost:53017';

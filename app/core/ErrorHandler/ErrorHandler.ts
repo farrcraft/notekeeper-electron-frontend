@@ -1,10 +1,32 @@
-import dialog from 'electron';
+import { dialog } from 'electron';
 
-class ErrorHandler {
+import { ErrorHandler as ErrorHandlerInterface } from '../../interfaces/core';
+import InternalError from '../InternalError';
 
-  error(title: string, msg: string|null) {
+/**
+ *
+ */
+class ErrorHandler implements ErrorHandlerInterface {
+  /**
+   *
+   */
+  lastError: InternalError|null;
+
+  /**
+   *
+   */
+  constructor() {
+    this.lastError = null;
+  }
+
+  /**
+   *
+   * @param err
+   */
+  error(err: InternalError): void {
+    this.lastError = err;
     if (dialog) {
-      this.showErrorDialog(title, msg);
+      this.showErrorDialog();
     }
   }
 
@@ -12,22 +34,12 @@ class ErrorHandler {
    * Show a native error dialog box
    * This only works in main or preload
    *
-   * @param title Error dialog caption
-   * @param msg Error message
    */
-  showErrorDialog(title: string, msg: string|null): void {
-    if (msg === null) {
-      this.lastError = {
-        title: 'Internal Error',
-        message: title
-      };
-    } else {
-      this.lastError = {
-        title,
-        message: msg
-      };
+  showErrorDialog(): void {
+    if (this.lastError === null) {
+      return;
     }
-    dialog.showErrorBox(this.lastError.title, this.lastError.message);
+    dialog.showErrorBox(this.lastError.name, this.lastError.message);
   }
 }
 

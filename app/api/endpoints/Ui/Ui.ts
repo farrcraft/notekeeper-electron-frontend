@@ -1,13 +1,16 @@
-import { Ui as UiInterface } from '../../interfaces/api';
+import { Ui as UiInterface } from '../../../interfaces/api/endpoints';
+import { WindowState as WindowStateInterface } from '../../../interfaces/domain/UI';
+import Endpoint from '../../Endpoint';
+import { Endpoint as EndpointInterface } from '../../../interfaces/api';
 
 /**
  *
  */
-class Ui implements UiInterface {
+class Ui extends Endpoint implements EndpointInterface, UiInterface {
   /**
    *
    */
-  loadWindowState(): WindowState {
+  loadWindowState(): WindowStateInterface {
     const message = new messagesRpc.EmptyRequest();
     const messageHeader = new messagesRpc.RequestHeader();
     messageHeader.setMethod('UIState::load');
@@ -20,7 +23,7 @@ class Ui implements UiInterface {
    *
    * @param state
    */
-  saveWindowState(state: WindowState) {
+  saveWindowState(state: WindowStateInterface) {
     message = this.protoify.toRequest(state);
     const payload = message.serializeBinary();
   }

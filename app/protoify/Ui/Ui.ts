@@ -1,3 +1,4 @@
+import { Ui as UiInterface } from '../../interfaces/protoify';
 import { WindowState as WindowStateInterface } from '../../interfaces/domain/UI';
 import { WindowState } from '../../domain/UI';
 import {
@@ -8,12 +9,12 @@ import {
 /**
  *
  */
-class Ui {
+class Ui implements UiInterface {
   /**
    *
    * @param windowState
    */
-  toRequest(windowState: WindowStateInterface) {
+  toRequest(windowState: WindowStateInterface): SaveUIStateRequest {
     const message = new SaveUIStateRequest();
     message.setWindowwidth(windowState.windowBounds.width);
     message.setWindowheight(windowState.windowBounds.height);

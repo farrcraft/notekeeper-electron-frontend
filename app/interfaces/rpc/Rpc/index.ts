@@ -1,2 +1,3 @@
-// eslint-disable-next-line import/prefer-default-export
-export { default as Rpc } from './Rpc';
+import Rpc from './Rpc';
+
+export default Rpc;

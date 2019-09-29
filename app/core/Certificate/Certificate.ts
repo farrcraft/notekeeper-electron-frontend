@@ -1,5 +1,6 @@
-import dialog from 'electron';
 import fs from 'fs';
+
+import { Certificate as CertificateInterface } from '../../interfaces/core';
 import InternalError from '../InternalError';
 
 /**
@@ -8,7 +9,7 @@ import InternalError from '../InternalError';
  * ready state.  Additionally, it can only be loaded from either the main or preload
  * processes.
  */
-class Certificate {
+class Certificate implements CertificateInterface {
   /**
    *
    */
@@ -33,7 +34,7 @@ class Certificate {
   load(): void {
     try {
       this.certificate = fs.readFileSync(this.path);
-    } catch (err: Error) {
+    } catch (err) {
       let msg = err.message;
       if (err.code === 'ENOENT') {
         msg = 'Certificate file does not exist';

@@ -1,4 +1,6 @@
 import Endpoint from '../Endpoint';
+import { Rpc } from '../../rpc';
+import EndpointHashMap from './EndpointHashMap';
 
 /**
  *
@@ -6,9 +8,19 @@ import Endpoint from '../Endpoint';
 interface Api {
   /**
    *
+   */
+  endpoints: EndpointHashMap|undefined;
+
+  /**
+   *
+   */
+  rpc: Rpc;
+
+  /**
+   *
    * @param provider
    */
-  registerProvider(provider) : void;
+  registerProvider(provider: Endpoint) : void;
 
   /**
    *

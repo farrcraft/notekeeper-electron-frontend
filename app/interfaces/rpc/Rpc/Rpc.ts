@@ -1,3 +1,5 @@
+import request from 'request-promise-native';
+
 /**
  * The interface for making RPC requests to the backend process
  */
@@ -26,6 +28,42 @@ interface Rpc {
    * The public key from the backend for verifying message signatures
    */
   verifyPublicKey: Uint8Array|null;
+
+  /**
+   *
+   */
+  clientToken: string;
+
+  /**
+   *
+   * @param method
+   * @param payload
+   */
+  request(method: string, payload: Uint8Array): Promise<any>;
+
+  /**
+   *
+   * @param payload
+   */
+  createSignature(payload: Uint8Array): string;
+
+  /**
+   *
+   * @param signature
+   * @param payload
+   */
+  verifySignature(signature: string, payload: string): boolean;
+
+  /**
+   *
+   */
+  verifyLastResponse(): void;
+
+  /**
+   *
+   * @param response
+   */
+  verifyResponse(response: request.RequestPromise<any>): void;
 }
 
 export default Rpc;

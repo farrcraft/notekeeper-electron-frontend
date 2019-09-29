@@ -2,7 +2,8 @@ import {
   app,
   session,
   shell,
-  ipcMain
+  ipcMain,
+  WebContents
 } from 'electron';
 import installExtension, { REACT_DEVELOPER_TOOLS, MOBX_DEVTOOLS } from 'electron-devtools-installer';
 import path from 'path';
@@ -10,11 +11,19 @@ import { URL } from 'url';
 
 import AppUpdater from '../AppUpdater';
 import Backend from '../Backend';
-import Logger from '../../core/Logger';
+import {
+  Certificate,
+  InternalError,
+  Logger
+} from '../../core';
 import Window from '../Window';
-import Api from '../../api/Api';
-import Rpc from '../../rpc/Rpc';
-import Certificate from '../../core/Certificate';
+import { Rpc } from '../../rpc';
+import {
+  Api,
+  Registrar
+} from '../../api';
+import { Kex } from '../../api/endpoints';
+
 
 /**
  * The Application that runs in the main process
@@ -57,8 +66,14 @@ class App {
     const userDataPath: string = app.getPath('userData');
     this.logger = new Logger(userDataPath);
 
+    // The RPC module talks to the backend
     this.rpc = new Rpc();
+    // The API layer uses the RPC as its transport layer
     this.api = new Api(this.rpc);
+
+    const registrar = new Registrar();
+    registrar.register(this.api);
+
     const certPath = path.join(userDataPath, 'certificate');
     this.certificate = new Certificate(certPath);
 
@@ -70,7 +85,7 @@ class App {
    *
    */
   onSecondInstance(): void {
-    if (!this.window) {
+    if (!this.window || !this.window.window) {
       return;
     }
     if (this.window.window.isMinimized()) {
@@ -83,7 +98,7 @@ class App {
    *
    */
   onWillQuit(): void {
-    this.backend.destroy();
+    this.backend.terminate();
   }
 
   /**
@@ -91,7 +106,7 @@ class App {
    * @param event
    * @param contents
    */
-  onWebContentsCreated(event, contents): void {
+  onWebContentsCreated(_event: Event, contents: WebContents): void {
     // Security - Disable navigation
     contents.on('will-navigate', (navEvent, navigationUrl) => {
       const parsedUrl = new URL(navigationUrl);
@@ -152,7 +167,7 @@ class App {
 
     // Security-related configuration
     // See: https://electronjs.org/docs/tutorial/security
-    app.on('web-contents-created', (event, contents) => this.onWebContentsCreated());
+    app.on('web-contents-created', (event, contents) => this.onWebContentsCreated(event, contents));
 
     app.on('window-all-closed', () => this.onWindowAllClosed());
 
@@ -162,8 +177,8 @@ class App {
   /**
    * Once the backend is ready, we create the main browser window
    */
-  async onBackendReady(): void {
-    const installExtensions = async (): void => {
+  async onBackendReady(): Promise<void> {
+    const installExtensions = async (): Promise<void> => {
       if (process.env.NODE_ENV === 'development') {
         return installExtension([REACT_DEVELOPER_TOOLS.id, MOBX_DEVTOOLS.id])
           .then(name => console.log(`Added Extension:  ${name}`))
@@ -175,7 +190,9 @@ class App {
 
     this.setContentSecurityPolicy();
 
-    if (!this.certificate.load()) {
+    try {
+      this.certificate.load();
+    } catch (err) {
       // [FIXME] - need to shutdown from here
       app.quit();
     }
@@ -191,9 +208,10 @@ class App {
     }
 
     // [FIXME] - should use constant of some kind of endpoint name here?
-    const kex = this.api.getEndpoint('kex');
-    ok = kex.keyExchange();
-    if (!ok) {
+    const kex = <Kex>this.api.getEndpoint('kex');
+    try {
+      kex.keyExchange();
+    } catch (err) {
       // [FIXME] - shutdown
       app.quit();
     }
@@ -219,7 +237,6 @@ class App {
     await kexMain.keyExchange();
     await dbMain.openMasterDb();
 
-    */
     await uiStateStore.load();
     let width: number = uiStateStore.windowWidth;
     let height: number = uiStateStore.windowHeight;
@@ -236,6 +253,8 @@ class App {
       uiStateStore.windowXPosition,
       uiStateStore.windowYPosition
     );
+    */
+
     // Remove this if your app does not use auto updates
     // eslint-disable-next-line
     new AppUpdater();
@@ -254,7 +273,7 @@ class App {
   /**
    *
    */
-  async onWindowAllClosed(): void {
+  async onWindowAllClosed(): Promise<void> {
     try {
       await uiStateStore.save();
 
@@ -287,6 +306,9 @@ class App {
    * Security - Set CSP HTTP Header
    */
   setContentSecurityPolicy(): void {
+    if (session.defaultSession === undefined) {
+      return;
+    }
     session.defaultSession.webRequest.onHeadersReceived((details, callback) => {
       callback({
         responseHeaders: {

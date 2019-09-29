@@ -1,4 +1,4 @@
-import { Rpc as RpcInterface } from '../../rpc/Rpc';
+import { Rpc } from '../../rpc';
 
 /**
  *
@@ -12,13 +12,13 @@ interface Endpoint {
   /**
    *
    */
-  rpc: RpcInterface;
+  rpc: Rpc|null;
 
   /**
    *
    * @param rpc
    */
-  setRpc(rpc: RpcInterface): void;
+  setRpc(rpc: Rpc): void;
 }
 
 export default Endpoint;

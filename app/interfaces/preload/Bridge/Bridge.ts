@@ -1,7 +1,6 @@
 import { IpcRenderer } from 'electron';
 
 import Env from './Env';
-import ErrorMessage from './ErrorMessage';
 import UserData from './UserData';
 
 /**
@@ -24,27 +23,9 @@ interface Bridge {
   userData: UserData;
 
   /**
-   * The last error that occured
-   */
-  lastError: ErrorMessage|null;
-
-  /**
    * The SSL certificate created by the backend process
    */
   certificate: Buffer|undefined;
-
-  /**
-   * Display an error in a native error dialog box
-   *
-   * @param title The error caption
-   * @param msg The error message
-   */
-  showErrorDialog(title: string, msg: string|null): void;
-
-  /**
-   * Load the SSL certificate created by the backend process
-   */
-  loadCertificate(): void;
 }
 
 export default Bridge;

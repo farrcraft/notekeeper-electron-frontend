@@ -1,3 +1,5 @@
+import { WindowState } from '../../../domain/UI';
+
 /**
  *
  */

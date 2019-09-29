@@ -1,6 +1,9 @@
-import { Api as ApiInterface } from '../../interfaces/api/Api';
-import { Endpoint as EndpointInterface } from '../../interfaces/api/Endpoint';
-import { Rpc as RpcInterface } from '../../interfaces/rpc/Rpc';
+import {
+  Api as ApiInterface,
+  Endpoint as EndpointInterface,
+  EndpointHashMap,
+} from '../../interfaces/api';
+import { Rpc as RpcInterface } from '../../interfaces/rpc';
 
 /**
  *
@@ -10,7 +13,7 @@ class Api implements ApiInterface {
   /**
    *
    */
-  endpoints: { [name: string]: EndpointInterface };
+  endpoints: EndpointHashMap;
 
   /**
    *
@@ -23,15 +26,16 @@ class Api implements ApiInterface {
    */
   constructor(rpc: RpcInterface) {
     this.rpc = rpc;
+    this.endpoints = {};
   }
 
   /**
    *
    * @param provider
    */
-  registerProvider(provider: EndpointInterface) {
+  registerProvider(provider: EndpointInterface): void {
     this.endpoints[provider.name] = provider;
-    provider.setRpc(rpc);
+    provider.setRpc(this.rpc);
   }
 
   /**

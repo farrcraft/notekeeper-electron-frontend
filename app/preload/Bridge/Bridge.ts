@@ -1,7 +1,6 @@
 // in preload scripts, we have access to node.js and electron APIs
 // the remote web app will not have access, so this is safe
 import {
-  dialog,
   ipcRenderer,
   IpcRenderer,
   remote
@@ -11,7 +10,6 @@ import path from 'path';
 import {
   Bridge as BridgeInterface,
   Env,
-  ErrorMessage,
   UserData
 } from '../../interfaces/preload/Bridge';
 import Certificate from '../../core/Certificate';
@@ -36,14 +34,9 @@ class Bridge implements BridgeInterface {
   userData: UserData;
 
   /**
-   * The last error that ocurred
-   */
-  lastError: ErrorMessage|null = null;
-
-  /**
    * The SSL certificate created by the backend process
    */
-  certificate: Buffer;
+  certificate: Buffer|undefined;
 
   /**
    * Initialize the preload bridge
@@ -63,33 +56,14 @@ class Bridge implements BridgeInterface {
     // We need the backend's SSL cert & verification key to be able to make backend API calls
     const certPath = path.join(this.userData.path, 'certificate');
     const cert = new Certificate(certPath);
-    if (!cert.load()) {
+    try {
+      cert.load();
+    } catch (err) {
       // [FIXME] - fatal error
     }
     this.certificate = cert.certificate;
 
     this.verifyPublicKey = ipcRenderer.sendSync('verify-public-key');
-  }
-
-  /**
-   * Show a native error dialog box
-   *
-   * @param title Error dialog caption
-   * @param msg Error message
-   */
-  showErrorDialog(title: string, msg: string|null): void {
-    if (msg === null) {
-      this.lastError = {
-        title: 'Internal Error',
-        message: title
-      };
-    } else {
-      this.lastError = {
-        title,
-        message: msg
-      };
-    }
-    dialog.showErrorBox(this.lastError.title, this.lastError.message);
   }
 }
 
