@@ -1,4 +1,4 @@
-import { Bounds as BoundsInterface } from '../../interfaces/domain/UI';
+import { Bounds as BoundsInterface } from '../../interfaces/domain/Ui';
 
 /**
  *

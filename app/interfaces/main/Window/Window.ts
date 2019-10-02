@@ -1,7 +1,7 @@
 import { BrowserWindow } from 'electron';
 
-import { Api as ApiInterface } from '../../../interfaces/api';
-import { WindowState as WindowStateInterface } from '../../../interfaces/domain/UI';
+import { Api as ApiInterface } from '../../api';
+import { WindowState as WindowStateInterface } from '../../domain/Ui';
 
 /**
  *

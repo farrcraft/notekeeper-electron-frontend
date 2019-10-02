@@ -19,14 +19,24 @@ class Kex extends Endpoint implements EndpointInterface {
     const payload = message.serializeBinary();
 
     const response = this.rpc.request('KeyExchange', payload);
-    const responseMessage = messagesKex.KeyExchangeResponse.deserializeBinary(response);
+    response.then((body) => {
+      if (this.rpc === null) {
+        throw new InternalError('Service Error', 'RPC Unavailable');
+      }
+      const responseMessage = messagesKex.KeyExchangeResponse.deserializeBinary(this.rpc.str2ab(body));
 
-    this.rpc.verifyPublicKey = responseMessage.getPublickey();
-    this.rpc.clientToken = responseMessage.getToken();
+      let key = responseMessage.getPublickey();
+      if (typeof key === 'string') {
+        // [FIXME] - need a better place for this method to live (it's in Request too)
+        key = this.rpc.str2ab(key);
+      }
+      this.rpc.verifyPublicKey = key;
+      this.rpc.clientToken = responseMessage.getToken();
 
-    // responses would normally be verified directly by the rpc call, but it has to
-    // be deferred in the case of key exchange - this throws on verification failure
-    this.rpc.verifyLastResponse();
+      // responses would normally be verified directly by the rpc call, but it has to
+      // be deferred in the case of key exchange - this throws on verification failure
+      this.rpc.verifyLastResponse();
+    });
   }
 }
 

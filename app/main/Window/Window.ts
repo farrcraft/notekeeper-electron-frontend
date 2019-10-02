@@ -4,7 +4,7 @@ import {
 import path from 'path';
 
 import MenuBuilder from '../Menu';
-import { WindowState } from '../../domain/UI';
+import { WindowState } from '../../domain/Ui';
 import { Window as WindowInterface } from '../../interfaces/main';
 import { Api as ApiInterface } from '../../interfaces/api';
 import { Ui as UiEndpoint } from '../../api/endpoints';
@@ -111,7 +111,7 @@ export default class Window implements WindowInterface {
     if (this.windowStateTimeout) {
       clearTimeout(this.windowStateTimeout);
     }
-    const updateState = (): void => { this.updateWindowState(); };
+    const updateState = (): void => { this.saveWindowState(); };
     this.windowStateTimeout = setTimeout(updateState, 5000);
   }
 

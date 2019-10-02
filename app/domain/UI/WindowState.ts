@@ -1,5 +1,5 @@
 import Bounds from './Bounds';
-import { WindowState as WindowStateInterface } from '../../interfaces/domain/UI';
+import { WindowState as WindowStateInterface } from '../../interfaces/domain/Ui';
 
 /**
  *

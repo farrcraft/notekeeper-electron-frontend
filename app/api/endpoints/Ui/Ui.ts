@@ -1,5 +1,5 @@
 import { Ui as UiInterface } from '../../../interfaces/api/endpoints';
-import { WindowState as WindowStateInterface } from '../../../interfaces/domain/UI';
+import { WindowState as WindowStateInterface } from '../../../interfaces/domain/Ui';
 import Endpoint from '../../Endpoint';
 import { Endpoint as EndpointInterface } from '../../../interfaces/api';
 import messagesRpc from '../../../proto/rpc_pb';
@@ -32,6 +32,7 @@ class Ui extends Endpoint implements EndpointInterface, UiInterface {
     message.setHeader(messageHeader);
     const payload = message.serializeBinary();
 
+    this.protoify.fromResponse();
   }
 
   /**

@@ -1,21 +1,26 @@
 import * as https from 'https';
 import * as http from 'http';
 
-import Request from './Request';
+import { Endpoint } from '../Rpc';
+import Client from './Client';
 
 /**
  * This is a native request using the built-in nodejs modules
  */
-class NativeRequest extends Request {
-
+class NativeClient extends Client {
+  /**
+   *
+   * @param method
+   * @param payload
+   */
   request(method: string, payload: Uint8Array): Promise<string> {
     this.sendCounter += 1;
     const signature = this.createSignature(payload);
 
     const options: https.RequestOptions = {
-      hostname: 'localhost',
-      port: 53017,
-      path: '/rpc',
+      hostname: Endpoint.host,
+      port: Endpoint.port,
+      path: Endpoint.path,
       method: 'POST'
     };
 
@@ -58,4 +63,4 @@ class NativeRequest extends Request {
   }
 }
 
-export default NativeRequest;
+export default NativeClient;

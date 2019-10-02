@@ -1,6 +1,6 @@
 import { Ui as UiInterface } from '../../interfaces/protoify';
-import { WindowState as WindowStateInterface } from '../../interfaces/domain/UI';
-import { WindowState } from '../../domain/UI';
+import { WindowState as WindowStateInterface } from '../../interfaces/domain/Ui';
+import { WindowState } from '../../domain/Ui';
 import {
   LoadUIStateResponse,
   SaveUIStateRequest

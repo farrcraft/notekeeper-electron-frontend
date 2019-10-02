@@ -1,4 +1,4 @@
-import { WindowState } from '../../../domain/UI';
+import { WindowState } from '../../../domain/Ui';
 import { default as UiProtoify } from '../../../protoify/Ui';
 /**
  *

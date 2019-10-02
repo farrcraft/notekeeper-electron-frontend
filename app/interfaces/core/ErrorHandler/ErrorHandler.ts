@@ -11,17 +11,16 @@ interface ErrorHandler {
 
   /**
    *
-   * @param title
-   * @param msg
+   * @param err
    */
-  error(title: string, msg: string|null): void;
+  error(err: InternalError): void;
 
   /**
+   * Show a native error dialog box
+   * This only works in main or preload
    *
-   * @param title
-   * @param msg
    */
-  showErrorDialog(title: string, msg: string|null): void;
+  showErrorDialog(): void;
 }
 
 export default ErrorHandler;

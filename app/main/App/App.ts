@@ -13,7 +13,6 @@ import AppUpdater from '../AppUpdater';
 import Backend from '../Backend';
 import {
   Certificate,
-  InternalError,
   Logger
 } from '../../core';
 import Window from '../Window';

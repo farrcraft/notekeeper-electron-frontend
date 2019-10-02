@@ -1,7 +1,8 @@
-class AjaxRequest {
-  certificate: Buffer|undefined;
+import { Endpoint } from '../Rpc';
+import Client from './Client';
 
-  request() {
+class AjaxClient extends Client {
+  request(method: string, payload: Uint8Array): Promise<string> {
     const req = new XMLHttpRequest();
     req.onreadystatechange = () => {
       try {
@@ -17,10 +18,10 @@ class AjaxRequest {
       }
     };
     // 3rd param = async - true/false
-    req.open('POST', RPC_ENDPOINT, false);
+    req.open('POST', Endpoint.endpoint, false);
     // req.setRequestHeader(name, value);
     req.send(payload);
   }
 }
 
-export default AjaxRequest;
+export default AjaxClient;

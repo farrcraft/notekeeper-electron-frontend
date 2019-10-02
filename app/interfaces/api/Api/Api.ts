@@ -20,13 +20,13 @@ interface Api {
    *
    * @param provider
    */
-  registerProvider(provider: Endpoint) : void;
+  registerProvider(provider: Endpoint): void;
 
   /**
    *
    * @param endpoint
    */
-  getEndpoint(endpoint: string) : Endpoint;
+  getEndpoint(endpoint: string): Endpoint;
 }
 
 export default Api;
