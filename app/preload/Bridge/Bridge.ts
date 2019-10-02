@@ -62,8 +62,6 @@ class Bridge implements BridgeInterface {
       // [FIXME] - fatal error
     }
     this.certificate = cert.certificate;
-
-    this.verifyPublicKey = ipcRenderer.sendSync('verify-public-key');
   }
 }
 

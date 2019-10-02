@@ -2,11 +2,26 @@ import { Ui as UiInterface } from '../../../interfaces/api/endpoints';
 import { WindowState as WindowStateInterface } from '../../../interfaces/domain/UI';
 import Endpoint from '../../Endpoint';
 import { Endpoint as EndpointInterface } from '../../../interfaces/api';
+import messagesRpc from '../../../proto/rpc_pb';
+import {default as UiProtoify } from '../../../protoify/Ui';
 
 /**
  *
  */
 class Ui extends Endpoint implements EndpointInterface, UiInterface {
+  /**
+   *
+   */
+  protoify: UiProtoify;
+
+  /**
+   *
+   */
+  constructor() {
+    super();
+    this.protoify = new UiProtoify();
+  }
+
   /**
    *
    */
@@ -24,7 +39,7 @@ class Ui extends Endpoint implements EndpointInterface, UiInterface {
    * @param state
    */
   saveWindowState(state: WindowStateInterface) {
-    message = this.protoify.toRequest(state);
+    const message = this.protoify.toRequest(state);
     const payload = message.serializeBinary();
   }
 }

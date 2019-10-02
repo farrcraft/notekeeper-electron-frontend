@@ -7,6 +7,7 @@ import MenuBuilder from '../Menu';
 import { WindowState } from '../../domain/UI';
 import { Window as WindowInterface } from '../../interfaces/main';
 import { Api as ApiInterface } from '../../interfaces/api';
+import { Ui as UiEndpoint } from '../../api/endpoints';
 
 /**
  * The renderer process window
@@ -135,7 +136,7 @@ export default class Window implements WindowInterface {
     this.state.minimized = this.window.isMinimized();
     this.state.fullscreen = this.window.isFullScreen();
 
-    const endpoint = this.api.getEndpoint('ui');
+    const endpoint = <UiEndpoint>this.api.getEndpoint('ui');
     endpoint.saveWindowState(this.state);
   }
 
@@ -174,7 +175,7 @@ export default class Window implements WindowInterface {
 
   // restoreWindowState sets the current window position/size to the last saved values
   restoreWindowState(): void {
-    const endpoint = this.api.getEndpoint('ui');
+    const endpoint = <UiEndpoint>this.api.getEndpoint('ui');
     // [FIXME] - this is an async api call - need to trigger updateWindowFromState() after completion
     this.state = endpoint.loadWindowState();
   }

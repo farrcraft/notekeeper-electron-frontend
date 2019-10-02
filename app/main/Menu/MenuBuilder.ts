@@ -36,7 +36,7 @@ export default class MenuBuilder {
             this.mainWindow.webContents.inspectElement(x, y);
           }
         }
-      ]).popup(this.mainWindow);
+      ]).popup();
     });
   }
 

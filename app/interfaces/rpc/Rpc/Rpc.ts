@@ -39,7 +39,13 @@ interface Rpc {
    * @param method
    * @param payload
    */
-  request(method: string, payload: Uint8Array): Promise<any>;
+  request(method: string, payload: Uint8Array): Promise<Uint8Array>;
+
+  /**
+   *
+   * @param str
+   */
+  str2ab(str: string) : Uint8Array;
 
   /**
    *

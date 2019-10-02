@@ -228,13 +228,6 @@ class App {
     // create the window
 
     /*
-    const kexMain = new KexRPC(rpcMain);
-    const dbMain = new DbRPC(rpcMain);
-    // register our kex & db transports should we need them later on
-    rpcMain.registerTransport('kex', kexMain);
-    rpcMain.registerTransport('db', dbMain);
-
-    await kexMain.keyExchange();
     await dbMain.openMasterDb();
 
     await uiStateStore.load();
@@ -275,6 +268,7 @@ class App {
    */
   async onWindowAllClosed(): Promise<void> {
     try {
+      /*
       await uiStateStore.save();
 
       // The most secure option is to completely sign out the user when they close the main window
@@ -282,6 +276,7 @@ class App {
       if (accountStore.signedIn === true) {
         await accountTransport.signout();
       }
+      */
       // If the user has opted into the less secure "remember me" option
       // then we can just lock instead:
       /*

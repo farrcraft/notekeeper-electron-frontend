@@ -2,6 +2,10 @@ import request from 'request-promise-native';
 import nacl from 'tweetnacl';
 import base64js from 'base64-js';
 
+import {
+  AjaxRequest,
+  NativeRequest
+} from '../Request';
 import { Rpc as RpcInterface } from '../../interfaces/rpc';
 import InternalError from '../../core/InternalError';
 
@@ -9,6 +13,8 @@ const RPC_PORT = 'localhost:53017';
 const RPC_ENDPOINT = `https://${RPC_PORT}/rpc`;
 
 // type RpcRequestCallback = (response: request.Response, body: any) => void;
+// import stream from 'stream';
+// type ResponseBodyType = string|string[]|Buffer|Buffer[]|stream.Readable;
 
 /**
  * The Rpc class is used to make RPC requests to the backend server process.
@@ -156,7 +162,11 @@ export default class Rpc implements RpcInterface {
    * @param payload
    * @param callback
    */
-  async request(method: string, payload: Uint8Array): Promise<any> {
+  async request(method: string, payload: Uint8Array): Promise<Uint8Array> {
+    const req = new NativeRequest();
+    const response = await req.request(method, payload);
+    return response;
+/*
     this.sendCounter += 1;
     const signature = this.createSignature(payload);
     const options: request.OptionsWithUri = {
@@ -182,12 +192,37 @@ export default class Rpc implements RpcInterface {
       throw new InternalError('Service Error', err.message);
     }
     if (this.lastResponse === null) {
-      return null;
+      return new Uint8Array();
     }
     if (method !== 'KeyExchange') {
       this.verifyResponse(this.lastResponse);
     }
-    return this.lastResponse.body;
+    const buffer = new ArrayBuffer(this.lastResponse.body.length * 2);
+    const view = new Uint8Array(buffer);
+    return view;
+*/
+  }
+
+  /**
+   *
+   * @param str
+   */
+  str2ab(str: string) : Uint8Array {
+    /*
+    var buf = new ArrayBuffer(str.length * 2); // 2 bytes for each char
+    var bufView = new Uint8Array(buf);
+    for (var i = 0, strLen = str.length; i < strLen; i++) {
+      bufView[i] = str.charCodeAt(i);
+    }
+    */
+    const buffer = new ArrayBuffer(str.length * 2);
+    const view = new Uint8Array(buffer);
+    return view;
+    /*
+    const bytes = new Uint8Array(buf);
+    const dv = new DataView(bytes.buffer);
+    return dv.getUint8(0);
+    */
   }
 
   /**

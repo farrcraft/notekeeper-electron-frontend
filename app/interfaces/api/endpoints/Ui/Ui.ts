@@ -1,9 +1,11 @@
 import { WindowState } from '../../../domain/UI';
-
+import { default as UiProtoify } from '../../../protoify/Ui';
 /**
  *
  */
 interface Ui {
+  protoify: UiProtoify;
+
   /**
    *
    */

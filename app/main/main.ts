@@ -17,9 +17,11 @@ if (process.env.NODE_ENV === 'production') {
 
 const mainApp = new App();
 
+/*
 process.on('error', err => {
   mainApp.logger.debug(err);
 });
+*/
 
 // We only want a single instance to be able to run at once
 const gotTheLock: boolean = app.requestSingleInstanceLock();
