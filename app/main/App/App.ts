@@ -173,6 +173,13 @@ class App {
     app.on('ready', () => this.onReady());
   }
 
+  onBackendStarted() {
+    // The backend is only guaranteed to be in its initial service ready state
+    // where its at least created the SSL certificate, but might not yet be
+    // ready to service RPC requests.
+    let ok = this.rpc.waitForReady(this.onBackendReady);
+  }
+
   /**
    * Once the backend is ready, we create the main browser window
    */
@@ -200,9 +207,10 @@ class App {
     // The backend is only guaranteed to be in its initial service ready state
     // where its at least created the SSL certificate, but might not yet be
     // ready to service RPC requests.
-    let ok = this.rpc.waitForReady();
+    let ok = await this.rpc.waitForReady();
     if (!ok) {
       // [FIXME] - shutdown
+      console.log('gave up waiting for rpc.');
       app.quit();
     }
 
@@ -211,6 +219,7 @@ class App {
     try {
       kex.keyExchange();
     } catch (err) {
+      console.log('key exchange failed ' + err);
       // [FIXME] - shutdown
       app.quit();
     }
@@ -218,7 +227,7 @@ class App {
     // The bridge will make an IPC request for the backend's public key.
     // Without it, the renderer process won't be able to make backend RPC calls.
     ipcMain.on('verify-public-key', (event): void => {
-      event.returnValue = this.rpc.verifyPublicKey;
+      event.returnValue = this.rpc.client.verifyPublicKey;
     });
 
     // next we need to:

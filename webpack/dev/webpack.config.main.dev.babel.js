@@ -12,7 +12,7 @@ export default merge.smart(baseConfig, {
   devtool: 'source-map',
   mode: 'development',
   target: 'electron-main',
-  entry: './app/main/index',
+  entry: './app/main/main',
 
   output: {
     path: path.join(__dirname, '..', '..', 'app/dist/dev'),

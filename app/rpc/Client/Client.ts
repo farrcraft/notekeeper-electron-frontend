@@ -47,7 +47,15 @@ class Client implements ClientInterface {
    */
   certificate: Buffer|undefined;
 
+  /**
+   *
+   */
   lastResponse: ResponseInterface|null;
+
+  /**
+   *
+   */
+  lastError: Error|null;
 
   /**
    * Initialize the RPC system
@@ -61,10 +69,16 @@ class Client implements ClientInterface {
     this.clientToken = 'Empty';
     keyPair = null;
     this.lastResponse = null;
+    this.lastError = null;
   }
 
-  request(_method: string, _payload: Uint8Array): Promise<string> {
-    const response = new Promise<string>(() => {});
+  /**
+   *
+   * @param _method
+   * @param _payload
+   */
+  request(_method: string, _payload: Uint8Array|null): Promise<boolean> {
+    const response = new Promise<boolean>(() => {});
     return response;
   }
 
@@ -130,6 +144,15 @@ class Client implements ClientInterface {
     const signature = response.headers['notekeeper-message-signature'] as string;
     if (!this.verifySignature(signature, response.body.toString())) {
       throw new InternalError('Transport Error', 'Failed to verify response signature');
+    }
+  }
+
+  /**
+   *
+   */
+  verifyLastResponse(): void {
+    if (this.lastResponse !== null) {
+      this.verifyResponse(this.lastResponse);
     }
   }
 

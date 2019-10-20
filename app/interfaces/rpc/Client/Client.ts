@@ -1,4 +1,4 @@
-import Response from '../Response';
+import { Response } from '../Response';
 
 /**
  *
@@ -41,10 +41,15 @@ interface Client {
 
   /**
    *
+   */
+  lastError: Error|null;
+
+  /**
+   *
    * @param method
    * @param payload
    */
-  request(method: string, payload: Uint8Array): Promise<string>;
+  request(method: string, payload: Uint8Array|null): Promise<boolean>;
 
   /**
    *
@@ -70,6 +75,11 @@ interface Client {
    * @param response
    */
   verifyResponse(response: Response): void;
+
+  /**
+   *
+   */
+  verifyLastResponse(): void;
 }
 
 export default Client;

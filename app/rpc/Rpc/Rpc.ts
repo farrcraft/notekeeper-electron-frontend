@@ -27,19 +27,15 @@ export default class Rpc implements RpcInterface {
    */
   certificate: Buffer|undefined;
 
-  lastResponse: null;
-
   /**
    * Initialize the RPC system
    */
   constructor() {
-    if (window === undefined) {
+    if (typeof window === 'undefined') {
       this.client = new NativeClient();
     } else {
       this.client = new AjaxClient();
     }
-
-    this.lastResponse = null;
   }
 
   /**
@@ -47,21 +43,36 @@ export default class Rpc implements RpcInterface {
    * This will poll once per second for up to 10 seconds.
    */
   async waitForReady(): Promise<boolean> {
-    let ok = this.backendReady();
-    if (ok) {
+    console.log('is backend ready?');
+    let ok = await this.backendReady();
+    /*
+    ok.then((result) => {
+      if (result === true) {
+        console.log('backend then was ok');
+      } else {
+        console.log('backend then not ok');
+      }
+    });
+    */
+    if (ok === true) {
+      console.log('backend was ready');
       return true;
     }
-
+console.log('need to sleep on it');
     const sleep = (ms: number) => {
-      return new Promise(resolve => {
-        setTimeout(resolve, ms);
+      console.log('sleeping');
+      return new Promise((resolve) => {
+        console.log('setting next stage');
+        setTimeout(() => { console.log('timed out'); resolve(); }, ms);
       });
     };
 
     for (let ticks = 10; ticks > 0; ticks--) {
+      console.log('going to sleep');
       await sleep(1000);
-      ok = this.backendReady();
-      if (ok) {
+      console.log('tick');
+      ok = await this.waitForReady();
+      if (ok === true) {
         return true;
       }
     }
@@ -72,29 +83,30 @@ export default class Rpc implements RpcInterface {
    * Make an RPC call to the backend to determine if it is ready.
    */
   async backendReady(): Promise<boolean> {
-    const response = await this.client.request('SERVICE-READY', null);
-
     // The backend generates the SSL cert on startup, so we can't enforce strict SSL yet
-    const options: request.OptionsWithUri = {
-      uri: RPC_ENDPOINT,
-      method: 'POST',
-      cert: this.certificate,
-      ca: this.certificate,
-      headers: {
-        'NoteKeeper-Request-Method': 'SERVICE-READY'
-      },
-      json: false
-    };
-    try {
-      const response = await request(options);
+    // [FIXME] - we need to tell the client not to enforce strict ssl checks on this request
+    const response = await this.client.request('SERVICE-READY', null);
+    return response;
+    /*
+    response.then((result) => {
+console.log('response then ' + result);
+    }).catch((err) => {
+console.log('response caught ' + err.code);
+    });
+    const promise = new Promise<boolean>((resolve) => {
       if (response === 'OK') {
-        return true;
+        resolve(true);
+      } else {
+        resolve(false);
       }
-    }
-    catch (_err) {
-      // [FIXME]
-    }
-    return false;
+    }).catch((err) => {
+      if (err.code === 'ECANCELED') {
+console.log('CAUGHT CANCELED!');
+      }
+      return false;
+    });
+    return promise;
+    */
   }
 
   /**
@@ -106,7 +118,10 @@ export default class Rpc implements RpcInterface {
    */
   async request(method: string, payload: Uint8Array): Promise<string> {
     const response = await this.client.request(method, payload);
-    return response;
+    if (response === true && this.client.lastResponse !== null) {
+      return this.client.lastResponse.body;
+    }
+    return '';
 /*
     this.sendCounter += 1;
     const signature = this.createSignature(payload);
@@ -158,20 +173,14 @@ export default class Rpc implements RpcInterface {
     */
     const buffer = new ArrayBuffer(str.length * 2);
     const view = new Uint8Array(buffer);
+    for (let i = 0, strLen = str.length; i < strLen; i++) {
+      view[i] = str.charCodeAt(i);
+    }
     return view;
     /*
     const bytes = new Uint8Array(buf);
     const dv = new DataView(bytes.buffer);
     return dv.getUint8(0);
     */
-  }
-
-  /**
-   *
-   */
-  verifyLastResponse(): void {
-    if (this.lastResponse !== null) {
-      this.verifyResponse(this.lastResponse);
-    }
   }
 }
