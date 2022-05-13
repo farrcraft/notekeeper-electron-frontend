@@ -38,13 +38,19 @@ export default class Rpc implements RpcInterface {
     }
   }
 
+  sleep(ms: number) {
+    return new Promise((resolve) => {
+      setTimeout(resolve, ms);
+    });
+  }
+
   /**
    * Periodically poll the backend server until it is ready.
    * This will poll once per second for up to 10 seconds.
    */
   async waitForReady(): Promise<boolean> {
     console.log('is backend ready?');
-    let ok = await this.backendReady();
+    let ok = this.backendReady();
     /*
     ok.then((result) => {
       if (result === true) {
@@ -59,22 +65,16 @@ export default class Rpc implements RpcInterface {
       return true;
     }
 console.log('need to sleep on it');
-    const sleep = (ms: number) => {
-      console.log('sleeping');
-      return new Promise((resolve) => {
-        console.log('setting next stage');
-        setTimeout(() => { console.log('timed out'); resolve(); }, ms);
-      });
-    };
 
     for (let ticks = 10; ticks > 0; ticks--) {
       console.log('going to sleep');
-      await sleep(1000);
-      console.log('tick');
-      ok = await this.waitForReady();
-      if (ok === true) {
-        return true;
-      }
+      await this.sleep(1000).then(() => {
+        console.log('tick');
+        ok =this.backendReady();
+        if (ok === true) {
+          return true;
+        }
+      });
     }
     return false;
   }
