@@ -8,7 +8,7 @@ import merge from 'webpack-merge';
 import TerserPlugin from 'terser-webpack-plugin';
 import baseConfig from '../webpack.config.base';
 
-export default merge.smart(baseConfig, {
+export default merge(baseConfig, {
   devtool: 'source-map',
   mode: 'production',
   target: 'electron-main',
@@ -21,11 +21,10 @@ export default merge.smart(baseConfig, {
   },
 
   optimization: {
+    minimize: true,
     minimizer: [
       new TerserPlugin({
-        parallel: true,
-        sourceMap: true,
-        cache: true
+        parallel: true
       })
     ]
   },

@@ -22,6 +22,10 @@ export default {
     ]
   },
 
+  optimization: {
+    moduleIds: 'named'
+  },
+
   output: {
     path: path.join(__dirname, '..', 'app'),
     // https://github.com/webpack/webpack/issues/1114
@@ -38,8 +42,6 @@ export default {
   plugins: [
     new webpack.EnvironmentPlugin({
       NODE_ENV: 'production'
-    }),
-
-    new webpack.NamedModulesPlugin()
+    })
   ]
 };
