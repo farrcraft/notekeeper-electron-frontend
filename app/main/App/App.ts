@@ -208,10 +208,11 @@ class App {
     // where its at least created the SSL certificate, but might not yet be
     // ready to service RPC requests.
     let ok = await this.rpc.waitForReady();
-    if (!ok) {
+    if (ok !== true) {
       // [FIXME] - shutdown
       console.log('gave up waiting for rpc.');
       app.quit();
+      return;
     }
 
     // [FIXME] - should use constant of some kind of endpoint name here?
